@@ -22,11 +22,12 @@
 %token IF ELSE-IF ELSE REPEAT WHILE
 %token SET TO-BE AS
 %token DO THANK-YOU
-%token RECEIVING RETURN
+%token FUNCTION RECEIVING RETURNING RETURN
 %token COMMA SEMICOLON
 %token INT STR DOUBLE
 %token EQ GT GE LT LE NE
-
+%token NUMBER-LITERAL STRING-LITERAL
+%token VAR
 %%
 
 entrypoint: 
@@ -46,30 +47,30 @@ block:  DO  statement THANK-YOU {;}
 
 while:  REPEAT UNTIL    expression  statement   THANK-YOU   {;}
 
-ifclause: IF    expression  statement
-        |   IF  expression  statement   elsetrain
+ifclause: IF    expression  statement   {;}
+        |   IF  expression  statement   elsetrain {;}
 
-elsetrain:  ELSE-IF expression  statement   elsetrain
-        |   ELSE    statement
-
-
-expression: VAR EQ  VAR
-        |   VAR GT  VAR
-        |   VAR GE  VAR
-        |   VAR LT  VAR
-        |   VAR LE  VAR
-        |   VAR NE  VAR
-        |   STR-LITERAL
-        |   NUMBER-LITERAL
+elsetrain:  ELSE-IF expression  statement   elsetrain {;}
+        |   ELSE    statement {;}
 
 
-assignment: SET VAR TO-BE   expression
+expression: VAR EQ  VAR {;}
+        |   VAR GT  VAR {;}
+        |   VAR GE  VAR {;}
+        |   VAR LT  VAR {;}
+        |   VAR LE  VAR {;}
+        |   VAR NE  VAR {;}
+        |   STR-LITERAL {;}
+        |   NUMBER-LITERAL {;}
 
-vardeclaration: SET VAR AS  type
 
-fundeclaration: SET VAR RECEIVING   arglist AS  type
+assignment: SET VAR TO-BE   expression {;}
 
-fundefinition:  DEFINE  VAR RECEIVING   arglist AS  statement
+vardeclaration: SET VAR AS  type {;}
+
+fundeclaration: SET FUNCTION VAR RECEIVING   arglist RETURNING  type {;}
+
+fundefinition:  DEFINE FUNCTION VAR RECEIVING   arglist AS  statement {;}
 
 type:   INT
     |   STR
