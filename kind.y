@@ -64,7 +64,7 @@ expression: VAR EQ  VAR {;}
         |   VAR LT  VAR {;}
         |   VAR LE  VAR {;}
         |   VAR NE  VAR {;}
-        |   STR-LITERAL {;}
+        |   STRING_LITERAL {;}
         |   NUMBER_LITERAL {;}
         ;
 
