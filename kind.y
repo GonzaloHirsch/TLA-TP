@@ -30,20 +30,26 @@
 entrypoint: 
 
 command:    vardeclaration  SEMICOLON   {printf("Result %d\n", $1);}
-        |   fundeclaration  SEMICOLON   {;}
+        |   fundeclaration    {;}
         |   assignment      SEMICOLON   {;}
+
 
 statement:  block       {;}
         |   while       {;}
         |   ifclause    {;}
         |   command statement   {;}
+        |   command
     
 block:  DO  statement THANK-YOU {;}
+
 while:  REPEAT UNTIL    expression  statement   THANK-YOU   {;}
+
 ifclause: IF    expression  statement
         |   IF  expression  statement   elsetrain
+
 elsetrain:  ELSE-IF expression  statement   elsetrain
         |   ELSE    statement
+
 
 expression: VAR EQ  VAR
         |   VAR GT  VAR
@@ -51,5 +57,18 @@ expression: VAR EQ  VAR
         |   VAR LT  VAR
         |   VAR LE  VAR
         |   VAR NE  VAR
+        |   STR-LITERAL
+        |   NUMBER-LITERAL
 
-assignment: LET
+
+assignment: SET VAR TO-BE   expression
+
+vardeclaration: SET VAR AS  type
+
+fundeclaration: SET VAR RECEIVING   arglist AS  type
+
+fundefinition:  DEFINE  VAR RECEIVING   arglist AS  statement
+
+type:   INT
+    |   STR
+    |   DOUBLE
