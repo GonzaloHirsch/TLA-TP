@@ -24,6 +24,8 @@
 %token DO THANK-YOU
 %token RECEIVING RETURN
 %token COMMA SEMICOLON
+%token INT STR DOUBLE
+%token EQ GT GE LT LE NE
 
 %%
 
