@@ -28,31 +28,35 @@
 %token EQ GT GE LT LE NE
 %token NUMBER-LITERAL STRING-LITERAL
 %token VAR
+
 %%
 
-entrypoint: 
+entrypoint: BEGIN statement END {;}
 
 command:    vardeclaration  SEMICOLON   {printf("Result %d\n", $1);}
-        |   fundeclaration    {;}
+        |   fundeclaration  SEMICOLON  {;}
         |   assignment      SEMICOLON   {;}
+        |   funex   SEMICOLON   {;}
+        ;
 
-
-statement:  block       {;}
-        |   while       {;}
-        |   ifclause    {;}
-        |   command statement   {;}
-        |   command
-    
+statement:  block   statement   {;}
+        |   while   statement   {;}
+        |   ifclause    statement  {;}
+        |   command statement  {;}
+        |   block {;}
+        |   while {;}
+        |   ifclause {;}
+        ;
 block:  DO  statement THANK-YOU {;}
-
+        ;
 while:  REPEAT UNTIL    expression  statement   THANK-YOU   {;}
-
+        ;
 ifclause: IF    expression  statement   {;}
         |   IF  expression  statement   elsetrain {;}
-
+        ;
 elsetrain:  ELSE-IF expression  statement   elsetrain {;}
         |   ELSE    statement {;}
-
+        ;
 
 expression: VAR EQ  VAR {;}
         |   VAR GT  VAR {;}
@@ -62,16 +66,27 @@ expression: VAR EQ  VAR {;}
         |   VAR NE  VAR {;}
         |   STR-LITERAL {;}
         |   NUMBER-LITERAL {;}
-
+        ;
 
 assignment: SET VAR TO-BE   expression {;}
-
+        ;
 vardeclaration: SET VAR AS  type {;}
+        ;
+fundeclaration: SET FUNCTION VAR RECEIVING   arglistdecl RETURNING  type {;}
+        ;
+fundefinition:  DEFINE FUNCTION VAR RECEIVING   arglistdecl AS  statement returnstatement{;}
+        ;
+arglist:    arglist COMMA arg |   arg COMMA
+        ;
+arg:    type    VAR
+        ;
 
-fundeclaration: SET FUNCTION VAR RECEIVING   arglist RETURNING  type {;}
-
-fundefinition:  DEFINE FUNCTION VAR RECEIVING   arglist AS  statement {;}
+funex:  EXECUTE FUNCTION    VAR PASSING arglist {;}
+        ;
+returnstatement:    RETURN  expression
+        ;
 
 type:   INT
     |   STR
     |   DOUBLE
+    ;
