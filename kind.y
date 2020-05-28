@@ -27,12 +27,17 @@
 
 %%
 
-command:    varDeclaration  SEMICOLON   {printf("Result %d\n", $1);}
-        |   funDeclaration  SEMICOLON   {;}
+command:    vardeclaration  SEMICOLON   {printf("Result %d\n", $1);}
+        |   fundeclaration  SEMICOLON   {;}
         |   assignment      SEMICOLON   {;}
 
-statement:  block   {;}
-            while   {;}
-            ifClause    {;}
+statement:  block       {;}
+        |   while       {;}
+        |   ifclause    {;}
     
-block:  DO  statement   
+block:  DO  statement THANK-YOU {;}
+while:  REPEAT UNTIL    expression  statement   THANK-YOU   {;}
+ifclause: IF    expression  statement
+        |   IF  expression  statement   elsetrain
+elsetrain:  ELSE-IF expression  statement   elsetrain
+        |   ELSE    statement
