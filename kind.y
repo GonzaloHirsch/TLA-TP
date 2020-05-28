@@ -10,10 +10,10 @@
     #include <ctype.h>
 %}
 
-%start entryPoint
+%start entrypoint
 
 %union {
-    character char;
+    char character;
     int integer;
     double decimal;
     char * string;
@@ -27,6 +27,8 @@
 
 %%
 
+entrypoint: 
+
 command:    vardeclaration  SEMICOLON   {printf("Result %d\n", $1);}
         |   fundeclaration  SEMICOLON   {;}
         |   assignment      SEMICOLON   {;}
@@ -34,6 +36,7 @@ command:    vardeclaration  SEMICOLON   {printf("Result %d\n", $1);}
 statement:  block       {;}
         |   while       {;}
         |   ifclause    {;}
+        |   command statement   {;}
     
 block:  DO  statement THANK-YOU {;}
 while:  REPEAT UNTIL    expression  statement   THANK-YOU   {;}
@@ -41,3 +44,12 @@ ifclause: IF    expression  statement
         |   IF  expression  statement   elsetrain
 elsetrain:  ELSE-IF expression  statement   elsetrain
         |   ELSE    statement
+
+expression: VAR EQ  VAR
+        |   VAR GT  VAR
+        |   VAR GE  VAR
+        |   VAR LT  VAR
+        |   VAR LE  VAR
+        |   VAR NE  VAR
+
+assignment: LET
