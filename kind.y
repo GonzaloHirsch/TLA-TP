@@ -19,14 +19,14 @@
     char * string;
 }
 
-%token IF ELSE-IF ELSE REPEAT WHILE
-%token SET TO-BE AS
-%token DO THANK-YOU
+%token IF ELSE_IF ELSE REPEAT WHILE
+%token SET TO_BE AS
+%token DO THANK_YOU
 %token FUNCTION RECEIVING RETURNING RETURN
 %token COMMA SEMICOLON
 %token INT STR DOUBLE
 %token EQ GT GE LT LE NE
-%token NUMBER-LITERAL STRING-LITERAL
+%token NUMBER_LITERAL STRING_LITERAL
 %token VAR
 
 %%
@@ -47,14 +47,14 @@ statement:  block   statement   {;}
         |   while {;}
         |   ifclause {;}
         ;
-block:  DO  statement THANK-YOU {;}
+block:  DO  statement THANK_YOU {;}
         ;
-while:  REPEAT UNTIL    expression  statement   THANK-YOU   {;}
+while:  REPEAT UNTIL    expression  statement   THANK_YOU   {;}
         ;
 ifclause: IF    expression  statement   {;}
         |   IF  expression  statement   elsetrain {;}
         ;
-elsetrain:  ELSE-IF expression  statement   elsetrain {;}
+elsetrain:  ELSE_IF expression  statement   elsetrain {;}
         |   ELSE    statement {;}
         ;
 
@@ -65,10 +65,10 @@ expression: VAR EQ  VAR {;}
         |   VAR LE  VAR {;}
         |   VAR NE  VAR {;}
         |   STR-LITERAL {;}
-        |   NUMBER-LITERAL {;}
+        |   NUMBER_LITERAL {;}
         ;
 
-assignment: SET VAR TO-BE   expression {;}
+assignment: SET VAR TO_BE   expression {;}
         ;
 vardeclaration: SET VAR AS  type {;}
         ;
