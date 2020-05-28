@@ -10,10 +10,10 @@
     #include <ctype.h>
 %}
 
-%start entryPoint
+%start entrypoint
 
 %union {
-    character char;
+    char character;
     int integer;
     double decimal;
     char * string;
@@ -24,15 +24,53 @@
 %token DO THANK-YOU
 %token RECEIVING RETURN
 %token COMMA SEMICOLON
+%token INT STR DOUBLE
+%token EQ GT GE LT LE NE
 
 %%
 
-command:    varDeclaration  SEMICOLON   {printf("Result %d\n", $1);}
-        |   funDeclaration  SEMICOLON   {;}
+entrypoint: 
+
+command:    vardeclaration  SEMICOLON   {printf("Result %d\n", $1);}
+        |   fundeclaration    {;}
         |   assignment      SEMICOLON   {;}
 
-statement:  block   {;}
-            while   {;}
-            ifClause    {;}
+
+statement:  block       {;}
+        |   while       {;}
+        |   ifclause    {;}
+        |   command statement   {;}
+        |   command
     
-block:  DO  statement   
+block:  DO  statement THANK-YOU {;}
+
+while:  REPEAT UNTIL    expression  statement   THANK-YOU   {;}
+
+ifclause: IF    expression  statement
+        |   IF  expression  statement   elsetrain
+
+elsetrain:  ELSE-IF expression  statement   elsetrain
+        |   ELSE    statement
+
+
+expression: VAR EQ  VAR
+        |   VAR GT  VAR
+        |   VAR GE  VAR
+        |   VAR LT  VAR
+        |   VAR LE  VAR
+        |   VAR NE  VAR
+        |   STR-LITERAL
+        |   NUMBER-LITERAL
+
+
+assignment: SET VAR TO-BE   expression
+
+vardeclaration: SET VAR AS  type
+
+fundeclaration: SET VAR RECEIVING   arglist AS  type
+
+fundefinition:  DEFINE  VAR RECEIVING   arglist AS  statement
+
+type:   INT
+    |   STR
+    |   DOUBLE
