@@ -25,16 +25,24 @@ varName [a-zA-Z][a-zA-Z0-9]*
 "returning"     return RETURNING;
 "return"        return RETURN;
 ","             return COMMA;
-" ok"           return SEMICOLON;
-"int"              return INT;
-"str"              return STR;
-"double"              return DOUBLE;
-"equal"                 return EQ;
-"greater than"          return GT;
-"greater or equal than"  return GE;
-"less than"             return LT;
-"less or equal than"    return LE;
-"not equal"             return NE;
+"ok"            return SEMICOLON;
+"int"           return INT;
+"str"           return STR;
+"double"        return DOUBLE;
+"=="            return EQ;
+">"             return GT;
+">="            return GE;
+"<="            return LT;
+"<="            return LE;
+"!="            return NE;
+"+"             return ADD;
+"-"             return SUBSTRACT;
+"*"             return PROD;
+"/"             return DIV;
+"%"             return MODULE;
+"&&"            return AND;
+"|"             return OR;
+
 
 {number} 		{ strcpy(yylval.string, yytext); return NUMBER_LITERAL; }
 {string}        { strcpy(yylval.string, yytext); return STRING_LITERAL}
