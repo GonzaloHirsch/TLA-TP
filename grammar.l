@@ -26,9 +26,9 @@ varName [a-zA-Z][a-zA-Z0-9]*
 "return"        return RETURN;
 ","             return COMMA;
 " ok"           return SEMICOLON;
- /*INT */
- /*STR */
- /*DOUBLE */
+"int"              return INT;
+"str"              return STR;
+"double"              return DOUBLE;
 "equal"                 return EQ;
 "greater than"          return GT;
 "greater or equal than"  return GE;
