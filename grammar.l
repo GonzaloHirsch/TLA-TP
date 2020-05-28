@@ -31,7 +31,7 @@ varName [a-zA-Z][a-zA-Z0-9]*
  /*DOUBLE */
 "equal"                 return EQ;
 "greater than"          return GT;
-"greater o equal than"  return GE;
+"greater or equal than"  return GE;
 "less than"             return LT;
 "less or equal than"    return LE;
 "not equal"             return NE;
