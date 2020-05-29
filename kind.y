@@ -5,12 +5,11 @@
     extern int yylineno;
 
 
+    symvartype symboltable[MAX_VARIABLES];  
     #include <stdio.h>
     #include <stdlib.h>
     #include <ctype.h>
     #include "symboltable.h"
-
-    symvartype symboltable[MAX_VARIABLES];
 %}
 
 %start entrypoint
@@ -22,10 +21,10 @@
     char * string;
 }
 
-%token IF ELSE_IF ELSE REPEAT WHILE
+%token IF ELSE_IF ELSE REPEAT WHILE UNTIL
 %token SET TO_BE AS
 %token DO THANK_YOU
-%token FUNCTION RECEIVING RETURNING RETURN
+%token EXECUTE FUNCTION RECEIVING RETURNING RETURN
 %token COMMA SEMICOLON
 %token INT STR DOUBLE
 %token EQ GT GE LT LE NE
@@ -73,17 +72,30 @@ expression: VAR EQ  VAR {;}
         |   VAR NE  VAR {;}
         |   STRING_LITERAL {;}
         |   NUMBER_LITERAL {;}
+        |   VAR EQ  NUMBER_LITERAL {;}
+        |   VAR GT  NUMBER_LITERAL {;}
+        |   VAR GE  NUMBER_LITERAL {;}
+        |   VAR LT  NUMBER_LITERAL {;}
+        |   VAR LE  NUMBER_LITERAL {;}
+        |   VAR NE  NUMBER_LITERAL {;}
+        |   NUMBER_LITERAL EQ  VAR {;}
+        |   NUMBER_LITERAL GT  VAR {;}
+        |   NUMBER_LITERAL GE  VAR {;}
+        |   NUMBER_LITERAL LT  VAR {;}
+        |   NUMBER_LITERAL LE  VAR {;}
+        |   NUMBER_LITERAL NE  VAR {;}
         ;
 
-assignment: SET VAR TO_BE   expression {;}
+assignment: SET VAR TO_BE expression {;}
         ;
-vardeclaration: SET VAR AS  type {;}
+vardeclaration: SET VAR AS type {;}
         ;
 fundeclaration: SET FUNCTION VAR RECEIVING   arglistdecl RETURNING  type {;}
         ;
 fundefinition:  DEFINE FUNCTION VAR RECEIVING   arglistdecl AS  statement returnstatement{;}
         ;
-arglist:    arglist COMMA arg |   arg COMMA
+arglist:    arglist COMMA arg {;}
+        |   arg COMMA   {;}
         ;
 arg:    type    VAR
         ;
