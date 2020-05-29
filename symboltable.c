@@ -1,7 +1,6 @@
 #include "symboltable.h"
 
-
-symvartype * symlook(char * name, symvartype * symvartable){
+symvartype * symLook(char * name, symvartype * symvartable){
     symvartype sp;
 
     for(int i =0; i < MAX_VARIABLES ; i++){
@@ -14,7 +13,7 @@ symvartype * symlook(char * name, symvartype * symvartable){
     return 0;
 }
 
-symvartype * symaddInt(char * name, symvartype * symvartable){
+symvartype * symAddInt(char * name, symvartype * symvartable){
 
     symvartype * sp;
 
@@ -24,7 +23,7 @@ symvartype * symaddInt(char * name, symvartype * symvartable){
     }
 
     //There is another variable with the same name
-    if(symlook(name, symvartable) != 0){
+    if(symLook(name, symvartable) != 0){
         return 0;
     }
 
@@ -42,14 +41,14 @@ symvartype * symaddInt(char * name, symvartype * symvartable){
     return 0;
 }
 
-symvartype * symaddString(char * name, symvartype * symvartable){
+symvartype * symAddString(char * name, symvartype * symvartable){
 
     symvartype * sp;
 
     if(strlen(name) > MAX_NAME_LENGTH){
         return 0;
     }
-    if(symlook(name, symvartable) != 0){
+    if(symLook(name, symvartable) != 0){
         return 0;
     }
 
@@ -66,7 +65,7 @@ symvartype * symaddString(char * name, symvartype * symvartable){
     return 0;
 }
 
-symvartype * symaddDouble(char * name, symvartype * symvartable){
+symvartype * symAddDouble(char * name, symvartype * symvartable){
 
     symvartype * sp;
 
@@ -74,7 +73,7 @@ symvartype * symaddDouble(char * name, symvartype * symvartable){
         return 0;
     }
 
-    if(symlook(name, symvartable) != 0){
+    if(symLook(name, symvartable) != 0){
         return 0;
     }
 
@@ -93,7 +92,7 @@ symvartype * symaddDouble(char * name, symvartype * symvartable){
 }
 
 symvartype * symSetInt(char * name, int value, symvartype * symvartable){
-    symvartype * sp = simlook(name,symvartable);
+    symvartype * sp = symLook(name,symvartable);
     if(sp->type == INTEGER_TYPE){
         *((int *) sp->value) = value;
         return sp;
@@ -103,7 +102,7 @@ symvartype * symSetInt(char * name, int value, symvartype * symvartable){
 }
 
 symvartype * symSetString(char * name, char * value, symvartype * symvartable){
-    symvartype * sp = simlook(name,symvartable);
+    symvartype * sp = symLook(name,symvartable);
     if(sp->type == STRING_TYPE){
         if(sp->value == 0){
             sp->value = malloc(strlen(value) * sizeof(char));
@@ -119,7 +118,7 @@ symvartype * symSetString(char * name, char * value, symvartype * symvartable){
 }
 
 symvartype * symSetDouble(char * name, double value, symvartype * symvartable){
-    symvartype * sp = simlook(name,symvartable);
+    symvartype * sp = symLook(name,symvartable);
     if(sp->type == DOUBLE_TYPE){
         *((double *) sp->value) = value;
         return sp;

@@ -25,14 +25,14 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "returning"     return RETURNING;
 "return"        return RETURN;
 ","             return COMMA;
-";"            return SEMICOLON;
+";"            	return SEMICOLON;
 "int"           return INT;
 "str"           return STR;
 "double"        return DOUBLE;
 "=="            return EQ;
 ">"             return GT;
 ">="            return GE;
-"<="            return LT;
+"<"            	return LT;
 "<="            return LE;
 "!="            return NE;
 "+"             return ADD;

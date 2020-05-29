@@ -20,10 +20,12 @@ typedef struct symvar{
     void * value;
 } symvartype;
 
-symvartype * symlook(char * name, symvartype * symvartable);
+symvartype * symLook(char * name, symvartype * symvartable);
+
 symvartype * symAddInt(char * name, symvartype * symvartable);
 symvartype * symAddString(char * name,  symvartype * symvartable);
 symvartype * symAddDouble(char * name, symvartype * symvartable);
+
 symvartype * symSetInt(char * name, int value, symvartype * symvartable);
 symvartype * symSetString(char * name, char * value, symvartype * symvartable);
 symvartype * symSetDouble(char * name, double value, symvartype * symvartable);

@@ -1,14 +1,14 @@
 %{
-    void yerror (char *s);
-    int yylex();
-
-    extern int yylineno;
-
     #include <stdio.h>
     #include <stdlib.h>
     #include <ctype.h>
     #include "symboltable.h"
     #include "utility.h"
+
+    void yyerror (char *s);
+    int yylex();
+    
+    extern int yylineno;
 
     symvartype symboltable[MAX_VARIABLES];  
 %}
@@ -89,3 +89,57 @@ expression: VAR EQ  VAR {;}
         |   NUMBER_LITERAL LE  VAR {;}
         |   NUMBER_LITERAL NE  VAR {;}
         ;
+
+%%
+
+void yyerror(char *s) {
+	fprintf(stderr, "%s\n", s);
+	printf("-------------------------------------\nError: %s in line %d\n-------------------------------------\n", s, yylineno);
+	exit(0);
+}
+
+int
+main(void) {
+        /*
+	variables = malloc(MAX_VARIABLES * sizeof(VariableToken *));
+
+	if (variables == NULL) {
+		printf("Unable to allocate space for the variables\n");
+		exit(EXIT_FAILURE);
+	}
+	memset(variables, '\0', sizeof(VariableToken *) * MAX_VARIABLES);
+        */
+	
+	yyparse();
+
+/*
+	char * translation = translateToC((Token *)code);
+	//We should always call get functions after translateToC
+	char * functionsTranslation = getFunctions();
+        */
+
+/*
+	if (translation == NULL) printf("Error allocating memory for generated C code.\n");
+	else {
+		printf("#include <stdio.h>\n");
+		printf("#include <stdlib.h>\n\n");
+		if(functionsTranslation != NULL) {
+			printf("%s\n", functionsTranslation);
+		}
+		printf("int main(int argc, char const *argv[]) {\n");
+		printf("%s\n", translation);
+		printf("\nreturn 0;\n}");
+	}
+
+	if(translation != NULL) {
+		free(translation);
+	}
+	if(functionsTranslation != NULL) {
+		free(functionsTranslation);
+	}
+	freeFunctions();
+	freeToken((Token *) code);
+	freeVariables();
+        */
+	return 0;
+}
