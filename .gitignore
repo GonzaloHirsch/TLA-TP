@@ -74,3 +74,7 @@ fabric.properties
 .vscode/settings.json
 
 codeGenerator
+
+lex.yy.c
+y.tab.c
+y.tab.h

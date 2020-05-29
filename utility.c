@@ -1,9 +1,5 @@
 #include "utility.h"
 
-
-
-
-
 char * c_string(int argCount, ...){
     int size;
     char **arguments = (char **)malloc(argCount * sizeof(char *));
