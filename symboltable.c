@@ -32,7 +32,7 @@ symvartype * symaddInt(char * name, symvartype * symvartable){
 
         if(!sp->name){
             strcpy(sp->name, name);
-            sp->type = INTEGER;
+            sp->type = INTEGER_TYPE;
             sp->value = malloc(sizeof(int));
             return sp; 
         }
@@ -57,7 +57,7 @@ symvartype * symaddString(char * name, symvartype * symvartable){
 
         if(!sp->name){
             strcpy(sp->name, name);
-            sp->type = STRING;
+            sp->type = STRING_TYPE;
             return sp; 
         }
     }
@@ -82,7 +82,7 @@ symvartype * symaddDouble(char * name, symvartype * symvartable){
 
         if(!sp->name){
             strcpy(sp->name, name);
-            sp->type = DOUBLE;
+            sp->type = DOUBLE_TYPE;
             sp->value = malloc(sizeof(double));
 
             return sp; 
@@ -94,7 +94,7 @@ symvartype * symaddDouble(char * name, symvartype * symvartable){
 
 symvartype * symSetInt(char * name, int value, symvartype * symvartable){
     symvartype * sp = simlook(name,symvartable);
-    if(sp->type == INTEGER){
+    if(sp->type == INTEGER_TYPE){
         *((int *) sp->value) = value;
         return sp;
     }
@@ -102,9 +102,9 @@ symvartype * symSetInt(char * name, int value, symvartype * symvartable){
     return 0;
 }
 
-symvartype * symSetInt(char * name, char * value, symvartype * symvartable){
+symvartype * symSetString(char * name, char * value, symvartype * symvartable){
     symvartype * sp = simlook(name,symvartable);
-    if(sp->type == STRING){
+    if(sp->type == STRING_TYPE){
         if(sp->value == 0){
             sp->value = malloc(strlen(value) * sizeof(char));
             strcpy((char *) sp->value, value);
@@ -115,13 +115,12 @@ symvartype * symSetInt(char * name, char * value, symvartype * symvartable){
         }
         return sp;
     }
-    
     return 0;
 }
 
 symvartype * symSetDouble(char * name, double value, symvartype * symvartable){
     symvartype * sp = simlook(name,symvartable);
-    if(sp->type == DOUBLE){
+    if(sp->type == DOUBLE_TYPE){
         *((double *) sp->value) = value;
         return sp;
     }

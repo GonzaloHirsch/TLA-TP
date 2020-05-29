@@ -1,0 +1,77 @@
+entrypoint: BEGIN statement END {;} 
+        ;       
+
+command:    vardeclaration  SEMICOLON   {printf("Result %d\n", $1);}
+        |   fundeclaration  SEMICOLON  {;}
+        |   assignment      SEMICOLON   {;}
+        |   funex   SEMICOLON   {;}
+        ;
+
+statement:  block   statement   {;}
+        |   while   statement   {;}
+        |   ifclause    statement  {;}
+        |   command statement  {;}
+        |   block {;}
+        |   while {;}
+        |   ifclause {;}
+        ;
+block:  DO  statement THANK_YOU {;}
+        ;
+while:  REPEAT UNTIL    expression  statement   THANK_YOU   {;}
+        ;
+ifclause: IF    expression  statement   {;}
+        |   IF  expression  statement   elsetrain {;}
+        ;
+elsetrain:  ELSE_IF expression  statement   elsetrain {;}
+        |   ELSE    statement {;}
+        ;
+
+expression: VAR EQ  VAR {;}
+        |   VAR GT  VAR {;}
+        |   VAR GE  VAR {;}
+        |   VAR LT  VAR {;}
+        |   VAR LE  VAR {;}
+        |   VAR NE  VAR {;}
+        |   VAR EQ  NUMBER_LITERAL {;}
+        |   VAR GT  NUMBER_LITERAL {;}
+        |   VAR GE  NUMBER_LITERAL {;}
+        |   VAR LT  NUMBER_LITERAL {;}
+        |   VAR LE  NUMBER_LITERAL {;}
+        |   VAR NE  NUMBER_LITERAL {;}
+        |   NUMBER_LITERAL EQ  VAR {;}
+        |   NUMBER_LITERAL GT  VAR {;}
+        |   NUMBER_LITERAL GE  VAR {;}
+        |   NUMBER_LITERAL LT  VAR {;}
+        |   NUMBER_LITERAL LE  VAR {;}
+        |   NUMBER_LITERAL NE  VAR {;}
+        ;
+
+asigned:    STRING_LITERAL {;}
+        |   NUMBER_LITERAL {;} 
+        ;
+
+assignment: SET VAR TO_BE asigned {;}
+        ;
+vardeclaration: SET VAR AS type {;}
+        ;
+fundeclaration: SET FUNCTION VAR RECEIVING   arglistdecl RETURNING  type {;}
+        ;
+fundefinition:  DEFINE FUNCTION VAR RECEIVING   arglistdecl AS  statement returnstatement{;}
+        ;
+arglist:    arglist COMMA arg {;}
+        |   arg COMMA   {;}
+        ;
+arg:    type    VAR
+        ;
+
+funex:  EXECUTE FUNCTION    VAR PASSING arglist {;}
+        ;
+
+        
+returnstatement:    RETURN  expression  {char * str = (char *)malloc((strlen("return") + 1) sizeof(char)); strcpy(str, "return"); $$ = c_string(2, str, $2);}
+        ;
+
+type:   INT     {char * str = (char *)malloc((strlen("int") + 1) sizeof(char)); strcpy(str, "int"); $$ = str;}
+    |   STR     {char * str = (char *)malloc((strlen("char *") + 1) sizeof(char)); strcpy(str, "char *"); $$ = str;}
+    |   DOUBLE  {char * str = (char *)malloc((strlen("double") + 1) sizeof(char)); strcpy(str, "double"); $$ = str;}
+    ;

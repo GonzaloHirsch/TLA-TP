@@ -2,11 +2,9 @@
 #include "y.tab.h"
 %}
 
-number  -?[\d.]+(?:e-?\d+)?
-string  \"[^\"]*\"
-varName [a-zA-Z][a-zA-Z0-9]*
-
-
+number		-?[1-9][0-9]+(\.[0-9]+)?
+string		\"[^\"]*\"
+varName		[a-zA-Z][a-zA-Z0-9]*
 
 %%
 
@@ -27,7 +25,7 @@ varName [a-zA-Z][a-zA-Z0-9]*
 "returning"     return RETURNING;
 "return"        return RETURN;
 ","             return COMMA;
-"ok"            return SEMICOLON;
+";"            return SEMICOLON;
 "int"           return INT;
 "str"           return STR;
 "double"        return DOUBLE;
@@ -50,18 +48,15 @@ varName [a-zA-Z][a-zA-Z0-9]*
 "("             return OPEN_P;
 ")"             return CLOSE_P;
 "print"         return PRINT;
-"start"         return BEGIN;
+"start"         return START;
 "end"           return END;
+{number} 		{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}
+{string}        {strcpy(yylval.string, yytext);return STRING_LITERAL;}
+{varName} 		{strcpy(yylval.string, yytext);return VAR;}
 .               ;
-
-
-
-{number} 		{ strcpy(yylval.string, yytext); return NUMBER_LITERAL; }
-{string}        { strcpy(yylval.string, yytext); return STRING_LITERAL}
-{varName} 		{ strcpy(yylval.string, yytext); return VAR;}
 
 %%
 
-return yywrap (void) {
+int yywrap (void) {
     return 1;
 }

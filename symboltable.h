@@ -9,9 +9,9 @@
 #define MAX_NAME_LENGTH 32
 
 typedef enum {
-    STRING,
-    INTEGER,
-    DOUBLE
+    STRING_TYPE,
+    INTEGER_TYPE,
+    DOUBLE_TYPE
 } VarType;
 
 typedef struct symvar{
