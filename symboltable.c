@@ -1,7 +1,7 @@
 #include "symboltable.h"
 
 
-struct symvar * symlook(char * name, symvartype * symvartable){
+symvartype * symlook(char * name, symvartype * symvartable){
     symvartype sp;
 
     for(int i =0; i < MAX_VARIABLES ; i++){
@@ -14,12 +14,12 @@ struct symvar * symlook(char * name, symvartype * symvartable){
     return 0;
 }
 
-struct symvar * symaddInt(char * name, int value, symvartype * symvartable){
+symvartype * symaddInt(char * name, symvartype * symvartable){
 
     symvartype * sp;
 
-    //
-    if(strlen(name) > 32){
+    //If name bigger than maximum name size
+    if(strlen(name) > MAX_NAME_LENGTH){
         return 0;
     }
 
@@ -34,7 +34,6 @@ struct symvar * symaddInt(char * name, int value, symvartype * symvartable){
             strcpy(sp->name, name);
             sp->type = INTEGER;
             sp->value = malloc(sizeof(int));
-            *((int *) sp->value) = value;
             return sp; 
         }
     }
@@ -43,16 +42,13 @@ struct symvar * symaddInt(char * name, int value, symvartype * symvartable){
     return 0;
 }
 
-struct symvar * symaddString(char * name, char * value, symvartype * symvartable){
+symvartype * symaddString(char * name, symvartype * symvartable){
 
     symvartype * sp;
 
-    //
-    if(strlen(name) > 32){
+    if(strlen(name) > MAX_NAME_LENGTH){
         return 0;
     }
-
-    //There is another variable with the same name
     if(symlook(name, symvartable) != 0){
         return 0;
     }
@@ -62,8 +58,6 @@ struct symvar * symaddString(char * name, char * value, symvartype * symvartable
         if(!sp->name){
             strcpy(sp->name, name);
             sp->type = STRING;
-            sp->value = malloc(strlen(value) * sizeof(char));
-            strcpy((char *) sp->value, value);
             return sp; 
         }
     }
@@ -72,16 +66,14 @@ struct symvar * symaddString(char * name, char * value, symvartype * symvartable
     return 0;
 }
 
-struct symvar * symaddDouble(char * name, double value, symvartype * symvartable){
+symvartype * symaddDouble(char * name, symvartype * symvartable){
 
     symvartype * sp;
 
-    //
-    if(strlen(name) > 32){
+    if(strlen(name) > MAX_NAME_LENGTH){
         return 0;
     }
 
-    //There is another variable with the same name
     if(symlook(name, symvartable) != 0){
         return 0;
     }
@@ -92,12 +84,48 @@ struct symvar * symaddDouble(char * name, double value, symvartype * symvartable
             strcpy(sp->name, name);
             sp->type = DOUBLE;
             sp->value = malloc(sizeof(double));
-            *((double *) sp->value) = value;
+
             return sp; 
         }
     }
 
-    //All variables are full.
+    return 0;
+}
+
+symvartype * symSetInt(char * name, int value, symvartype * symvartable){
+    symvartype * sp = simlook(name,symvartable);
+    if(sp->type == INTEGER){
+        *((int *) sp->value) = value;
+        return sp;
+    }
+    
+    return 0;
+}
+
+symvartype * symSetInt(char * name, char * value, symvartype * symvartable){
+    symvartype * sp = simlook(name,symvartable);
+    if(sp->type == STRING){
+        if(sp->value == 0){
+            sp->value = malloc(strlen(value) * sizeof(char));
+            strcpy((char *) sp->value, value);
+        }
+        else{
+            sp->value = realloc(sp->value, strlen(value) * sizeof(char));
+            strcpy((char *) sp->value, value);
+        }
+        return sp;
+    }
+    
+    return 0;
+}
+
+symvartype * symSetDouble(char * name, double value, symvartype * symvartable){
+    symvartype * sp = simlook(name,symvartable);
+    if(sp->type == DOUBLE){
+        *((double *) sp->value) = value;
+        return sp;
+    }
+    
     return 0;
 }
 
