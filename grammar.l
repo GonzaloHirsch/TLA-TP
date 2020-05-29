@@ -10,6 +10,8 @@ varName [a-zA-Z][a-zA-Z0-9]*
 
 %%
 
+"until"         return UNTIL;
+"execute"       return EXECUTE;
 "if"			return IF;
 "else if"       return ELSE_IF;
 "else"          return ELSE; 
@@ -42,11 +44,19 @@ varName [a-zA-Z][a-zA-Z0-9]*
 "%"             return MODULE;
 "&&"            return AND;
 "|"             return OR;
+"!"             return NOT;
+"{"             return OPEN_B;
+"}"             return CLOSE_B;
+"("             return OPEN_P;
+")"             return CLOSE_P;
+"print"         return PRINT;
+.               ;
+
 
 
 {number} 		{ strcpy(yylval.string, yytext); return NUMBER_LITERAL; }
 {string}        { strcpy(yylval.string, yytext); return STRING_LITERAL}
-{varName} 		{ strcpy(yylval.string, yytext); return VAR;    }
+{varName} 		{ strcpy(yylval.string, yytext); return VAR;}
 
 %%
 
