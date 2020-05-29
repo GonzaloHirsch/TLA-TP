@@ -38,6 +38,8 @@
 %token AND OR NOT
 %token OPEN_B CLOSE_B OPEN_P CLOSE_P
 %token PRINT
+%token BEGIN END
+%token DEFINE PASSING
 
 
 %type<string> statement

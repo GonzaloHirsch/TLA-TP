@@ -50,6 +50,8 @@ varName [a-zA-Z][a-zA-Z0-9]*
 "("             return OPEN_P;
 ")"             return CLOSE_P;
 "print"         return PRINT;
+"start"         return BEGIN;
+"end"           return END;
 .               ;
 
 
