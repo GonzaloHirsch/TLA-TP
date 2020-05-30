@@ -33,7 +33,7 @@
 %token<string> EQ GT GE LT LE NE
 %token<string> NUMBER_LITERAL STRING_LITERAL
 %token<string> VAR
-%token<string> ADD SUBSTRACT PROD DIV MODULE
+%token<string> ADD SUBS PROD DIV MODULE
 %token<string> AND OR NOT
 %token<string> OPEN_B CLOSE_B OPEN_P CLOSE_P OPEN_BRACK CLOSE_BRACK
 %token<string> PRINT
@@ -46,6 +46,8 @@
 %type<string> entrypoint
 %type<string> expression
 %type<string> generalexpression
+%type<string> generaloperation
+%type<string> operation
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
@@ -120,9 +122,9 @@ vardeclaration:
         | type  VAR OPEN_BRACK NUMBER_LITERAL CLOSE_BRACK {printf("declaring an array\n");}
         ;
 
-vardeclassignment: 
-        type VAR ASSIGN_EQ generalexpression {;}
+vardeclassignment: type VAR ASSIGN_EQ generaloperation {;}
         | type VAR ASSIGN_EQ literal {;}
+        | type VAR ASSIGN_EQ generalexpression {;}
         ;
 
 foreach:
@@ -139,11 +141,12 @@ block:	OPEN_B inblockstatements  CLOSE_B {
         }
         ;
 
-assignment:	VAR ASSIGN_EQ generalexpression 	{;}
-        |	VAR ASSIGN_EQ literal 		{;}
+assignment:	VAR ASSIGN_EQ literal	        {;}
+        |	VAR ASSIGN_EQ generaloperation 	{;} 
+        |       VAR ASSIGN_EQ generalexpression {;}
         ;
 
-literal:	NUMBER_LITERAL {;}
+literal:	NUMBER_LITERAL {;} 
         | 	STRING_LITERAL {;}
         |       arrayliteral {;}
         ;
@@ -167,7 +170,8 @@ funblock:	OPEN_B inblockstatements returnstatement CLOSE_B {;}
         |       OPEN_B inblockstatements CLOSE_B {;}
         ;
 
-returnstatement:	RETURN generalexpression SEMICOLON {;}
+returnstatement:	 RETURN generaloperation SEMICOLON {;}
+        |                RETURN generalexpression SEMICOLON {;}
         ;
 
 funargs:	OPEN_P  CLOSE_P 	{;}
@@ -232,6 +236,33 @@ expression: VAR EQ  VAR {;}
         |   NUMBER_LITERAL NE  VAR {;}
         ;
 
+generaloperation: generaloperation ADD  operation  {printf("general operation ADD\n");}
+        |         generaloperation SUBS operation  {printf("general operation SUBS\n");;}
+        |         generaloperation DIV  operation  {printf("general operation DIV\n");;}
+        |         generaloperation PROD operation  {printf("general operation PROD\n");;}
+        |         operation                        {printf("general operation raw\n");;}
+        ;
+
+
+operation:      VAR ADD VAR                     {;}
+        |       VAR SUBS VAR                    {;}
+        |       VAR DIV VAR                     {;}
+        |       VAR PROD VAR                    {;}
+        |       VAR ADD NUMBER_LITERAL          {;}
+        |       VAR SUBS NUMBER_LITERAL         {;}
+        |       VAR DIV NUMBER_LITERAL          {;}
+        |       VAR PROD NUMBER_LITERAL         {;}
+        |       NUMBER_LITERAL ADD VAR          {;}
+        |       NUMBER_LITERAL SUBS VAR         {;}
+        |       NUMBER_LITERAL DIV VAR          {;}
+        |       NUMBER_LITERAL PROD VAR         {;}
+        |       NUMBER_LITERAL ADD NUMBER_LITERAL          {;}
+        |       NUMBER_LITERAL SUBS NUMBER_LITERAL         {;}
+        |       NUMBER_LITERAL DIV NUMBER_LITERAL          {;}
+        |       NUMBER_LITERAL PROD NUMBER_LITERAL         {;}
+        |       VAR                                        {;}
+        |       NUMBER_LITERAL                             {;}
+        ;
 %%
 
 void yyerror(char *s) {

@@ -40,12 +40,12 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "<="            return LE;
 "!="            return NE;
 "+"             return ADD;
-"-"             return SUBSTRACT;
+"-"             return SUBS;
 "*"             return PROD;
 "/"             return DIV;
 "%"             return MODULE;
 "&&"            return AND;
-"||"             return OR;
+"||"            return OR;
 "!"             return NOT;
 "{"             return OPEN_B;
 "}"             return CLOSE_B;
