@@ -29,12 +29,13 @@
 %token<string> FOREACH RIGHT_ARROW
 %token<string> COMMA SEMICOLON DOT
 %token<string> INT STR DOUBLE
+%token<string> INTEGER
 %token<string> EQ GT GE LT LE NE
 %token<string> NUMBER_LITERAL STRING_LITERAL
 %token<string> VAR
 %token<string> ADD SUBSTRACT PROD DIV MODULE
 %token<string> AND OR NOT
-%token<string> OPEN_B CLOSE_B OPEN_P CLOSE_P
+%token<string> OPEN_B CLOSE_B OPEN_P CLOSE_P OPEN_BRACK CLOSE_BRACK
 %token<string> PRINT
 %token<string> START END
 %token<string> DEFINE PASSING
@@ -116,6 +117,7 @@ statement:	generalexpression      {
 
 vardeclaration:
         type VAR {;}
+        | type  VAR OPEN_BRACK NUMBER_LITERAL CLOSE_BRACK {printf("declaring an array\n");}
         ;
 
 vardeclassignment: 
@@ -143,6 +145,16 @@ assignment:	VAR ASSIGN_EQ generalexpression 	{;}
 
 literal:	NUMBER_LITERAL {;}
         | 	STRING_LITERAL {;}
+        |       arrayliteral {;}
+        ;
+
+arrayliteral:
+                OPEN_BRACK numlist CLOSE_BRACK {;}
+        ;
+
+numlist:
+        numlist COMMA NUMBER_LITERAL {;}
+        | NUMBER_LITERAL {;}
         ;
 
 fundeclaration: FUNCTION VAR funargs RETURNING type {;}
