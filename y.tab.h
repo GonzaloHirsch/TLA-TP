@@ -39,103 +39,105 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     IF = 258,
-     ELSE_IF = 259,
-     ELSE = 260,
-     REPEAT = 261,
-     WHILE = 262,
-     UNTIL = 263,
-     SET = 264,
-     TO_BE = 265,
-     AS = 266,
-     DO = 267,
-     THANK_YOU = 268,
-     EXECUTE = 269,
-     FUNCTION = 270,
-     RECEIVING = 271,
-     RETURNING = 272,
-     RETURN = 273,
-     COMMA = 274,
-     SEMICOLON = 275,
-     INT = 276,
-     STR = 277,
-     DOUBLE = 278,
-     EQ = 279,
-     GT = 280,
-     GE = 281,
-     LT = 282,
-     LE = 283,
-     NE = 284,
-     NUMBER_LITERAL = 285,
-     STRING_LITERAL = 286,
-     VAR = 287,
-     ADD = 288,
-     SUBSTRACT = 289,
-     PROD = 290,
-     DIV = 291,
-     MODULE = 292,
-     AND = 293,
-     OR = 294,
-     NOT = 295,
-     OPEN_B = 296,
-     CLOSE_B = 297,
-     OPEN_P = 298,
-     CLOSE_P = 299,
-     PRINT = 300,
-     START = 301,
-     END = 302,
-     DEFINE = 303,
-     PASSING = 304
+     ASIGN = 258,
+     IF = 259,
+     ELSE_IF = 260,
+     ELSE = 261,
+     REPEAT = 262,
+     WHILE = 263,
+     UNTIL = 264,
+     SET = 265,
+     TO_BE = 266,
+     AS = 267,
+     DO = 268,
+     THANK_YOU = 269,
+     EXECUTE = 270,
+     FUNCTION = 271,
+     RECEIVING = 272,
+     RETURNING = 273,
+     RETURN = 274,
+     COMMA = 275,
+     SEMICOLON = 276,
+     INT = 277,
+     STR = 278,
+     DOUBLE = 279,
+     EQ = 280,
+     GT = 281,
+     GE = 282,
+     LT = 283,
+     LE = 284,
+     NE = 285,
+     NUMBER_LITERAL = 286,
+     STRING_LITERAL = 287,
+     VAR = 288,
+     ADD = 289,
+     SUBSTRACT = 290,
+     PROD = 291,
+     DIV = 292,
+     MODULE = 293,
+     AND = 294,
+     OR = 295,
+     NOT = 296,
+     OPEN_B = 297,
+     CLOSE_B = 298,
+     OPEN_P = 299,
+     CLOSE_P = 300,
+     PRINT = 301,
+     START = 302,
+     END = 303,
+     DEFINE = 304,
+     PASSING = 305
    };
 #endif
 /* Tokens.  */
-#define IF 258
-#define ELSE_IF 259
-#define ELSE 260
-#define REPEAT 261
-#define WHILE 262
-#define UNTIL 263
-#define SET 264
-#define TO_BE 265
-#define AS 266
-#define DO 267
-#define THANK_YOU 268
-#define EXECUTE 269
-#define FUNCTION 270
-#define RECEIVING 271
-#define RETURNING 272
-#define RETURN 273
-#define COMMA 274
-#define SEMICOLON 275
-#define INT 276
-#define STR 277
-#define DOUBLE 278
-#define EQ 279
-#define GT 280
-#define GE 281
-#define LT 282
-#define LE 283
-#define NE 284
-#define NUMBER_LITERAL 285
-#define STRING_LITERAL 286
-#define VAR 287
-#define ADD 288
-#define SUBSTRACT 289
-#define PROD 290
-#define DIV 291
-#define MODULE 292
-#define AND 293
-#define OR 294
-#define NOT 295
-#define OPEN_B 296
-#define CLOSE_B 297
-#define OPEN_P 298
-#define CLOSE_P 299
-#define PRINT 300
-#define START 301
-#define END 302
-#define DEFINE 303
-#define PASSING 304
+#define ASIGN 258
+#define IF 259
+#define ELSE_IF 260
+#define ELSE 261
+#define REPEAT 262
+#define WHILE 263
+#define UNTIL 264
+#define SET 265
+#define TO_BE 266
+#define AS 267
+#define DO 268
+#define THANK_YOU 269
+#define EXECUTE 270
+#define FUNCTION 271
+#define RECEIVING 272
+#define RETURNING 273
+#define RETURN 274
+#define COMMA 275
+#define SEMICOLON 276
+#define INT 277
+#define STR 278
+#define DOUBLE 279
+#define EQ 280
+#define GT 281
+#define GE 282
+#define LT 283
+#define LE 284
+#define NE 285
+#define NUMBER_LITERAL 286
+#define STRING_LITERAL 287
+#define VAR 288
+#define ADD 289
+#define SUBSTRACT 290
+#define PROD 291
+#define DIV 292
+#define MODULE 293
+#define AND 294
+#define OR 295
+#define NOT 296
+#define OPEN_B 297
+#define CLOSE_B 298
+#define OPEN_P 299
+#define CLOSE_P 300
+#define PRINT 301
+#define START 302
+#define END 303
+#define DEFINE 304
+#define PASSING 305
 
 
 
@@ -150,7 +152,7 @@ typedef union YYSTYPE
     char * string;
 }
 /* Line 1529 of yacc.c.  */
-#line 154 "y.tab.h"
+#line 156 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
