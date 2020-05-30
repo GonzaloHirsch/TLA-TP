@@ -3,9 +3,10 @@
 #     rm $testFile
 # done
 
-testsDir=tests
-resultsDir=$testDir/results
-
+testsDir='tests'
+echo $testsDir
+resultsDir=${testsDir}/results
+echo $resultsDir
 for testFile in $(find $testsDir -name *.tst); do
     filePath=$(echo $testFile | cut -d'.' -f1)
     fileName=$(echo $filePath | cut -d'/' -f2)

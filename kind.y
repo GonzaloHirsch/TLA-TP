@@ -77,10 +77,22 @@ hyperstatement:
                 statement SEMICOLON {printf("Just reading a statement\n");}
         |        block   {;}
         |        ifsentence        {;}
+        |       while   {;}
         ;
 
 ifsentence:
                 IF OPEN_P expression CLOSE_P block   {printf("ifff \n");}
+        |       IF OPEN_P expression CLOSE_P block elsetrain {printf("if that has elsetrain\n");}
+        ;
+
+elsetrain:
+                ELSE block {printf("last else\n");}
+        |       ELSE_IF OPEN_P expression CLOSE_P block {printf("else if\n");}
+        |       ELSE_IF OPEN_P expression CLOSE_P  block elsetrain {printf("else if with else train\n");}
+        ;
+
+while:  
+        WHILE OPEN_P expression CLOSE_P block {printf("while shit\n");}
         ;
 
 statement:

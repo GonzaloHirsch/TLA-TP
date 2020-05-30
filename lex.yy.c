@@ -351,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 46
-#define YY_END_OF_BUFFER 47
+#define YY_NUM_RULES 47
+#define YY_END_OF_BUFFER 48
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -362,19 +362,19 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[117] =
     {   0,
-        0,    0,   47,   45,   41,   41,   33,   45,   30,   45,
-       36,   37,   28,   26,   15,   27,   29,   45,   16,   23,
-       45,   21,   44,   44,   44,   44,   44,   44,   44,   44,
-       44,   44,   44,   44,   34,   32,   35,   25,    0,   43,
-       31,    0,   42,   24,   20,   22,   44,   10,   12,   44,
-       44,   44,   44,   44,    3,   44,   44,   44,   44,   44,
-       44,   44,   44,    0,   44,   44,   40,   44,   44,   44,
-       17,   44,   44,   44,    8,   44,   18,    0,   44,   44,
-       42,   44,    5,   44,   44,   44,   44,   44,   44,   44,
-        0,   44,   44,   44,    0,   11,   44,   44,   38,   44,
+        0,    0,   48,   46,   41,   42,   33,   46,   30,   46,
+       36,   37,   28,   26,   15,   27,   29,   46,   16,   23,
+       46,   21,   45,   45,   45,   45,   45,   45,   45,   45,
+       45,   45,   45,   45,   34,   32,   35,   25,    0,   44,
+       31,    0,   43,   24,   20,   22,   45,   10,   12,   45,
+       45,   45,   45,   45,    3,   45,   45,   45,   45,   45,
+       45,   45,   45,    0,   45,   45,   40,   45,   45,   45,
+       17,   45,   45,   45,    8,   45,   18,    0,   45,   45,
+       43,   45,    5,   45,   45,   45,   45,   45,   45,   45,
+        0,   45,   45,   45,    0,   11,   45,   45,   38,   45,
 
-       44,   39,    9,    1,    7,   19,    0,   44,   44,    6,
-       14,    4,    2,   44,   13,    0
+       45,   39,    9,    1,    7,   19,    0,   45,   45,    6,
+       14,    4,    2,   45,   13,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -994,38 +994,43 @@ YY_RULE_SETUP
 return END;
 	YY_BREAK
 case 41:
-/* rule 41 can match eol */
 YY_RULE_SETUP
 #line 51 "grammar.l"
 ;
 	YY_BREAK
 case 42:
+/* rule 42 can match eol */
 YY_RULE_SETUP
 #line 52 "grammar.l"
-{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}
+{yylineno++;}
 	YY_BREAK
 case 43:
-/* rule 43 can match eol */
 YY_RULE_SETUP
 #line 53 "grammar.l"
-{strcpy(yylval.string, yytext);return STRING_LITERAL;}
+{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}
 	YY_BREAK
 case 44:
+/* rule 44 can match eol */
 YY_RULE_SETUP
 #line 54 "grammar.l"
-{strcpy(yylval.string, yytext);return VAR;}
+{strcpy(yylval.string, yytext);return STRING_LITERAL;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 55 "grammar.l"
-;
+{strcpy(yylval.string, yytext);return VAR;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 57 "grammar.l"
+#line 56 "grammar.l"
+;
+	YY_BREAK
+case 47:
+YY_RULE_SETUP
+#line 58 "grammar.l"
 ECHO;
 	YY_BREAK
-#line 1029 "lex.yy.c"
+#line 1034 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2030,7 +2035,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 57 "grammar.l"
+#line 58 "grammar.l"
 
 
 int yywrap (void) {
