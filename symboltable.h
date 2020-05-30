@@ -11,7 +11,9 @@
 typedef enum {
     STRING_TYPE,
     INTEGER_TYPE,
-    DOUBLE_TYPE
+    DOUBLE_TYPE,
+    INTEGER_ARRAY_TYPE,
+    DOUBLE_ARRAY_TYPE
 } VarType;
 
 typedef struct symvar{
@@ -22,14 +24,18 @@ typedef struct symvar{
 
 symvartype * symLook(char * name, symvartype * symvartable);
 
+// Functions to declare variables
 symvartype * symAddInt(char * name, symvartype * symvartable);
 symvartype * symAddString(char * name,  symvartype * symvartable);
 symvartype * symAddDouble(char * name, symvartype * symvartable);
+symvartype * symAddDoubleArr(char * name, symvartype * symvartable);
+symvartype * symAddIntArr(char * name, symvartype * symvartable);
 
+// Functions to set values to variables
 symvartype * symSetInt(char * name, int value, symvartype * symvartable);
 symvartype * symSetString(char * name, char * value, symvartype * symvartable);
 symvartype * symSetDouble(char * name, double value, symvartype * symvartable);
-
-
+symvartype * symSetDoubleArr(char * name, double * values, symvartype * symvartable);
+symvartype * symSetDoubleArr(char * name, double * values, symvartype * symvartable);
 
 #endif
