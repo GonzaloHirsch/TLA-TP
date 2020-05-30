@@ -6,7 +6,7 @@
 #include <string.h>
 #include "symboltable.h"
 #define LENGTH 5000
-#define MAX_CONCAT 5
+#define MAX_CONCAT 5   
 
 typedef enum {
     NODE_LIST,
@@ -56,7 +56,7 @@ typedef struct FunctionDefinitionNode {
 
 typedef struct FunctionCallNode {
     Node self;
-    Node * name;
+    char * name;
     NodeList * params;
 } FunctionCallNode;
 
@@ -96,7 +96,7 @@ typedef struct WhileNode {
     Node * ret;
 } WhileNode;
 
-typedef struct IfNode {
+typedef struct IfNode {  //how to get the values of each node?
     Node self;
     Node * ifExpression;
     Node * ifBlock;
