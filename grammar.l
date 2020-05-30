@@ -50,9 +50,9 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "print"         return PRINT;
 "start"         return START;
 "end"           return END;
-{number} 		{strcpy(yylval.value, yytext);return NUMBER_LITERAL;}
-{string}        {strcpy(yylval.value, yytext);return STRING_LITERAL;}
-{varName} 		{strcpy(yylval.value, yytext);return VAR;}
+{number} 		{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}
+{string}        {strcpy(yylval.string, yytext);return STRING_LITERAL;}
+{varName} 		{strcpy(yylval.string, yytext);return VAR;}
 .               ;
 
 %%

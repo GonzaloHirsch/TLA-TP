@@ -1018,18 +1018,18 @@ return END;
 case 44:
 YY_RULE_SETUP
 #line 53 "grammar.l"
-{strcpy(yylval.value, yytext);return NUMBER_LITERAL;}
+{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
 #line 54 "grammar.l"
-{strcpy(yylval.value, yytext);return STRING_LITERAL;}
+{strcpy(yylval.string, yytext);return STRING_LITERAL;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 55 "grammar.l"
-{strcpy(yylval.value, yytext);return VAR;}
+{strcpy(yylval.string, yytext);return VAR;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP

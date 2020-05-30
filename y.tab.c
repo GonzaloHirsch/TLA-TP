@@ -211,11 +211,10 @@ typedef union YYSTYPE
     char character;
     int integer;
     double decimal;
-    char* string;
-    char value[256];
+    char * string;
 }
 /* Line 193 of yacc.c.  */
-#line 219 "y.tab.c"
+#line 218 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -228,7 +227,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 232 "y.tab.c"
+#line 231 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -526,9 +525,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    71,    71,    82,    83,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
-     101,   102,   103,   107,   108,   112,   113,   114
+       0,    70,    70,    81,    82,    85,    86,    87,    88,    89,
+      90,    91,    92,    93,    94,    95,    96,    97,    98,    99,
+     100,   101,   102,   106,   107,   111,   112,   113
 };
 #endif
 
@@ -1460,7 +1459,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 71 "kind.y"
+#line 70 "kind.y"
     {
 
                                         char  * main = (char *) malloc((strlen("int main(){)") + 1) * sizeof(char));
@@ -1473,133 +1472,133 @@ yyreduce:
     break;
 
   case 3:
-#line 82 "kind.y"
+#line 81 "kind.y"
     {;}
     break;
 
   case 4:
-#line 83 "kind.y"
+#line 82 "kind.y"
     {(yyval.string) = (yyvsp[(1) - (1)].string);}
     break;
 
   case 5:
-#line 86 "kind.y"
+#line 85 "kind.y"
     {;}
     break;
 
   case 6:
-#line 87 "kind.y"
+#line 86 "kind.y"
     {;}
     break;
 
   case 7:
-#line 88 "kind.y"
+#line 87 "kind.y"
     {;}
     break;
 
   case 8:
-#line 89 "kind.y"
+#line 88 "kind.y"
     {;}
     break;
 
   case 9:
-#line 90 "kind.y"
+#line 89 "kind.y"
     {;}
     break;
 
   case 10:
-#line 91 "kind.y"
+#line 90 "kind.y"
     {;}
     break;
 
   case 11:
-#line 92 "kind.y"
+#line 91 "kind.y"
     {;}
     break;
 
   case 12:
-#line 93 "kind.y"
+#line 92 "kind.y"
     {;}
     break;
 
   case 13:
-#line 94 "kind.y"
+#line 93 "kind.y"
     {;}
     break;
 
   case 14:
-#line 95 "kind.y"
+#line 94 "kind.y"
     {;}
     break;
 
   case 15:
-#line 96 "kind.y"
+#line 95 "kind.y"
     {;}
     break;
 
   case 16:
-#line 97 "kind.y"
+#line 96 "kind.y"
     {;}
     break;
 
   case 17:
-#line 98 "kind.y"
+#line 97 "kind.y"
     {;}
     break;
 
   case 18:
-#line 99 "kind.y"
+#line 98 "kind.y"
     {;}
     break;
 
   case 19:
-#line 100 "kind.y"
+#line 99 "kind.y"
     {;}
     break;
 
   case 20:
-#line 101 "kind.y"
+#line 100 "kind.y"
     {;}
     break;
 
   case 21:
-#line 102 "kind.y"
+#line 101 "kind.y"
     {;}
     break;
 
   case 22:
-#line 103 "kind.y"
+#line 102 "kind.y"
     {;}
     break;
 
   case 23:
-#line 107 "kind.y"
-    {char * val = (char *)malloc((strlen((yyvsp[(4) - (5)].value))+1) * sizeof(char));strcpy(val, (yyvsp[(4) - (5)].value)) ;(yyval.string) = c_string(5,(yyvsp[(1) - (5)].string),(yyvsp[(2) - (5)].string),(yyvsp[(3) - (5)].string),val,(yyvsp[(5) - (5)].string));}
+#line 106 "kind.y"
+    {(yyval.string) = c_string(4,(yyvsp[(1) - (5)].string),(yyvsp[(2) - (5)].string),(yyvsp[(3) - (5)].string),(yyvsp[(4) - (5)].string));}
     break;
 
   case 24:
-#line 108 "kind.y"
-    {char * val = (char *)malloc((strlen((yyvsp[(4) - (5)].value))+1) * sizeof(char)); (yyval.string) = c_string(5,(yyvsp[(1) - (5)].string),(yyvsp[(2) - (5)].string),(yyvsp[(3) - (5)].string),val,(yyvsp[(5) - (5)].string));}
+#line 107 "kind.y"
+    {(yyval.string) = c_string(4,(yyvsp[(1) - (5)].string),(yyvsp[(2) - (5)].string),(yyvsp[(3) - (5)].string),(yyvsp[(4) - (5)].string));}
     break;
 
   case 25:
-#line 112 "kind.y"
-    {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "int "); (yyval.string) = var;}
+#line 111 "kind.y"
+    {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "int"); (yyval.string) = var;}
     break;
 
   case 26:
-#line 113 "kind.y"
-    {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "char * "); (yyval.string) = var;}
+#line 112 "kind.y"
+    {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "char *"); (yyval.string) = var;}
     break;
 
   case 27:
-#line 114 "kind.y"
+#line 113 "kind.y"
     {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "double"); (yyval.string) = var;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1603 "y.tab.c"
+#line 1602 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1813,7 +1812,7 @@ yyreturn:
 }
 
 
-#line 117 "kind.y"
+#line 116 "kind.y"
 
 
 void yyerror(char *s) {
