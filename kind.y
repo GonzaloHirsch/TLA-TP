@@ -37,6 +37,7 @@
 %token<string> PRINT
 %token<string> START END
 %token<string> DEFINE PASSING
+%token<string> ASSIGN_EQ
 
 %type<string> hyperstatements
 %type<string> hyperstatement
@@ -45,12 +46,6 @@
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
-
-
-
-
-
-
 
 %%
 
@@ -86,11 +81,21 @@ while:
 
 statement:
                 expression      {strcpy($$, $1);}
+        |       assignment      {;}
         ;
 
 block:  OPEN_B hyperstatements  CLOSE_B {;}
-        
         ;
+
+assignment:
+        VAR ASSIGN_EQ expression {;}
+        |VAR ASSIGN_EQ literal {;}
+        ;
+literal:
+        NUMBER_LITERAL {;}
+        | STRING_LITERAL {;}
+        ;
+
 expression: VAR EQ  VAR {;}
         |   VAR GT  VAR {;}
         |   VAR GE  VAR {;}

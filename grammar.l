@@ -27,6 +27,7 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "int"           return INT;
 "str"           return STR;
 "double"        return DOUBLE;
+"="             return ASSIGN_EQ;
 "=="            return EQ;
 ">"             return GT;
 ">="            return GE;
