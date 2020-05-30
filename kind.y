@@ -19,54 +19,43 @@
     char character;
     int integer;
     double decimal;
-    char string[240];
+    char string[5000];
 }
 
-%token IF ELSE_IF ELSE REPEAT WHILE UNTIL
-%token SET TO_BE AS
-%token DO THANK_YOU
-%token EXECUTE FUNCTION RECEIVING RETURNING RETURN
-%token COMMA SEMICOLON
-%token INT STR DOUBLE
-%token EQ GT GE LT LE NE
-%token NUMBER_LITERAL STRING_LITERAL
-%token VAR
-%token ADD SUBSTRACT PROD DIV MODULE
-%token AND OR NOT
-%token OPEN_B CLOSE_B OPEN_P CLOSE_P
-%token PRINT
-%token START END
-%token DEFINE PASSING
+%token<string> IF ELSE_IF ELSE REPEAT WHILE UNTIL
+%token<string> SET TO_BE AS
+%token<string> DO THANK_YOU
+%token<string> EXECUTE FUNCTION RECEIVING RETURNING RETURN
+%token<string> COMMA SEMICOLON
+%token<string> INT STR DOUBLE
+%token<string> EQ GT GE LT LE NE
+%token<string> NUMBER_LITERAL STRING_LITERAL
+%token<string> VAR
+%token<string> ADD SUBSTRACT PROD DIV MODULE
+%token<string> AND OR NOT
+%token<string> OPEN_B CLOSE_B OPEN_P CLOSE_P
+%token<string> PRINT
+%token<string> START END
+%token<string> DEFINE PASSING
 
-
+%type<string> hyperstatements
 %type<string> hyperstatement
-/*
-%type<string> block
-%type<string> while
-%type<string> command
-%type<string> ifclause
-%type<string> elsetrain
-*/
+%type<string> entrypoint
 %type<string> expression
-/*
-%type<string> asigned
-%type<string> assignment
-%type<string> vardeclaration
-%type<string> fundeclaration
-%type<string> fundefinition
-%type<string> arglist
-%type<string> arg
-%type<string> funex
-%type<string> returnstatement
-%type<string> type
-*/
+%type<string> ifsentence
+%type<string> statement
+%type<string> block
+
+
+
+
 
 
 
 %%
 
-entrypoint: START hyperstatements END {printf("Entry point, should have start, statement, end\n");}
-        |       START END       {;}
+entrypoint: START hyperstatements END {printf("%s", c_string(3,"int main(){", $2, "return 1;}"));}
+        |       START END       {printf("int main(){ return 1; }") ;}
         ;
 
 hyperstatements: hyperstatement hyperstatements {;}
@@ -74,22 +63,23 @@ hyperstatements: hyperstatement hyperstatements {;}
         ;
 
 hyperstatement:
-                statement SEMICOLON {printf("Just reading a statement\n");}
+                statement SEMICOLON {;}
         |        block   {;}
         |        ifsentence        {;}
         ;
 
 ifsentence:
-                IF      OPEN_P  expression      CLOSE_P block   {printf("ifff \n");}
+                IF      OPEN_P  expression      CLOSE_P block   {strcpy($$, c_string(5, $1, $2, $3, $4, $5)) ;}
         ;
 
 statement:
-                expression      {;}
+                expression      {strcpy($$, $1);}
         ;
 
-block:  OPEN_B hyperstatements  CLOSE_B {printf("In a block\n");}
+block:  OPEN_B hyperstatements  CLOSE_B {;}
+        
         ;
-expression: VAR EQ  VAR {printf("var equals var!\n");}
+expression: VAR EQ  VAR {;}
         |   VAR GT  VAR {;}
         |   VAR GE  VAR {;}
         |   VAR LT  VAR {;}

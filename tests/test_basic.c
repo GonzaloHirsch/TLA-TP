@@ -1,0 +1,1 @@
+int main(){varreturn 1;}

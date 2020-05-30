@@ -14,13 +14,12 @@ char * c_string(int argCount, ...){
         size += strlen(arguments[i]);
     }
 
-    char * concatenation = (char *) malloc((size + 1) * sizeof(char));
+    char concatenation[LENGTH];
 
     strcpy(concatenation, arguments[0]); //need to copy first argument
 
     for(i = 1; i < argCount; i++){
         strcat(concatenation, arguments[i]);
-        free(arguments[i]); //free resources mallocated before
     }
 
 
