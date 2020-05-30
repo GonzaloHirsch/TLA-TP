@@ -25,9 +25,12 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "return"        return RETURN;
 ","             return COMMA;
 ";"            	return SEMICOLON;
+"."             return DOT;
 "int"           return INT;
 "str"           return STR;
 "double"        return DOUBLE;
+"forEach"       return FOREACH;
+"->"            return RIGHT_ARROW;
 "="             return ASSIGN_EQ;
 "=="            return EQ;
 ">"             return GT;

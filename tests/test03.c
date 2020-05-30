@@ -1,1 +1,1 @@
-int main() { ix; return 1;}   
+entrypoint

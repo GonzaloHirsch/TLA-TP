@@ -1,1 +1,1 @@
-int main() { if ( expr == 10    ) { expre == 10   ; }      return 1;}   
+entrypoint

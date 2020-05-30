@@ -26,7 +26,8 @@
 %token<string> SET TO_BE AS
 %token<string> DO THANK_YOU
 %token<string> EXECUTE FUNCTION RECEIVING RETURNING RETURN
-%token<string> COMMA SEMICOLON
+%token<string> FOREACH RIGHT_ARROW
+%token<string> COMMA SEMICOLON DOT
 %token<string> INT STR DOUBLE
 %token<string> EQ GT GE LT LE NE
 %token<string> NUMBER_LITERAL STRING_LITERAL
@@ -46,18 +47,32 @@
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
+%type<string> inblockstatements
+%type<string> inblockstatement
+%type<string> funcall
 
 %%
 
-entrypoint: 	START hyperstatements END 	{printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));}
-        |       START END       		{printf("int main(){ return 1; }") ;}
+entrypoint: 	START hyperstatements END 	{
+        printf("entrypoint\n");
+        // printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));
+        }
+        |       START END       		{
+                printf("int main(){ return 1; }") ;
+                }
         ;
 
 hyperstatements: 	hyperstatement hyperstatements 	{;}
-        |       	hyperstatement 			{strcpy($$, $1);}
+        |       	hyperstatement 			{
+                // strcpy($$, $1);
+                        ;
+                }
         ;
 
-hyperstatement:	statement SEMICOLON 	{strcpy($$, strcat($1,";"));}
+hyperstatement:	statement SEMICOLON 	{
+        // strcpy($$, strcat($1,";"));
+                ;
+        }
         |       block   		{;}
         |       ifsentence        	{;}
         |      	while   		{;}
@@ -72,7 +87,10 @@ inblockstatement:	statement SEMICOLON 	{;}
         |       	while   		{;}
         ;
 
-ifsentence:	IF OPEN_P expression CLOSE_P block   		{strcpy($$, c_string("if (", $3, ")", $5, "")) ;}
+ifsentence:	IF OPEN_P expression CLOSE_P block   		{
+        // strcpy($$, c_string("if (", $3, ")", $5, "")) ;
+        ;
+        }
         |       IF OPEN_P expression CLOSE_P block elsetrain 	{printf("if that has elsetrain\n");}
         ;
 
@@ -84,12 +102,28 @@ elsetrain:	ELSE block 						{printf("last else\n");}
 while:	WHILE OPEN_P expression CLOSE_P block	{printf("while shit\n");}
         ;
 
-statement:	expression      {strcpy($$, $1);}
+statement:	expression      {
+        strcpy($$, $1);
+        }
         |       assignment      {;}
         |       fundeclaration  {;}
+        |       funcall         {;}
+        |       foreach         {;}
         ;
 
-block:	OPEN_B hyperstatements  CLOSE_B {strcpy($$,c_string("{", $2, "}", "", ""));}
+
+foreach:
+        VAR DOT FOREACH OPEN_P VAR RIGHT_ARROW foreachbody CLOSE_P {;}
+        ; 
+foreachbody:
+        statement {;}
+        | funblock {printf("funblock");}
+        ;
+
+block:	OPEN_B inblockstatements  CLOSE_B {
+        // strcpy($$,c_string("{", $2, "}", "", ""));
+                ;
+        }
         ;
 
 assignment:	VAR ASSIGN_EQ expression 	{;}
@@ -107,6 +141,7 @@ function:	FUNCTION VAR funargs funblock {;}
         ;
 
 funblock:	OPEN_B inblockstatements returnstatement CLOSE_B {;}
+        |       OPEN_B inblockstatements CLOSE_B {;}
         ;
 
 returnstatement:	RETURN expression SEMICOLON {;}
@@ -114,6 +149,7 @@ returnstatement:	RETURN expression SEMICOLON {;}
 
 funargs:	OPEN_P  CLOSE_P 	{;}
         | 	OPEN_P arglist CLOSE_P	{;}
+        ;
 
 arglist:	arglist COMMA arg 	{;}
         | 	arg 			{;}
@@ -122,18 +158,44 @@ arglist:	arglist COMMA arg 	{;}
 arg:	type VAR {;}
         ;
 
+funcall:
+        VAR funcallargs {;}
+        ;
+
+funcallargs:
+        OPEN_P CLOSE_P {;}
+        |       OPEN_P funarglist CLOSE_P {;}               
+        ;
+
+funarglist:
+        funarglist COMMA funarg {;}
+        | funarg {;}
+        ;
+
+funarg:
+        VAR {;}
+        | STRING_LITERAL {;}
+        | NUMBER_LITERAL {;}
+        ;
+
 type:		INT 	{;}
         | 	STR 	{;}
         | 	DOUBLE 	{;}
         ;
 
-expression: VAR EQ  VAR {strcpy($$, c_string($1, "==", $3, "", ""));}
+expression: VAR EQ  VAR {
+        // strcpy($$, c_string($1, "==", $3, "", ""));
+                ;
+        }
         |   VAR GT  VAR {;}
         |   VAR GE  VAR {;}
         |   VAR LT  VAR {;}
         |   VAR LE  VAR {;}
         |   VAR NE  VAR {;}
-        |   VAR EQ  NUMBER_LITERAL {strcpy($$, c_string($1, "==", $3, "", ""));}
+        |   VAR EQ  NUMBER_LITERAL {
+                // strcpy($$, c_string($1, "==", $3, "", ""));
+                ;
+        }
         |   VAR GT  NUMBER_LITERAL {;}
         |   VAR GE  NUMBER_LITERAL {;}
         |   VAR LT  NUMBER_LITERAL {;}
