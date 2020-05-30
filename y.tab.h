@@ -149,10 +149,11 @@ typedef union YYSTYPE
     char character;
     int integer;
     double decimal;
-    char * string;
+    char* string;
+    char value[256];
 }
 /* Line 1529 of yacc.c.  */
-#line 156 "y.tab.h"
+#line 157 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

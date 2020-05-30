@@ -19,7 +19,8 @@
     char character;
     int integer;
     double decimal;
-    char * string;
+    char* string;
+    char value[256];
 }
 %token<string> ASIGN
 %token IF ELSE_IF ELSE REPEAT WHILE UNTIL
@@ -29,7 +30,7 @@
 %token<string> COMMA SEMICOLON
 %token INT STR DOUBLE
 %token EQ GT GE LT LE NE
-%token<string> NUMBER_LITERAL STRING_LITERAL
+%token<value> NUMBER_LITERAL STRING_LITERAL
 %token<string> VAR
 %token ADD SUBSTRACT PROD DIV MODULE
 %token AND OR NOT
@@ -103,13 +104,13 @@ expression: VAR EQ  VAR {;}
         ;
 
 
-declaration:    type VAR ASIGN NUMBER_LITERAL SEMICOLON  {$$ = c_string(4,$1,$2,$3,$4);}
-                | type VAR ASIGN STRING_LITERAL SEMICOLON {$$ = c_string(4,$1,$2,$3,$4);}
+declaration:    type VAR ASIGN NUMBER_LITERAL SEMICOLON  {char * val = (char *)malloc((strlen($4)+1) * sizeof(char));strcpy(val, $4) ;$$ = c_string(5,$1,$2,$3,val,$5);}
+                | type VAR ASIGN STRING_LITERAL SEMICOLON {char * val = (char *)malloc((strlen($4)+1) * sizeof(char)); $$ = c_string(5,$1,$2,$3,val,$5);}
                 ;
 
 
-type:     INT {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "int"); $$ = var;} 
-        | STR {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "char *"); $$ = var;}
+type:     INT {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "int "); $$ = var;} 
+        | STR {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "char * "); $$ = var;}
         | DOUBLE {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "double"); $$ = var;}
         ;
 
