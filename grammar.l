@@ -21,6 +21,7 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "equal"         return EQ;
 "do"            return DO;
 "function"      return FUNCTION;
+"returning"     return RETURNING;
 "return"        return RETURN;
 ","             return COMMA;
 ";"            	return SEMICOLON;

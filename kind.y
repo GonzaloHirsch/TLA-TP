@@ -62,6 +62,17 @@ hyperstatement:
         |        block   {;}
         |        ifsentence        {;}
         |       while   {;}
+        |       function {;}
+        ;
+
+inblockstatements:
+        inblockstatement inblockstatements {;}
+        | inblockstatement {;}
+        ;
+inblockstatement:
+                statement SEMICOLON {;}
+        |       ifsentence        {;}
+        |       while   {;}
         ;
 
 ifsentence:
@@ -82,18 +93,54 @@ while:
 statement:
                 expression      {strcpy($$, $1);}
         |       assignment      {;}
+        |       fundeclaration  {;}
         ;
 
-block:  OPEN_B hyperstatements  CLOSE_B {;}
+block:  OPEN_B inblockstatements  CLOSE_B {;}
         ;
 
 assignment:
         VAR ASSIGN_EQ expression {;}
         |VAR ASSIGN_EQ literal {;}
         ;
+
 literal:
         NUMBER_LITERAL {;}
         | STRING_LITERAL {;}
+        ;
+
+fundeclaration: 
+        FUNCTION VAR funargs RETURNING type {;}
+        ;
+
+function:
+        FUNCTION VAR funargs funblock {;}
+        ;
+
+funblock: 
+        OPEN_B inblockstatements returnstatement CLOSE_B {;}
+        ;
+
+returnstatement:
+        RETURN expression SEMICOLON {;}
+        ;
+
+funargs:
+        OPEN_P  CLOSE_P {;}
+        | OPEN_P arglist CLOSE_P;
+
+arglist:
+        arglist COMMA arg {;}
+        | arg {;}
+        ;
+arg:
+        type VAR {;}
+        ;
+
+type:  
+        INT {;}
+        | STR {;}
+        | DOUBLE {;}
         ;
 
 expression: VAR EQ  VAR {;}
