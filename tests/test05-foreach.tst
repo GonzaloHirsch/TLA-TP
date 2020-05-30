@@ -6,7 +6,7 @@ start
         {
         x == y;
         x == 1234;
-        while (x == 1234) {
+        while (x == 4) {
             printf("hola");
             if (a == 21234) {
                 printf("s", 12341);

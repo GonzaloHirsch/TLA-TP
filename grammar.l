@@ -2,7 +2,7 @@
 #include "y.tab.h"
 %}
 
-number		-?[1-9][0-9]+(\.[0-9]+)?
+number		-?[0-9]+(\.[0-9]+)?
 string		\"[^\"]*\"
 varName		[a-zA-Z][a-zA-Z0-9]*
 
