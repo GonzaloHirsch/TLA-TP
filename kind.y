@@ -49,6 +49,7 @@
 %type<string> generaloperation
 %type<string> operation
 %type<string> unity
+%type<string> expunity
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
@@ -215,38 +216,30 @@ generalexpression:      generalexpression AND expression {;}
         ;
 
 
-expression: VAR EQ  VAR {;}
-        |   VAR GT  VAR {;}
-        |   VAR GE  VAR {;}
-        |   VAR LT  VAR {;}
-        |   VAR LE  VAR {;}
-        |   VAR NE  VAR {;}
-        |   VAR EQ  NUMBER_LITERAL {;}
-        |   VAR GT  NUMBER_LITERAL {;}
-        |   VAR GE  NUMBER_LITERAL {;}
-        |   VAR LT  NUMBER_LITERAL {;}
-        |   VAR LE  NUMBER_LITERAL {;}
-        |   VAR NE  NUMBER_LITERAL {;}
-        |   NUMBER_LITERAL EQ  VAR {;}
-        |   NUMBER_LITERAL GT  VAR {;}
-        |   NUMBER_LITERAL GE  VAR {;}
-        |   NUMBER_LITERAL LT  VAR {;}
-        |   NUMBER_LITERAL LE  VAR {;}
-        |   NUMBER_LITERAL NE  VAR {;}
-        |   NOT VAR                {;}
+expression: expunity EQ  expunity {;}
+        |   expunity GT  expunity {;}
+        |   expunity GE  expunity {;}
+        |   expunity LT  expunity {;}
+        |   expunity LE  expunity {;}
+        |   expunity NE  expunity {;}
+        |   NOT VAR               {;}
         ;
 
-generaloperation:       operation                        {;}
-        |               operation ADD   generaloperation {;}
-        |               operation SUBS  generaloperation {;}
+expunity:       VAR               {;}
+        |       NUMBER_LITERAL    {;}
+        ;
+
+generaloperation:       operation                        {printf("%s\n",$1);}
+        |               operation ADD   generaloperation {printf("%s + %s\n",$1,$3);}
+        |               operation SUBS  generaloperation {printf("%s - %s\n",$1,$3);}
         ;
 
 
-operation:      unity                            {;}
-        |       unity PROD operation             {;}
-        |       unity DIV  operation             {;}
-        |       unity CROSS operation            {;}
-        |       SUBS operation                   {;}
+operation:      unity                            {/*printf("%s\n",$1)*/;}
+        |       unity PROD operation             {printf("%s * %s\n",$1,$3);}
+        |       unity DIV  operation             {printf("%s / %s\n",$1,$3);}
+        |       unity CROSS operation            {printf("%s cross %s\n",$1,$3);}
+        |       SUBS operation                   {printf("-%s\n",$1);}
         ;
 
 
