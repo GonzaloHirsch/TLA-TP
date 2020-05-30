@@ -19,7 +19,7 @@
     char character;
     int integer;
     double decimal;
-    char * string;
+    char string[240];
 }
 
 %token IF ELSE_IF ELSE REPEAT WHILE UNTIL
@@ -39,7 +39,7 @@
 %token DEFINE PASSING
 
 
-%type<string> statement
+%type<string> hyperstatement
 /*
 %type<string> block
 %type<string> while
@@ -65,12 +65,31 @@
 
 %%
 
-entrypoint: START statement END {;} 
-
-statement:      expression {;}
+entrypoint: START hyperstatements END {printf("Entry point, should have start, statement, end\n");}
+        |       START END       {;}
         ;
 
-expression: VAR EQ  VAR {;}
+hyperstatements: hyperstatement hyperstatements {;}
+        |       hyperstatement {;}
+        ;
+
+hyperstatement:
+                statement SEMICOLON {printf("Just reading a statement\n");}
+        |        block   {;}
+        |        ifsentence        {;}
+        ;
+
+ifsentence:
+                IF      OPEN_P  expression      CLOSE_P block   {printf("ifff \n");}
+        ;
+
+statement:
+                expression      {;}
+        ;
+
+block:  OPEN_B hyperstatements  CLOSE_B {printf("In a block\n");}
+        ;
+expression: VAR EQ  VAR {printf("var equals var!\n");}
         |   VAR GT  VAR {;}
         |   VAR GE  VAR {;}
         |   VAR LT  VAR {;}
