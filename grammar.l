@@ -21,8 +21,6 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "equal"         return EQ;
 "do"            return DO;
 "function"      return FUNCTION;
-"receiving"     return RECEIVING; 
-"returning"     return RETURNING;
 "return"        return RETURN;
 ","             return COMMA;
 ";"            	return SEMICOLON;
@@ -50,6 +48,7 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "print"         return PRINT;
 "start"         return START;
 "end"           return END;
+[\n\t ]         ;
 {number} 		{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}
 {string}        {strcpy(yylval.string, yytext);return STRING_LITERAL;}
 {varName} 		{strcpy(yylval.string, yytext);return VAR;}
