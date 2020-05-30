@@ -233,6 +233,7 @@ expression: VAR EQ  VAR {;}
         |   NUMBER_LITERAL LT  VAR {;}
         |   NUMBER_LITERAL LE  VAR {;}
         |   NUMBER_LITERAL NE  VAR {;}
+        |   NOT VAR                {;}
         ;
 
 generaloperation: generaloperation ADD  generaloperation  {printf("general operation ADD\n");}
@@ -259,6 +260,7 @@ operation:      VAR ADD VAR                     {;}
         |       NUMBER_LITERAL SUBS NUMBER_LITERAL         {;}
         |       NUMBER_LITERAL DIV NUMBER_LITERAL          {;}
         |       NUMBER_LITERAL PROD NUMBER_LITERAL         {;}
+        |       SUBS VAR                                   {;}
         |       VAR                                        {;}
         |       NUMBER_LITERAL                             {;}
         ;
