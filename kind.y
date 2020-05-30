@@ -106,11 +106,21 @@ statement:	expression      {
         strcpy($$, $1);
         }
         |       assignment      {;}
+        |       vardeclaration  {;}
+        |       vardeclassignment {;}
         |       fundeclaration  {;}
         |       funcall         {;}
         |       foreach         {;}
         ;
 
+vardeclaration:
+        type VAR {;}
+        ;
+
+vardeclassignment: 
+        type VAR ASSIGN_EQ expression {;}
+        | type VAR ASSIGN_EQ literal {;}
+        ;
 
 foreach:
         VAR DOT FOREACH OPEN_P VAR RIGHT_ARROW foreachbody CLOSE_P {;}
