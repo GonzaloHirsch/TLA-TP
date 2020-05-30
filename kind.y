@@ -48,6 +48,7 @@
 %type<string> generalexpression
 %type<string> generaloperation
 %type<string> operation
+%type<string> unity
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
@@ -147,7 +148,6 @@ assignment:	VAR ASSIGN_EQ literal	        {;}
         ;
 
 literal:        STRING_LITERAL {;}
-        |       arrayliteral {;}
         ;
 
 arrayliteral:
@@ -236,59 +236,24 @@ expression: VAR EQ  VAR {;}
         |   NOT VAR                {;}
         ;
 
-generaloperation: generaloperation ADD  generaloperation  {printf("general operation ADD\n");}
-        |         generaloperation SUBS generaloperation  {printf("general operation SUBS\n");;}
-        |         generaloperation DIV  generaloperation  {printf("general operation DIV\n");;}
-        |         generaloperation PROD generaloperation  {printf("general operation PROD\n");;}     
-        |         operation                               {printf("general operation raw\n");;}
+generaloperation:       operation                        {;}
+        |               operation ADD   generaloperation {;}
+        |               operation SUBS  generaloperation {;}
         ;
 
 
-operation:      VAR ADD VAR                     {;}
-        |       VAR SUBS VAR                    {;}
-        |       VAR DIV VAR                     {;}
-        |       VAR PROD VAR                    {;}
-        |       VAR ADD NUMBER_LITERAL          {;}
-        |       VAR SUBS NUMBER_LITERAL         {;}
-        |       VAR DIV NUMBER_LITERAL          {;}
-        |       VAR PROD NUMBER_LITERAL         {;}
-        |       VAR CROSS VAR                   {
-                printf("%s %s cross %s // var cross var\n", $$, $1, $3);
-                }
-        |       NUMBER_LITERAL ADD VAR          {;}
-        |       NUMBER_LITERAL SUBS VAR         {;}
-        |       NUMBER_LITERAL DIV VAR          {;}
-        |       NUMBER_LITERAL PROD VAR         {;}
-        |       NUMBER_LITERAL ADD NUMBER_LITERAL          {;}
-        |       NUMBER_LITERAL SUBS NUMBER_LITERAL         {;}
-        |       NUMBER_LITERAL DIV NUMBER_LITERAL          {;}
-        |       NUMBER_LITERAL PROD NUMBER_LITERAL         {;}
-
-        |       NUMBER_LITERAL ADD arrayliteral           {printf("numb literal add array literal\n");}
-        |       arrayliteral  ADD arrayliteral           {printf("array literal add array literal\n");}
-        |       arrayliteral  ADD NUMBER_LITERAL          {printf("array literal add num literal\n");}
-        |       arrayliteral  SUBS arrayliteral          {printf("array literal subs array literal\n");}
-        |       arrayliteral  SUBS NUMBER_LITERAL         {printf("array literal subs num literal\n");}
-        |       NUMBER_LITERAL  PROD arrayliteral          {printf("num literal prod array literal\n");}
-        |       arrayliteral  PROD arrayliteral           {printf("array literal prod array literal\n");}
-        |       arrayliteral  PROD NUMBER_LITERAL         {printf("array literal prod num literal\n");}
-        |       arrayliteral  DIV NUMBER_LITERAL         {printf("array literal div num literal\n");}
-        |       arrayliteral CROSS      arrayliteral    {printf("arraylit cross arraylit\n");}
-
-        |       arrayliteral ADD VAR    {;}
-        |       arrayliteral SUBS VAR    {;}
-        |       arrayliteral PROD VAR    {;}
-        |       arrayliteral DIV VAR    {;}
-        |       arrayliteral CROSS VAR  {;}
-        |       VAR ADD arrayliteral    {;}
-        |       VAR SUBS arrayliteral    {;}
-        |       VAR PROD arrayliteral    {;}
-        |       VAR CROSS arrayliteral    {;}
-
-        |       SUBS VAR                                   {;}
-        |       VAR                                        {;}
-        |       NUMBER_LITERAL                             {;}
+operation:      unity                            {;}
+        |       unity PROD operation             {;}
+        |       unity DIV  operation             {;}
+        |       unity CROSS operation            {;}
+        |       SUBS operation                   {;}
         ;
+
+
+unity:          VAR                             {;}
+        |       NUMBER_LITERAL                  {;}
+        |       arrayliteral                    {;}
+
 %%
 
 void yyerror(char *s) {
