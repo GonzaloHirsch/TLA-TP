@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-
+#define LENGTH 5000
 
 char * c_string(int argCount, ...);
 
