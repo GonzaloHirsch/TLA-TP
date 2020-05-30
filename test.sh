@@ -11,5 +11,6 @@ for testFile in $(find $testsDir -name *.tst); do
     filePath=$(echo $testFile | cut -d'.' -f1)
     fileName=$(echo $filePath | cut -d'/' -f2)
     echo $filePath $fileName
-    ./codeGenerator < $testFile > ${filePath}.c && gcc -o $resultsDir/${filePath}_result ${filePath}.c
+    ./codeGenerator < $testFile > ${filePath}.c
+    # gcc -o $resultsDir/${filePath}_result ${filePath}.c
 done

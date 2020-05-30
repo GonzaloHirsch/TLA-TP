@@ -37,6 +37,7 @@
 %token<string> PRINT
 %token<string> START END
 %token<string> DEFINE PASSING
+%token<string> ASSIGN_EQ
 
 %type<string> hyperstatements
 %type<string> hyperstatement
@@ -45,12 +46,6 @@
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
-
-
-
-
-
-
 
 %%
 
@@ -66,6 +61,17 @@ hyperstatement:
                 statement SEMICOLON {strcpy($$, strcat($1,";"));}
         |        block   {;}
         |        ifsentence        {;}
+        |       while   {;}
+        |       function {;}
+        ;
+
+inblockstatements:
+        inblockstatement inblockstatements {;}
+        | inblockstatement {;}
+        ;
+inblockstatement:
+                statement SEMICOLON {;}
+        |       ifsentence        {;}
         |       while   {;}
         ;
 
