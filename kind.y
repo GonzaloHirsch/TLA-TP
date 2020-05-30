@@ -146,8 +146,7 @@ assignment:	VAR ASSIGN_EQ literal	        {;}
         |       VAR ASSIGN_EQ generalexpression {;}
         ;
 
-literal:	NUMBER_LITERAL {;} 
-        | 	STRING_LITERAL {;}
+literal:        STRING_LITERAL {;}
         |       arrayliteral {;}
         ;
 
@@ -236,11 +235,11 @@ expression: VAR EQ  VAR {;}
         |   NUMBER_LITERAL NE  VAR {;}
         ;
 
-generaloperation: generaloperation ADD  operation  {printf("general operation ADD\n");}
-        |         generaloperation SUBS operation  {printf("general operation SUBS\n");;}
-        |         generaloperation DIV  operation  {printf("general operation DIV\n");;}
-        |         generaloperation PROD operation  {printf("general operation PROD\n");;}
-        |         operation                        {printf("general operation raw\n");;}
+generaloperation: generaloperation ADD  generaloperation  {printf("general operation ADD\n");}
+        |         generaloperation SUBS generaloperation  {printf("general operation SUBS\n");;}
+        |         generaloperation DIV  generaloperation  {printf("general operation DIV\n");;}
+        |         generaloperation PROD generaloperation  {printf("general operation PROD\n");;}     
+        |         operation                               {printf("general operation raw\n");;}
         ;
 
 
