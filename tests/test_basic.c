@@ -1,1 +1,1 @@
-(null)
+int main() { var == 10   ; return 1;}   

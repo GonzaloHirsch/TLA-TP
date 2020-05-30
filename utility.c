@@ -1,30 +1,21 @@
 #include "utility.h"
 
-char * c_string(int argCount, ...){
-    int size;
-    char **arguments = (char **)malloc(argCount * sizeof(char *));
-    
-    va_list ap;
+char * c_string(char *a1, char * a2, char * a3, char *a4, char *a5){
+    char ans[LENGTH];
 
-    va_start(ap, argCount);
+    strcpy(ans, a1);
+    strcat(ans, " ");
+    strcat(ans, a2);
+    strcat(ans, " ");
+    strcat(ans, a3);
+    strcat(ans, " ");
+    strcat(ans, a4);
+    strcat(ans, " ");
+    strcat(ans, a5);
+    strcat(ans, " ");
 
-    int i;
-    for(i = 0; i < argCount; i++){
-        arguments[i] = va_arg(ap, char *);
-        size += strlen(arguments[i]);
-    }
+    return ans;
 
-    char concatenation[LENGTH];
-
-    strcpy(concatenation, arguments[0]); //need to copy first argument
-
-    for(i = 1; i < argCount; i++){
-        strcat(concatenation, arguments[i]);
-    }
-
-
-
-    return concatenation;
 
 }
 

@@ -54,23 +54,23 @@
 
 %%
 
-entrypoint: START hyperstatements END {printf("%s", c_string(3,"int main(){", $2, "return 1;}"));}
+entrypoint: START hyperstatements END {printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));}
         |       START END       {printf("int main(){ return 1; }") ;}
         ;
 
 hyperstatements: hyperstatement hyperstatements {;}
-        |       hyperstatement {;}
+        |       hyperstatement {strcpy($$, $1);}
         ;
 
 hyperstatement:
-                statement SEMICOLON {;}
+                statement SEMICOLON {strcpy($$, strcat($1,";"));}
         |        block   {;}
         |        ifsentence        {;}
         |       while   {;}
         ;
 
 ifsentence:
-                IF OPEN_P expression CLOSE_P block   {strcpy($$, c_string(5, $1, $2, $3, $4, $5)) ;}
+                IF OPEN_P expression CLOSE_P block   {strcpy($$, c_string("if (", $3, ")", $5, "")) ;}
         |       IF OPEN_P expression CLOSE_P block elsetrain {printf("if that has elsetrain\n");}
         ;
 
@@ -85,19 +85,19 @@ while:
         ;
 
 statement:
-                expression      {strcpy($$, $1);}
+                expression      {strcpy($$, $1); }
         ;
 
-block:  OPEN_B hyperstatements  CLOSE_B {;}
+block:  OPEN_B hyperstatements  CLOSE_B {strcpy($$,c_string("{", $2, "}", "", ""));}
         
         ;
-expression: VAR EQ  VAR {;}
+expression: VAR EQ  VAR {strcpy($$, c_string($1, "==", $3, "", ""));}
         |   VAR GT  VAR {;}
         |   VAR GE  VAR {;}
         |   VAR LT  VAR {;}
         |   VAR LE  VAR {;}
         |   VAR NE  VAR {;}
-        |   VAR EQ  NUMBER_LITERAL {;}
+        |   VAR EQ  NUMBER_LITERAL {strcpy($$, c_string($1, "==", $3, "", ""));}
         |   VAR GT  NUMBER_LITERAL {;}
         |   VAR GE  NUMBER_LITERAL {;}
         |   VAR LT  NUMBER_LITERAL {;}
