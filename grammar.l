@@ -2,6 +2,7 @@
 #include "y.tab.h"
 %}
 
+integer     [0-9]+
 number		-?[0-9]+(\.[0-9]+)?
 string		\"[^\"]*\"
 varName		[a-zA-Z][a-zA-Z0-9]*
@@ -50,6 +51,8 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "}"             return CLOSE_B;
 "("             return OPEN_P;
 ")"             return CLOSE_P;
+"["             return OPEN_BRACK;
+"]"             return CLOSE_BRACK;
 "print"         return PRINT;
 "start"         return START;
 "end"           return END;
