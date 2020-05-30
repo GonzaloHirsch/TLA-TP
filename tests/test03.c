@@ -1,2 +1,0 @@
-general operation raw
-entrypoint
