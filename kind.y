@@ -21,16 +21,16 @@
     double decimal;
     char * string;
 }
-%token<string> ASIGN
+
 %token IF ELSE_IF ELSE REPEAT WHILE UNTIL
 %token SET TO_BE AS
 %token DO THANK_YOU
 %token EXECUTE FUNCTION RECEIVING RETURNING RETURN
-%token<string> COMMA SEMICOLON
+%token COMMA SEMICOLON
 %token INT STR DOUBLE
 %token EQ GT GE LT LE NE
-%token<string> NUMBER_LITERAL STRING_LITERAL
-%token<string> VAR
+%token NUMBER_LITERAL STRING_LITERAL
+%token VAR
 %token ADD SUBSTRACT PROD DIV MODULE
 %token AND OR NOT
 %token OPEN_B CLOSE_B OPEN_P CLOSE_P
@@ -40,7 +40,6 @@
 
 
 %type<string> statement
-%type<string> declaration
 /*
 %type<string> block
 %type<string> while
@@ -49,7 +48,6 @@
 %type<string> elsetrain
 */
 %type<string> expression
-%type<string> type
 /*
 %type<string> asigned
 %type<string> assignment
@@ -60,26 +58,16 @@
 %type<string> arg
 %type<string> funex
 %type<string> returnstatement
-
+%type<string> type
 */
 
 
 
 %%
 
-entrypoint: START statement END {
-
-                                        char  * main = (char *) malloc((strlen("int main(){)") + 1) * sizeof(char));
-                                        char  * returning = (char *) malloc((strlen("return 0;}") + 1) * sizeof(char));
-        
-                                        char * finalCode = c_string(3 ,main, $2, returning); printf("%s", finalCode); free(finalCode);
-                                        
-                                
-                                } 
-                                ;
+entrypoint: START statement END {;} 
 
 statement:      expression {;}
-        |       declaration {$$ = $1;}
         ;
 
 expression: VAR EQ  VAR {;}
@@ -100,17 +88,6 @@ expression: VAR EQ  VAR {;}
         |   NUMBER_LITERAL LT  VAR {;}
         |   NUMBER_LITERAL LE  VAR {;}
         |   NUMBER_LITERAL NE  VAR {;}
-        ;
-
-
-declaration:    type VAR ASIGN NUMBER_LITERAL SEMICOLON  {$$ = c_string(4,$1,$2,$3,$4);}
-                | type VAR ASIGN STRING_LITERAL SEMICOLON {$$ = c_string(4,$1,$2,$3,$4);}
-                ;
-
-
-type:     INT {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "int"); $$ = var;} 
-        | STR {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "char *"); $$ = var;}
-        | DOUBLE {char * var = (char *) malloc((strlen("int ") + 1) * sizeof(char)); strcpy(var, "double"); $$ = var;}
         ;
 
 %%

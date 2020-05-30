@@ -7,7 +7,7 @@ string		\"[^\"]*\"
 varName		[a-zA-Z][a-zA-Z0-9]*
 
 %%
-"="             return ASIGN;
+
 "until"         return UNTIL;
 "execute"       return EXECUTE;
 "if"			return IF;
