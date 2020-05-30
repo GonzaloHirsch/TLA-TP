@@ -1,2 +1,0 @@
-declaring an array
-entrypoint
