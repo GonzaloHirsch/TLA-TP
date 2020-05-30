@@ -49,54 +49,84 @@
 
 %%
 
-entrypoint: START hyperstatements END {printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));}
-        |       START END       {printf("int main(){ return 1; }") ;}
+entrypoint: 	START hyperstatements END 	{printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));}
+        |       START END       		{printf("int main(){ return 1; }") ;}
         ;
 
-hyperstatements: hyperstatement hyperstatements {;}
-        |       hyperstatement {strcpy($$, $1);}
+hyperstatements: 	hyperstatement hyperstatements 	{;}
+        |       	hyperstatement 			{strcpy($$, $1);}
         ;
 
-hyperstatement:
-                statement SEMICOLON {strcpy($$, strcat($1,";"));}
-        |        block   {;}
-        |        ifsentence        {;}
-        |       while   {;}
-        |       function {;}
+hyperstatement:	statement SEMICOLON 	{strcpy($$, strcat($1,";"));}
+        |       block   		{;}
+        |       ifsentence        	{;}
+        |      	while   		{;}
+        |       function 		{;}
         ;
 
-inblockstatements:
-        inblockstatement inblockstatements {;}
-        | inblockstatement {;}
+inblockstatements:	inblockstatement inblockstatements 	{;}
+        | 		inblockstatement 			{;}
         ;
-inblockstatement:
-                statement SEMICOLON {;}
-        |       ifsentence        {;}
-        |       while   {;}
+inblockstatement:	statement SEMICOLON 	{;}
+        |       	ifsentence        	{;}
+        |       	while   		{;}
         ;
 
-ifsentence:
-                IF OPEN_P expression CLOSE_P block   {strcpy($$, c_string("if (", $3, ")", $5, "")) ;}
-        |       IF OPEN_P expression CLOSE_P block elsetrain {printf("if that has elsetrain\n");}
+ifsentence:	IF OPEN_P expression CLOSE_P block   		{strcpy($$, c_string("if (", $3, ")", $5, "")) ;}
+        |       IF OPEN_P expression CLOSE_P block elsetrain 	{printf("if that has elsetrain\n");}
         ;
 
-elsetrain:
-                ELSE block {printf("last else\n");}
-        |       ELSE_IF OPEN_P expression CLOSE_P block {printf("else if\n");}
-        |       ELSE_IF OPEN_P expression CLOSE_P  block elsetrain {printf("else if with else train\n");}
+elsetrain:	ELSE block 						{printf("last else\n");}
+        |       ELSE_IF OPEN_P expression CLOSE_P block 		{printf("else if\n");}
+        |       ELSE_IF OPEN_P expression CLOSE_P block elsetrain 	{printf("else if with else train\n");}
         ;
 
-while:  
-        WHILE OPEN_P expression CLOSE_P block {printf("while shit\n");}
+while:	WHILE OPEN_P expression CLOSE_P block	{printf("while shit\n");}
         ;
 
-statement:
-                expression      {strcpy($$, $1); }
+statement:	expression      {strcpy($$, $1);}
+        |       assignment      {;}
+        |       fundeclaration  {;}
         ;
 
-block:  OPEN_B hyperstatements  CLOSE_B {strcpy($$,c_string("{", $2, "}", "", ""));}
-        
+block:	OPEN_B hyperstatements  CLOSE_B {strcpy($$,c_string("{", $2, "}", "", ""));}
         ;
+
+assignment:	VAR ASSIGN_EQ expression 	{;}
+        |	VAR ASSIGN_EQ literal 		{;}
+        ;
+
+literal:	NUMBER_LITERAL {;}
+        | 	STRING_LITERAL {;}
+        ;
+
+fundeclaration: FUNCTION VAR funargs RETURNING type {;}
+        ;
+
+function:	FUNCTION VAR funargs funblock {;}
+        ;
+
+funblock:	OPEN_B inblockstatements returnstatement CLOSE_B {;}
+        ;
+
+returnstatement:	RETURN expression SEMICOLON {;}
+        ;
+
+funargs:	OPEN_P  CLOSE_P 	{;}
+        | 	OPEN_P arglist CLOSE_P	{;}
+
+arglist:	arglist COMMA arg 	{;}
+        | 	arg 			{;}
+        ;
+
+arg:	type VAR {;}
+        ;
+
+type:		INT 	{;}
+        | 	STR 	{;}
+        | 	DOUBLE 	{;}
+        ;
+
 expression: VAR EQ  VAR {strcpy($$, c_string($1, "==", $3, "", ""));}
         |   VAR GT  VAR {;}
         |   VAR GE  VAR {;}
