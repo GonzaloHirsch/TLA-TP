@@ -80,7 +80,7 @@ hyperstatement:
         ;
 
 ifsentence:
-                IF      OPEN_P  expression      CLOSE_P block   {printf("ifff \n");}
+                IF OPEN_P expression CLOSE_P block   {printf("ifff \n");}
         ;
 
 statement:

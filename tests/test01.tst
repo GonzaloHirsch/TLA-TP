@@ -1,11 +1,5 @@
 start
-if (x == 1) {
-    {
-        {
-            {
-                x==1;
-            }
-        }
+    if (expr == 10) {
+        expre == 10;
     }
-}
 end
