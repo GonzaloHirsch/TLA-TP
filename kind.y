@@ -117,7 +117,7 @@ foreach:
         ; 
 foreachbody:
         statement {;}
-        | funblock {printf("funblock");}
+        | funblock {printf("funblock\n");}
         ;
 
 block:	OPEN_B inblockstatements  CLOSE_B {
@@ -151,7 +151,7 @@ funargs:	OPEN_P  CLOSE_P 	{;}
         | 	OPEN_P arglist CLOSE_P	{;}
         ;
 
-arglist:	arglist COMMA arg 	{;}
+arglist:	arglist COMMA arg 	{printf("arglist\n");;}
         | 	arg 			{;}
         ;
 
@@ -159,7 +159,7 @@ arg:	type VAR {;}
         ;
 
 funcall:
-        VAR funcallargs {;}
+        VAR funcallargs {printf("funcall\n");}
         ;
 
 funcallargs:
@@ -168,7 +168,7 @@ funcallargs:
         ;
 
 funarglist:
-        funarglist COMMA funarg {;}
+        funarglist COMMA funarg {printf("funarglist\n");}
         | funarg {;}
         ;
 

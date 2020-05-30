@@ -8,14 +8,14 @@ start
         x == 1234;
         while (x == 1234) {
             printf("hola");
-            if(a == 2) {
-                printf("%s", 3);
+            if (a == 21234) {
+                printf("s", 12341);
             }
-            else if (b == 2) {
-                printf("%s", 3, 4, 5);
+            else if (b == 2425) {
+                printf("%s", 12343, 41234, 12345);
             }
             else {
-                x = 2;
+                x = 212;
             }
         }
     }
