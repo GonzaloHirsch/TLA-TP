@@ -56,6 +56,7 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "print"         return PRINT;
 "start"         return START;
 "end"           return END;
+"cross"             return CROSS;
 [\t ]           ;
 \n              {yylineno++;}
 {number} 		{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}

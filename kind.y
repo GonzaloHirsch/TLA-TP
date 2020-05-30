@@ -33,7 +33,7 @@
 %token<string> EQ GT GE LT LE NE
 %token<string> NUMBER_LITERAL STRING_LITERAL
 %token<string> VAR
-%token<string> ADD SUBS PROD DIV MODULE
+%token<string> ADD SUBS PROD DIV MODULE CROSS
 %token<string> AND OR NOT
 %token<string> OPEN_B CLOSE_B OPEN_P CLOSE_P OPEN_BRACK CLOSE_BRACK
 %token<string> PRINT
@@ -252,6 +252,9 @@ operation:      VAR ADD VAR                     {;}
         |       VAR SUBS NUMBER_LITERAL         {;}
         |       VAR DIV NUMBER_LITERAL          {;}
         |       VAR PROD NUMBER_LITERAL         {;}
+        |       VAR CROSS VAR                   {
+                printf("%s %s cross %s // var cross var\n", $$, $1, $3);
+                }
         |       NUMBER_LITERAL ADD VAR          {;}
         |       NUMBER_LITERAL SUBS VAR         {;}
         |       NUMBER_LITERAL DIV VAR          {;}
@@ -260,6 +263,28 @@ operation:      VAR ADD VAR                     {;}
         |       NUMBER_LITERAL SUBS NUMBER_LITERAL         {;}
         |       NUMBER_LITERAL DIV NUMBER_LITERAL          {;}
         |       NUMBER_LITERAL PROD NUMBER_LITERAL         {;}
+
+        |       NUMBER_LITERAL ADD arrayliteral           {printf("numb literal add array literal\n");}
+        |       arrayliteral  ADD arrayliteral           {printf("array literal add array literal\n");}
+        |       arrayliteral  ADD NUMBER_LITERAL          {printf("array literal add num literal\n");}
+        |       arrayliteral  SUBS arrayliteral          {printf("array literal subs array literal\n");}
+        |       arrayliteral  SUBS NUMBER_LITERAL         {printf("array literal subs num literal\n");}
+        |       NUMBER_LITERAL  PROD arrayliteral          {printf("num literal prod array literal\n");}
+        |       arrayliteral  PROD arrayliteral           {printf("array literal prod array literal\n");}
+        |       arrayliteral  PROD NUMBER_LITERAL         {printf("array literal prod num literal\n");}
+        |       arrayliteral  DIV NUMBER_LITERAL         {printf("array literal div num literal\n");}
+        |       arrayliteral CROSS      arrayliteral    {printf("arraylit cross arraylit\n");}
+
+        |       arrayliteral ADD VAR    {;}
+        |       arrayliteral SUBS VAR    {;}
+        |       arrayliteral PROD VAR    {;}
+        |       arrayliteral DIV VAR    {;}
+        |       arrayliteral CROSS VAR  {;}
+        |       VAR ADD arrayliteral    {;}
+        |       VAR SUBS arrayliteral    {;}
+        |       VAR PROD arrayliteral    {;}
+        |       VAR CROSS arrayliteral    {;}
+
         |       SUBS VAR                                   {;}
         |       VAR                                        {;}
         |       NUMBER_LITERAL                             {;}
