@@ -44,6 +44,7 @@
 %type<string> hyperstatement
 %type<string> entrypoint
 %type<string> expression
+%type<string> generalexpression
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
@@ -87,22 +88,22 @@ inblockstatement:	statement SEMICOLON 	{;}
         |       	while   		{;}
         ;
 
-ifsentence:	IF OPEN_P expression CLOSE_P block   		{
+ifsentence:	IF OPEN_P generalexpression CLOSE_P block   		{
         // strcpy($$, c_string("if (", $3, ")", $5, "")) ;
         ;
         }
-        |       IF OPEN_P expression CLOSE_P block elsetrain 	{printf("if that has elsetrain\n");}
+        |       IF OPEN_P generalexpression CLOSE_P block elsetrain 	{printf("if that has elsetrain\n");}
         ;
 
 elsetrain:	ELSE block 						{printf("last else\n");}
-        |       ELSE_IF OPEN_P expression CLOSE_P block 		{printf("else if\n");}
-        |       ELSE_IF OPEN_P expression CLOSE_P block elsetrain 	{printf("else if with else train\n");}
+        |       ELSE_IF OPEN_P generalexpression CLOSE_P block 		{printf("else if\n");}
+        |       ELSE_IF OPEN_P generalexpression CLOSE_P block elsetrain 	{printf("else if with else train\n");}
         ;
 
-while:	WHILE OPEN_P expression CLOSE_P block	{printf("while shit\n");}
+while:	WHILE OPEN_P generalexpression CLOSE_P block	{printf("while shit\n");}
         ;
 
-statement:	expression      {
+statement:	generalexpression      {
         strcpy($$, $1);
         }
         |       assignment      {;}
@@ -118,7 +119,7 @@ vardeclaration:
         ;
 
 vardeclassignment: 
-        type VAR ASSIGN_EQ expression {;}
+        type VAR ASSIGN_EQ generalexpression {;}
         | type VAR ASSIGN_EQ literal {;}
         ;
 
@@ -136,7 +137,7 @@ block:	OPEN_B inblockstatements  CLOSE_B {
         }
         ;
 
-assignment:	VAR ASSIGN_EQ expression 	{;}
+assignment:	VAR ASSIGN_EQ generalexpression 	{;}
         |	VAR ASSIGN_EQ literal 		{;}
         ;
 
@@ -154,7 +155,7 @@ funblock:	OPEN_B inblockstatements returnstatement CLOSE_B {;}
         |       OPEN_B inblockstatements CLOSE_B {;}
         ;
 
-returnstatement:	RETURN expression SEMICOLON {;}
+returnstatement:	RETURN generalexpression SEMICOLON {;}
         ;
 
 funargs:	OPEN_P  CLOSE_P 	{;}
@@ -193,19 +194,19 @@ type:		INT 	{;}
         | 	DOUBLE 	{;}
         ;
 
-expression: VAR EQ  VAR {
-        // strcpy($$, c_string($1, "==", $3, "", ""));
-                ;
-        }
+generalexpression:      generalexpression AND expression {;}
+        |               generalexpression OR expression {;}
+        |               expression {;}
+        ;
+
+
+expression: VAR EQ  VAR {;}
         |   VAR GT  VAR {;}
         |   VAR GE  VAR {;}
         |   VAR LT  VAR {;}
         |   VAR LE  VAR {;}
         |   VAR NE  VAR {;}
-        |   VAR EQ  NUMBER_LITERAL {
-                // strcpy($$, c_string($1, "==", $3, "", ""));
-                ;
-        }
+        |   VAR EQ  NUMBER_LITERAL {;}
         |   VAR GT  NUMBER_LITERAL {;}
         |   VAR GE  NUMBER_LITERAL {;}
         |   VAR LT  NUMBER_LITERAL {;}
