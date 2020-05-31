@@ -6,6 +6,18 @@ all:
 	gcc -g lex.yy.c y.tab.c symboltable.c utility.c node2.c -o codeGenerator
 	./test.sh
 
+mac:
+	yacc -d kind.y --debug
+	lex grammar.l
+	gcc -g lex.yy.c y.tab.c symboltable.c utility.c node2.c -o codeGenerator
+	./test.sh
+
+debug_mac:
+	yacc -d kind.y --debug
+	lex grammar.l
+	gcc -g lex.yy.c y.tab.c symboltable.c utility.c node2.c -o codeGenerator
+	./debug.sh tests/test11-firstparseable.tst
+
 clean:
 	rm -f codeGenerator
 	rm -rf tests/*.c tests/*results
