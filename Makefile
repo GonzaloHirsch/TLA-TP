@@ -1,9 +1,9 @@
 .PHONY: clean
 
 all:
-	yacc -d kind.y --debug
+	yacc -d kind.y --debug -Wconflicts-rr
 	lex grammar.l
-	gcc lex.yy.c y.tab.c symboltable.c utility.c node2.c -o codeGenerator
+	gcc -g lex.yy.c y.tab.c symboltable.c utility.c node2.c -o codeGenerator
 	./test.sh
 
 clean:
