@@ -5,7 +5,8 @@
     #include <string.h>
     #include "symboltable.h"
     #include "utility.h"
-    #include "node2.h"
+    #include "node.h"
+    #include "translate.h"
 
     void yyerror (GenericNode ** node, char *s);
     int yylex();
@@ -294,10 +295,15 @@ main(void) {
 	
 	yyparse(&codeRootNode);
 
-        printf("%s\n", codeRootNode->value);
+        char * code = translate(codeRootNode);
+        if (code == NULL){
+                freeGenericNode(codeRootNode);
+                return 1;
+        }
+
+        printf("%s\n", code);
 
         freeGenericNode(codeRootNode);
-
 /*
 	char * translation = translateToC((Token *)code);
 	//We should always call get functions after translateToC

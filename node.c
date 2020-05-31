@@ -1,4 +1,4 @@
-#include "node2.h"
+#include "node.h"
 
 // GenericNode * newGenericNodeAux(NodeList * hyperStatements) {
 //     GenericNode * epn = malloc(sizeof(GenericNode));
