@@ -10,7 +10,7 @@
 #define MAX_CONCAT 5   
 
 typedef enum {
-    NODE_LIST,
+    NODE_LIST = 0,
     NODE_FUNCTIONS,
     
     NODE_ENTRYPOINT,
@@ -33,8 +33,18 @@ typedef enum {
     NODE_LITERAL,
     NODE_VARIABLE,  
     NODE_ARRAYLITERAL,
+    NODE_STRING_LITERAL,
 
     NODE_OPERATION,
+    NODE_G_OPERATION,
+
+    NODE_EXPRESSION,
+    NODE_G_EXPRESSION,
+
+    NODE_INT,
+    NODE_DOUBLE,
+    NODE_STR    ,
+
 } NodeType;
 
 // Information about the node itinfo

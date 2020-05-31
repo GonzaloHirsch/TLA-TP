@@ -71,6 +71,8 @@
 %type<node> type literal
 %type<node> while
 %type<node> elsetrain
+%type<node> funarg
+%type<node> arrayliteral
 
 %%
 
@@ -163,16 +165,19 @@ block:	OPEN_B inblockstatements  CLOSE_B {
         }
         ;
 
-assignment:	VAR ASSIGN_EQ literal	        {;}
-        |	VAR ASSIGN_EQ generaloperation 	{;} 
-        |       VAR ASSIGN_EQ generalexpression {;}
+assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+                                                        $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, 2, varNode, $3);}
+        |	VAR ASSIGN_EQ generaloperation 	{       GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+                                                        $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, 2, varNode, $3);}
+        |       VAR ASSIGN_EQ generalexpression {       GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+                                                        $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, 2, varNode, $3);}
         ;
 
-literal:        STRING_LITERAL {;}
+literal:        STRING_LITERAL {$$ = newGenericNode(STRING_LITERAL, $1);}
         ;
 
 arrayliteral:
-                OPEN_BRACK numlist CLOSE_BRACK {;}
+                OPEN_BRACK numlist CLOSE_BRACK {}
         ;
 
 numlist:
@@ -221,46 +226,46 @@ funarglist:
         ;
 
 funarg:
-        VAR {;}
-        | STRING_LITERAL {;}
-        | NUMBER_LITERAL {;}
+        VAR              {$$ = newGenericNode(NODE_VARIABLE,$1);}
+        | STRING_LITERAL {$$ = newGenericNode(NODE_STRING_LITERAL,$1);}
+        | NUMBER_LITERAL {$$ = newGenericNode(NODE_LITERAL,$1);}
         ;
 
-type:		INT 	{;}
-        | 	STR 	{;}
-        | 	DOUBLE 	{;}
+type:		INT 	{$$ = newGenericNode(NODE_INT,$1);}
+        | 	STR 	{$$ = newGenericNode(NODE_STR,$1);}
+        | 	DOUBLE 	{$$ = newGenericNode(NODE_DOUBLE,$1);}
         ;
 
-generalexpression:      generalexpression AND expression {;}
-        |               generalexpression OR expression {;}
-        |               expression {;}
-        ;
-
-
-expression: expunity EQ  expunity {;}
-        |   expunity GT  expunity {;}
-        |   expunity GE  expunity {;}
-        |   expunity LT  expunity {;}
-        |   expunity LE  expunity {;}
-        |   expunity NE  expunity {;}
-        |   NOT VAR               {;}
-        ;
-
-expunity:       VAR               {;}
-        |       NUMBER_LITERAL    {;}
-        ;
-
-generaloperation:       operation                        {printf("%s\n",$1);}
-        |               operation ADD   generaloperation {printf("%s + %s\n",$1,$3);}
-        |               operation SUBS  generaloperation {printf("%s - %s\n",$1,$3);}
+generalexpression:      generalexpression AND expression {$$ = newGenericNodeWithChildren(NODE_G_EXPRESSION, "AND", 2, $1, $3);}
+        |               generalexpression OR expression {$$ = newGenericNodeWithChildren(NODE_G_EXPRESSION, "OR", 2, $1, $3);}
+        |               expression                      {$$ = newGenericNodeWithChildren(NODE_G_EXPRESSION, "PLAIN", 1, $1);}
         ;
 
 
-operation:      unity                            {$$ = newGenericNodeWithChildren(NODE_OPERATION, "PLAIN", 1, $1)}
-        |       unity PROD operation             {$$ = newGenericNodeWithChildren(NODE_OPERATION, "PROD", 2, $1, $3)}
-        |       unity DIV  operation             {printf("%s / %s\n",$1,$3);}
-        |       unity CROSS operation            {printf("%s cross %s\n",$1,$3);}
-        |       SUBS operation                   {printf("-%s\n",$1);}
+expression: expunity EQ  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "EQ", 2, $1, $3);}
+        |   expunity GT  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "GT", 2, $1, $3);}
+        |   expunity GE  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "GE", 2, $1, $3);}
+        |   expunity LT  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "LT", 2, $1, $3);}
+        |   expunity LE  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "LE", 2, $1, $3);}
+        |   expunity NE  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "NE", 2, $1, $3);}
+        |   NOT expunity          {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "NOT", 1, $2);}
+        ;
+
+expunity:       VAR               {$$ = newGenericNode(NODE_VARIABLE, $1);}
+        |       NUMBER_LITERAL    {$$ = newGenericNode(NODE_LITERAL, $1);}
+        ;
+
+generaloperation:       operation                        {$$ = newGenericNodeWithChildren(NODE_G_OPERATION, "PLAIN", 1, $1);}
+        |               operation ADD   generaloperation {$$ = newGenericNodeWithChildren(NODE_G_OPERATION, "ADD", 2, $1,$3);}
+        |               operation SUBS  generaloperation {$$ = newGenericNodeWithChildren(NODE_G_OPERATION, "SUBS", 2, $1,$3);}
+        ;
+
+
+operation:      unity                            {$$ = newGenericNodeWithChildren(NODE_OPERATION, "PLAIN", 1, $1);}
+        |       unity PROD operation             {$$ = newGenericNodeWithChildren(NODE_OPERATION, "PROD", 2, $1, $3);}
+        |       unity DIV  operation             {$$ = newGenericNodeWithChildren(NODE_OPERATION, "DIV", 2, $1, $3);}
+        |       unity CROSS operation            {$$ = newGenericNodeWithChildren(NODE_OPERATION, "CROSS", 2, $1, $3);}
+        |       SUBS operation                   {$$ = newGenericNodeWithChildren(NODE_OPERATION, "SUBS", 1, $2);       }
         ;
 
 
