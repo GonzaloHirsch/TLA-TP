@@ -75,3 +75,387 @@ type:   INT     {char * str = (char *)malloc((strlen("int") + 1) sizeof(char)); 
     |   STR     {char * str = (char *)malloc((strlen("char *") + 1) sizeof(char)); strcpy(str, "char *"); $$ = str;}
     |   DOUBLE  {char * str = (char *)malloc((strlen("double") + 1) sizeof(char)); strcpy(str, "double"); $$ = str;}
     ;
+
+
+#include "node.h"
+
+int mallocError(void * pointer){
+    if(pointer == NULL){
+        return 1;
+    }
+    return 0;
+}
+
+
+Node * initNode(NodeType type){
+    Node * node = malloc(sizeof(Node *));
+    if(mallocError(node)) {
+        return NULL;
+    }
+    node->type = type;
+
+}
+
+void freeNode(Node * node){
+    if(node != NULL){
+        free(node);
+    }
+    
+}
+
+
+NodeList * initNodeList(Node self, Node * actual, Node * next){
+    NodeList * nList = malloc(sizeof(NodeList *));
+        if(mallocError(nList)) {
+        return NULL;
+    }
+
+    nList->self = self;
+    nList->actual = actual;
+    nList-> next = next;
+
+}
+
+FunctionsNode * initFuncNode(Node self, NodeList * functions){
+        FunctionsNode * funcList = malloc(sizeof(FunctionsNode *));
+        if(mallocError(funcList)) {
+        return NULL;
+    }
+
+    funcList ->self = self;
+    funcList -> functions = functions;
+
+    return funcList;
+}
+
+
+
+FunctionDefinitionNode * initFuncDefNode(Node self, NodeList * params, Node * block, Node * name){
+    FunctionDefinitionNode * funcDef = malloc(sizeof(FunctionDefinitionNode *));
+        if(mallocError(funcDef)) {
+            return NULL;
+         }
+    funcDef -> self = self;
+    funcDef -> params = params;
+    funcDef -> block = block;
+    funcDef -> name = name;
+
+    return funcDef;
+}
+
+
+FunctionCallNode * initFuncCallNode(Node self, char * name, NodeList * params){
+        FunctionCallNode * funcCall = malloc(sizeof(FunctionCallNode *));
+        if(mallocError(funcCall)) {
+            return NULL;
+         }
+
+        funcCall -> self = self;
+        funcCall -> name = name;
+        funcCall -> params = params;
+
+
+        return funcCall;
+
+
+}
+
+VariableNode * initVarNode(Node self, char * name){
+    VariableNode * varNode = malloc(sizeof(VariableNode *));
+    if(mallocError(varNode)) {
+        return NULL;
+    }
+
+
+    // have to update variables value
+    varNode -> self = self;
+    varNode -> name = name;
+
+    return varNode;
+
+}
+
+
+ConstantNode * initConstNode(Node self, VarType type, void * value){
+    //initialize constant depending on type later? constant needs type?
+    ConstantNode * constNode = malloc(sizeof(ConstantNode *));
+    if(mallocError(constNode)) {
+        return NULL;
+    }
+
+    constNode -> self = self;
+    constNode -> type = type;
+    constNode -> value = value;
+
+    return constNode;
+
+
+}
+
+BinaryOperationNode * initBinaryOperationNode(Node self, Node * left, Node * right, char * op){
+    BinaryOperationNode * binOpNode = malloc(sizeof(BinaryOperationNode *));
+    if(mallocError(binOpNode)) {
+        return NULL;
+    }
+
+    binOpNode -> self = self;
+    binOpNode -> left = left;
+    binOpNode -> right = right;
+    binOpNode -> op = op;
+
+    return binOpNode;
+
+}
+
+
+UnaryOperationNode * initUnaryOperationNode(Node self, Node * expression, char * op){
+    UnaryOperationNode * unOpNode = malloc(sizeof(UnaryOperationNode *));
+    if(mallocError(unOpNode)) {
+        return NULL;
+    }
+
+    unOpNode -> self = self;
+    unOpNode -> expression = expression;
+    unOpNode -> op = op;
+
+    return unOpNode;
+
+}
+
+BlockNode * initBlockNode(Node self, NodeList * statement){
+    BlockNode * blockNode = malloc(sizeof(BlockNode *));
+    if(mallocError(blockNode)) {
+        return NULL;
+    }
+
+    blockNode -> self = self;
+    blockNode -> statement = statement;
+
+    return blockNode;
+
+}
+
+
+WhileNode * initWhileNode(Node self, NodeList * statements, Node * expression, Node * ret){
+    WhileNode * whileNode = malloc(sizeof(WhileNode *));
+    if(mallocError(whileNode)) {
+        return NULL;
+    }
+
+    whileNode -> self = self;
+    whileNode -> statements = statements;
+    whileNode -> expression = expression;
+    whileNode -> ret = ret;
+
+    return whileNode;
+
+}
+
+IfNode * initIfNode(Node self, Node * ifExpression, Node  * ifBlock, Node * elseIfExpression, Node * elseBlock ){
+    IfNode * ifNode = malloc(sizeof(IfNode *));
+    if(mallocError(ifNode)) {
+        return NULL;
+    }
+
+    ifNode -> self = self;
+    ifNode -> ifExpression = ifExpression;
+    ifNode -> ifBlock = ifBlock;
+    ifNode -> elseIfExpression = elseIfExpression;
+    ifNode -> elseIfBlock = elseBlock;
+
+
+    return ifNode;
+
+}
+
+
+PrintNode * initPrintNode(Node self, Node * expression){
+    PrintNode * printNode = malloc(sizeof(PrintNode *));
+    if(mallocError(printNode)) {
+        return NULL;
+    }  
+
+
+    printNode -> self = self;
+    printNode -> expression = expression;
+
+
+    return printNode;
+
+}
+
+MainNode  * initMainNode(Node self, NodeList * statements){
+    MainNode * mainNode = malloc(sizeof(MainNode *));
+    if(mallocError(mainNode)) {
+        return NULL;
+    }  
+
+    mainNode -> self = self;
+    mainNode -> statements = statements;
+
+    return mainNode;
+    
+}
+
+
+StatementNode * initStatement(Node self, Node * statement){
+
+    StatementNode * statementNode = malloc(sizeof(StatementNode *));
+    if(mallocError(statementNode)) return NULL;
+
+    statementNode -> self = self;
+    statementNode -> statement = statementNode;
+
+    return statementNode;
+}
+
+
+
+#ifndef __NODE_H__
+#define __NODE_H__
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include "symboltable.h"
+#define LENGTH 5000
+#define MAX_CONCAT 5   
+
+typedef enum {
+    NODE_LIST,
+    NODE_FUNCTIONS,
+    NODE_FUNCTION_DECLARATION,
+    NODE_FUNCTION_CALL,
+    NODE_VARIABLE,
+    NODE_CONSTANT,
+    NODE_BINARY_OP,
+    NODE_UNARY_OP,
+    NODE_BLOCK,
+    NODE_WHILE,
+    NODE_IF,
+    NODE_PRINT,
+    NODE_MAIN,
+    
+    NODE_RETURN,
+    NODE_IF,
+    NODE_VARIABLE,
+    NODE_CONSTANT
+} NodeType;
+
+// Information about the node itself
+typedef struct Node {
+    NodeType type;
+} Node;
+
+// List of nodes
+typedef struct NodeList {
+    Node self;                  // Information about the type of node
+    Node * actual;              // The actual node with information
+    Node * next;                // The next node on the list
+} NodeList;
+
+// Node for a functions section
+typedef struct FunctionsNode {
+    Node self;                  // Information about the type of node
+    NodeList * functions;       // List of functions declared
+} FunctionsNode;
+
+typedef struct FunctionDefinitionNode {
+    Node self;                  //
+    NodeList * params;
+    Node * block;
+    Node * name;
+} FunctionDefinitionNode;
+
+typedef struct FunctionCallNode {
+    Node self;
+    char * name;
+    NodeList * params;
+} FunctionCallNode;
+
+typedef struct VariableNode {
+    Node self;
+    char * name;
+} VariableNode;
+
+typedef struct ConstantNode {
+    Node self;
+    VarType type;
+    void * value;
+} ConstantNode;
+
+typedef struct BinaryOperationNode {
+    Node self;
+    Node * left;                // Left side of operation
+    Node * right;               // Right side of operation
+    char * op;                  // Operator for the operation
+} BinaryOperationNode;
+
+typedef struct UnaryOperationNode {
+    Node self;
+    Node * expression;                // Expression to be operated on
+    char * op;                  // Operator for the expression
+} UnaryOperationNode;
+
+typedef struct BlockNode {
+    Node self;
+    NodeList * statement;
+} BlockNode;
+
+typedef struct WhileNode {
+    Node self;
+    NodeList * statements;
+    Node * expression;
+    Node * ret;
+} WhileNode;
+
+typedef struct IfNode {  //how to get the values of each node?
+    Node self;
+    Node * ifExpression;
+    Node * ifBlock;
+    Node * elseIfExpression;
+    Node * elseIfBlock;
+} IfNode;
+
+typedef struct PrintNode {
+    Node self;
+    Node * expression;
+} PrintNode;
+
+typedef struct MainNode {
+    Node self;
+    NodeList * statements;
+} MainNode;
+
+typedef struct StatementNode {
+    Node self;
+    Node * statement;
+} StatementNode;
+
+typedef struct symvar{
+    char name[32];
+    VarType type;
+    void * value;
+} symvartype;
+
+char * c_string(char *a1, char * a2, char * a3, char *a4, char *a5);
+
+char * dotProduct(int ** a,int ** b);
+
+Node * initNode(NodeType type);
+void freeNode(Node * node);
+NodeList * initNodeList(Node self, Node * actual, Node * next);
+FunctionsNode * initFuncNode(Node self, NodeList * functions);
+FunctionDefinitionNode * initFuncDefNode(Node self, NodeList * params, Node * block, Node * name);
+FunctionCallNode * initFuncCallNode(Node self, char * name, NodeList * params);
+VariableNode * initVarNode(Node self, char * name);
+ConstantNode * initConstNode(Node self, VarType type, void * value);
+BinaryOperationNode * initBinaryOperationNode(Node self, Node * left, Node * right, char * op);
+UnaryOperationNode * initUnaryOperationNode(Node self, Node * expression, char * op);
+BlockNode * initBlockNode(Node self, NodeList * statement);
+WhileNode * initWhileNode(Node self, NodeList * statements, Node * expression, Node * ret);
+PrintNode * initPrintNode(Node self, Node * expression);
+MainNode  * initMainNode(Node self, NodeList * statements);
+StatementNode * initStatement(Node self, Node * statement);
+
+#endif
