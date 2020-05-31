@@ -25,8 +25,8 @@
     int integer;
     double decimal;
     char string[5000];
-    struct GenericNode * node;
-    struct NodeList * nodelist;
+    struct Node * node;
+    struct NodeList * nodeList;
     struct EntryPointNode * entrypointnode;
 }
 
@@ -51,9 +51,9 @@
 %token<string> DEFINE PASSING
 %token<string> ASSIGN_EQ
 
+%type<string> hyperstatements
+%type<string> hyperstatement
 %type<entrypointnode> entrypoint
-%type<nodelist> hyperstatements
-%type<node> hyperstatement
 %type<string> expression
 %type<string> generalexpression
 %type<string> generaloperation
@@ -63,7 +63,7 @@
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
-%type<nodelist> inblockstatements
+%type<string> inblockstatements
 %type<string> inblockstatement
 %type<string> funcall
 
@@ -72,8 +72,8 @@
 entrypoint: 	
         START hyperstatements END 	{
         printf("entrypoint\n");
-        *cstring = newEntryPointNode($2); $$ = *cstring;
-        strcpy((*cstring)->testString, "helloThere\n");
+        *cstring = newEntryPointNode(NULL); $$ = *cstring;
+        strcpy((char * )(*cstring)->testString, "helloThere\n");
         // printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));
         }
         |       START END       		{
@@ -85,7 +85,6 @@ entrypoint:
 hyperstatements: 	hyperstatement hyperstatements 	{;}
         |       	hyperstatement 			{
                 // strcpy($$, $1);
-                                $$ = createNodeList($1);
                         ;
                 }
         ;

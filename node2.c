@@ -13,27 +13,9 @@ EntryPointNode * newEntryPointNode(NodeList * hyperStatements) {
     return epn;
 }
 
-NodeList * createNodeList(GenericNode * node) {
-    NodeList nl = malloc(sizeof(NodeList));
-    nl -> self.type = NODE_LIST;
-    nl -> current = node;
-    nl -> next = NULL;
-    return nl
-}
-
-addToNodeList(NodeList * nodeList, GenericNode * node) {
-
-    NodeList * nl = nodeList;
-    while (nl->next != NULL)
-        nl = nl->next;
-    nl->next = createNodeList(node);
-    return nodeList;
-}
-
-
 void freeEntryPointNode (EntryPointNode * epn) {
     if (epn->hyperstatements != NULL){
-        // free(epn->hyperstatements);
+        free(epn->hyperstatements);
     }
     free(epn);
 }

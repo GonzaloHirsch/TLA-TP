@@ -37,28 +37,15 @@ typedef struct Node {
 // List of nodes
 typedef struct NodeList {
     Node self;                  // Information about the type of node
-    GenericNode * current;              // The current node with information
-    struct NodeList * next;                // The next node on the list
+    Node * current;              // The current node with information
+    Node * next;                // The next node on the list
 } NodeList;
-
-// This is used so as to enable polymorphism and reduce
-// code size
-
-typedef struct GenericNode {
-    Node self;
-} GenericNode;
 
 typedef struct EntryPointNode {
     Node self;
     char testString[240];
     NodeList * hyperstatements;
 } EntryPointNode;
-
-typedef struct HyperStatementsNode {
-    Node self;
-    char testString[240];
-    
-} HyperStatementsNode;
 
 // Node for a functions section
 typedef struct FunctionsNode {
@@ -68,6 +55,4 @@ typedef struct FunctionsNode {
 
 EntryPointNode * newEntryPointNode(NodeList * hyperStatements);
 void freeEntryPointNode(EntryPointNode * entryPointNode);
-createNodeList(GenericNode * node);
-addToNodeList(NodeList * nodeList, GenericNode * node);
 #endif
