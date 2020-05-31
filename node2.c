@@ -30,6 +30,13 @@ NodeList * addToNodeList(NodeList * nodeList, GenericNode * node) {
     return nodeList;
 }
 
+// For test purposes only
+
+GenericNode * newGenericNode(NodeType type) {
+    GenericNode * gn = malloc(sizeof(GenericNode));
+    gn->self.type = type;
+    return gn;
+}
 
 void freeEntryPointNode (EntryPointNode * epn) {
     if (epn->hyperstatements != NULL){

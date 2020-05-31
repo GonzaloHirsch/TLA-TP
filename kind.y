@@ -92,12 +92,12 @@ hyperstatements: 	hyperstatement hyperstatements 	{;}
 
 hyperstatement:	statement SEMICOLON 	{
         // strcpy($$, strcat($1,";"));
-                ;
+                $$ = newGenericNode(NODE_HYPERSTATEMENT);
         }
-        |       block   		{;}
-        |       ifsentence        	{;}
-        |      	while   		{;}
-        |       function 		{;}
+        |       block   		{$$ = newGenericNode(NODE_HYPERSTATEMENT);}
+        |       ifsentence        	{$$ = newGenericNode(NODE_HYPERSTATEMENT);}
+        |      	while   		{$$ = newGenericNode(NODE_HYPERSTATEMENT);}
+        |       function 		{$$ = newGenericNode(NODE_HYPERSTATEMENT);}
         ;
 
 inblockstatements:	inblockstatement inblockstatements 	{;}

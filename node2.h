@@ -46,6 +46,7 @@ typedef struct NodeList {
 
 typedef struct GenericNode {
     Node self;
+    char testString[240];
 } GenericNode;
 
 typedef struct EntryPointNode {
@@ -70,4 +71,6 @@ EntryPointNode * newEntryPointNode(NodeList * hyperStatements);
 void freeEntryPointNode(EntryPointNode * entryPointNode);
 NodeList * createNodeList(GenericNode * node);
 NodeList * addToNodeList(NodeList * nodeList, GenericNode * node);
+// TODO remove when everything is working
+GenericNode * newGenericNode(NodeType type);
 #endif
