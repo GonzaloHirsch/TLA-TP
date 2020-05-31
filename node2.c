@@ -7,7 +7,7 @@
 //     return epn;
 // }
 
-GenericNode * newGenericNodeWithChildren(NodeType type, int childrenCount, ...) {
+GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int childrenCount, ...) {
     va_list childrenList;
     GenericNode * createdNode = malloc(sizeof(GenericNode));
     createdNode->info.type = type;
@@ -20,6 +20,14 @@ GenericNode * newGenericNodeWithChildren(NodeType type, int childrenCount, ...) 
         it = it->next;
     }
     va_end(childrenList);
+
+    if(value != 0){
+        createdNode->value = malloc(strlen(value) * sizeof(char));
+        strcpy(createdNode->value, value);
+    }
+    else{
+        createdNode->value = 0;
+    }
     
     return createdNode;
 }
@@ -41,15 +49,19 @@ NodeList * addToNodeList(NodeList * nodeList, GenericNode * node) {
     return nodeList;
 }
 
-// For test purposes only
-
-GenericNode * newGenericNode(NodeType type) {
+GenericNode * newGenericNode(NodeType type, char * value) {
     GenericNode * gn = malloc(sizeof(GenericNode));
     gn->info.type = type;
+    if(value != 0){
+        gn->value = malloc(strlen(value) * sizeof(char));
+        strcpy(gn->value, value);
+    }
+    else{
+        gn->value = 0;
+    }
     return gn;
 }
 
-// GenericNode * newGenericNodeWithChildren(NodeType type, )
 
 void freeGenericNode (GenericNode * gn) {
     if (gn->children != NULL){

@@ -1,4 +1,4 @@
-#ifndef __NODE2_H__
+    #ifndef __NODE2_H__
 #define __NODE2_H__
 #include <stdlib.h>
 #include <stdarg.h>
@@ -29,7 +29,12 @@ typedef enum {
     NODE_BLOCK,
     NODE_FUNBLOCK,
     NODE_ASSIGNMENT,
-    NODE_LITERAL
+
+    NODE_LITERAL,
+    NODE_VARIABLE,  
+    NODE_ARRAYLITERAL,
+
+    NODE_OPERATION,
 } NodeType;
 
 // Information about the node itinfo
@@ -49,7 +54,7 @@ typedef struct NodeList {
 
 typedef struct GenericNode {
     NodeInfo info;
-    char testString[240];
+    char * value;
     struct GenericNode * parent;
     NodeList * children;
 } GenericNode;
@@ -63,8 +68,8 @@ typedef struct FunctionsNode {
 NodeList * createNodeList(GenericNode * node);
 NodeList * addToNodeList(NodeList * nodeList, GenericNode * node);
 
-GenericNode * newGenericNode(NodeType type);
-GenericNode * newGenericNodeWithChildren(NodeType type, int childrenCound, ...);
+GenericNode * newGenericNode(NodeType type, char * value);
+GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int childrenCound, ...);
 
 void freeGenericNode(GenericNode * GenericNode);
 void freeNodeList (NodeList * nl);

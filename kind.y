@@ -77,15 +77,13 @@ entrypoint:
         START hyperstatements END 	{
         printf("entrypoint\n");
         // create node for hyprestatements
-        GenericNode * hyperstatements = newGenericNode(NODE_HYPERSTATEMENTS);
+        GenericNode * hyperstatements = newGenericNode(NODE_HYPERSTATEMENTS, 0);
         hyperstatements->children = $2;
-        *codeRootNode = newGenericNodeWithChildren(NODE_ENTRYPOINT, 1, hyperstatements); $$ = *codeRootNode;
-        strcpy((*codeRootNode)->testString, "helloThere\n");
-        // printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));
+        *codeRootNode = newGenericNodeWithChildren(NODE_ENTRYPOINT, "helloThere\n", 1, hyperstatements); $$ = *codeRootNode;
+
         }
         |       START END       		{
-                *codeRootNode = newGenericNode(NODE_ENTRYPOINT); $$ = *codeRootNode;
-                strcpy((char * )(*codeRootNode)->testString, "helloThere\n");
+                *codeRootNode = newGenericNode(NODE_ENTRYPOINT, "helloThere\n"); $$ = *codeRootNode;
                 }
         ;
 
@@ -93,75 +91,74 @@ hyperstatements: 	hyperstatement hyperstatements 	{$$ = addToNodeList($2, $1);}
         |       	hyperstatement 			{$$ = createNodeList($1);}
         ;
 
-hyperstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 1, $1);}
-        |       block   		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 1, $1);}
-        |       ifsentence        	{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 1, $1);}
-        |      	while   		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 1, $1);}
-        |       function 		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 1, $1);}
+hyperstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, 1, $1);}
+        |       block   		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, 1, $1);}
+        |       ifsentence        	{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, 1, $1);}
+        |      	while   		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, 1, $1);}
+        |       function 		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, 1, $1);}
         ;
 
 inblockstatements:	inblockstatement inblockstatements 	{$$ = addToNodeList($2, $1);}
         | 		inblockstatement 			{$$ = createNodeList($1);}
         ;
-inblockstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENT, 1, $1);}
-        |       	ifsentence        	{$$ = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENT, 1, $1);}
-        |       	while   		{$$ = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENT, 1, $1);}
+inblockstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENT, 0, 1, $1);}
+        |       	ifsentence        	{$$ = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENT, 0, 1, $1);}
+        |       	while   		{$$ = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENT, 0, 1, $1);}
         ;
 
 ifsentence:	IF OPEN_P generalexpression CLOSE_P block
-                {$$ = newGenericNodeWithChildren(NODE_IFSENTENCE, 2, $3, $5);}
+                {$$ = newGenericNodeWithChildren(NODE_IFSENTENCE, 0, 2, $3, $5);}
         |       IF OPEN_P generalexpression CLOSE_P block elsetrain
-                {$$ = newGenericNodeWithChildren(NODE_IFSENTENCE, 3, $3, $5, $6);}
+                {$$ = newGenericNodeWithChildren(NODE_IFSENTENCE, 0 ,3, $3, $5, $6);}
         ;
 
 elsetrain:	ELSE block
-                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 1, $2);}
+                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 0, 1, $2);}
         |       ELSE_IF OPEN_P generalexpression CLOSE_P block
-                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 2, $3, $5);}
+                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 0, 2, $3, $5);}
         |       ELSE_IF OPEN_P generalexpression CLOSE_P block elsetrain
-                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 3, $3, $5, $6);}
+                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 0, 3, $3, $5, $6);}
         ;
 
 while:	WHILE OPEN_P generalexpression CLOSE_P block
-        {$$ = newGenericNodeWithChildren(NODE_WHILE, 2, $3, $5);}
+        {$$ = newGenericNodeWithChildren(NODE_WHILE, 0, 2, $3, $5);}
         ;
 
 statement:	
-                generalexpression       {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);}
-        |       assignment              {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);}
-        |       vardeclaration          {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);}
-        |       vardeclassignment       {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);}
-        |       fundeclaration          {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);}
-        |       funcall                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);}
-        |       foreach                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);}
+                generalexpression       {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
+        |       assignment              {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
+        |       vardeclaration          {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
+        |       vardeclassignment       {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
+        |       fundeclaration          {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
+        |       funcall                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
+        |       foreach                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
         ;
 
 vardeclaration:
-                type VAR {$$ = newGenericNodeWithChildren(NODE_VARDECLARATION, 2, $1, $2);}
+                type VAR {$$ = newGenericNodeWithChildren(NODE_VARDECLARATION, 0, 2, $1, $2);}
         |       type  VAR OPEN_BRACK NUMBER_LITERAL CLOSE_BRACK
-                {$$ = newGenericNodeWithChildren(NODE_VARDECLARATION, 3, $1, $2, $4);}
+                {$$ = newGenericNodeWithChildren(NODE_VARDECLARATION, 0, 3, $1, $2, $4);}
         ;
 
 vardeclassignment: 
-          type VAR ASSIGN_EQ generaloperation {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 3, $1, $2, $4);}
-        | type VAR ASSIGN_EQ literal {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 3, $1, $2, $4);}
-        | type VAR ASSIGN_EQ generalexpression {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 3, $1, $2, $4);}
+          type VAR ASSIGN_EQ generaloperation {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, $2, $4);}
+        | type VAR ASSIGN_EQ literal {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, $2, $4);}
+        | type VAR ASSIGN_EQ generalexpression {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, $2, $4);}
         ;
 
 foreach:
         VAR DOT FOREACH OPEN_P VAR RIGHT_ARROW foreachbody CLOSE_P 
-        {$$ = newGenericNodeWithChildren(NODE_FOREACH, 3, $1, $5, $7);}
+        {$$ = newGenericNodeWithChildren(NODE_FOREACH, 0, 3, $1, $5, $7);}
         ; 
 foreachbody:
-        statement {$$ = newGenericNodeWithChildren(NODE_FOREACHBODY, 1, $1);}
-        | funblock {$$ = newGenericNodeWithChildren(NODE_FOREACHBODY, 1, $1);}
+        statement {$$ = newGenericNodeWithChildren(NODE_FOREACHBODY, 0, 1, $1);}
+        | funblock {$$ = newGenericNodeWithChildren(NODE_FOREACHBODY, 0, 1, $1);}
         ;
 
 block:	OPEN_B inblockstatements  CLOSE_B {
-        // strcpy($$,c_string("{", $2, "}", "", ""));
-        GenericNode * ibssNode = newGenericNode(NODE_INBLOCKSTATEMENTS);
+        GenericNode * ibssNode = newGenericNode(NODE_INBLOCKSTATEMENTS, 0);
         ibssNode->children = $2;
-        $$ = newGenericNodeWithChildren(NODE_STATEMENT, 1, $1);
+        $$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);
         }
         ;
 
@@ -258,17 +255,17 @@ generaloperation:       operation                        {printf("%s\n",$1);}
         ;
 
 
-operation:      unity                            {/*printf("%s\n",$1)*/;}
-        |       unity PROD operation             {printf("%s * %s\n",$1,$3);}
+operation:      unity                            {$$ = newGenericNodeWithChildren(NODE_OPERATION, "PLAIN", 1, $1)}
+        |       unity PROD operation             {$$ = newGenericNodeWithChildren(NODE_OPERATION, "PROD", 2, $1, $3)}
         |       unity DIV  operation             {printf("%s / %s\n",$1,$3);}
         |       unity CROSS operation            {printf("%s cross %s\n",$1,$3);}
         |       SUBS operation                   {printf("-%s\n",$1);}
         ;
 
 
-unity:          VAR                             {;}
-        |       NUMBER_LITERAL                  {;}
-        |       arrayliteral                    {;}
+unity:          VAR                             {$$ = newGenericNode(NODE_VARIABLE, $1);}
+        |       NUMBER_LITERAL                  {$$ = newGenericNode(NODE_LITERAL, $1);}
+        |       arrayliteral                    {$$ = newGenericNodeWithChildren(NODE_ARRAYLITERAL, 0, 1, $1);}
 
 %%
 
@@ -297,7 +294,7 @@ main(void) {
 	
 	yyparse(&codeRootNode);
 
-        printf("%s\n", codeRootNode -> testString);
+        printf("%s\n", codeRootNode->value);
 
         freeGenericNode(codeRootNode);
 
