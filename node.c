@@ -1,8 +1,5 @@
 #include "node.h"
 
-
-
-
 int mallocError(void * pointer){
     if(pointer == NULL){
         return 1;

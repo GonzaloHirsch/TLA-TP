@@ -129,5 +129,20 @@ char * c_string(char *a1, char * a2, char * a3, char *a4, char *a5);
 
 char * dotProduct(int ** a,int ** b);
 
+Node * initNode(NodeType type);
+void freeNode(Node * node);
+NodeList * initNodeList(Node self, Node * actual, Node * next);
+FunctionsNode * initFuncNode(Node self, NodeList * functions);
+FunctionDefinitionNode * initFuncDefNode(Node self, NodeList * params, Node * block, Node * name);
+FunctionCallNode * initFuncCallNode(Node self, char * name, NodeList * params);
+VariableNode * initVarNode(Node self, char * name);
+ConstantNode * initConstNode(Node self, VarType type, void * value);
+BinaryOperationNode * initBinaryOperationNode(Node self, Node * left, Node * right, char * op);
+UnaryOperationNode * initUnaryOperationNode(Node self, Node * expression, char * op);
+BlockNode * initBlockNode(Node self, NodeList * statement);
+WhileNode * initWhileNode(Node self, NodeList * statements, Node * expression, Node * ret);
+PrintNode * initPrintNode(Node self, Node * expression);
+MainNode  * initMainNode(Node self, NodeList * statements);
+StatementNode * initStatement(Node self, Node * statement);
 
 #endif

@@ -2,25 +2,35 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <ctype.h>
+    #include <string.h>
     #include "symboltable.h"
     #include "utility.h"
+    #include "node2.h"
 
-    void yyerror (char *s);
+    void yyerror (EntryPointNode ** node, char *s);
     int yylex();
     
     extern int yylineno;
 
-    symvartype symboltable[MAX_VARIABLES];  
+    EntryPointNode * cstring;
+
+    symvartype symboltable[MAX_VARIABLES];
 %}
 
 %start entrypoint
+
 
 %union {
     char character;
     int integer;
     double decimal;
     char string[5000];
+    struct Node * node;
+    struct NodeList * nodeList;
+    struct EntryPointNode * entrypointnode;
 }
+
+%parse-param {struct EntryPointNode ** cstring}
 
 %token<string> IF ELSE_IF ELSE REPEAT WHILE UNTIL
 %token<string> SET TO_BE AS
@@ -43,7 +53,7 @@
 
 %type<string> hyperstatements
 %type<string> hyperstatement
-%type<string> entrypoint
+%type<entrypointnode> entrypoint
 %type<string> expression
 %type<string> generalexpression
 %type<string> generaloperation
@@ -59,12 +69,16 @@
 
 %%
 
-entrypoint: 	START hyperstatements END 	{
+entrypoint: 	
+        START hyperstatements END 	{
         printf("entrypoint\n");
+        *cstring = newEntryPointNode(NULL); $$ = *cstring;
+        strcpy((char * )(*cstring)->testString, "helloThere\n");
         // printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));
         }
         |       START END       		{
-                printf("int main(){ return 1; }") ;
+                *cstring = newEntryPointNode(NULL); $$ = *cstring;
+                strcpy((char * )(*cstring)->testString, "helloThere\n");
                 }
         ;
 
@@ -249,7 +263,7 @@ unity:          VAR                             {;}
 
 %%
 
-void yyerror(char *s) {
+void yyerror(EntryPointNode ** cstring, char *s) {
 	fprintf(stderr, "%s\n", s);
 	printf("-------------------------------------\nError: %s in line %d\n-------------------------------------\n", s, yylineno);
 	exit(0);
@@ -257,6 +271,11 @@ void yyerror(char *s) {
 
 int
 main(void) {
+
+        #ifdef YYDEBUG
+        yydebug = 1;
+        #endif
+
         /*
 	variables = malloc(MAX_VARIABLES * sizeof(VariableToken *));
 
@@ -267,7 +286,11 @@ main(void) {
 	memset(variables, '\0', sizeof(VariableToken *) * MAX_VARIABLES);
         */
 	
-	yyparse();
+	yyparse(&cstring);
+
+        printf("%s\n", cstring -> testString);
+
+        freeEntryPointNode(cstring);
 
 /*
 	char * translation = translateToC((Token *)code);
