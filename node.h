@@ -27,7 +27,6 @@ typedef enum {
     NODE_FOREACH,
     NODE_FOREACHBODY,
     NODE_BLOCK,
-    NODE_FUNBLOCK,
     NODE_ASSIGNMENT,
 
     NODE_LITERAL,
@@ -43,7 +42,17 @@ typedef enum {
 
     NODE_INT,
     NODE_DOUBLE,
-    NODE_STR    ,
+    NODE_STR,
+
+    NODE_FUNDEC,
+    NODE_FUNCTION,
+    NODE_FUNBLOCK,
+    NODE_FUNBLOCK_RET,
+    NODE_FUNCALL,
+    NODE_FUNCALLARGS,
+    NODE_RETURN_STATEMENT,
+    NODE_FUNARGS,
+    NODE_ARG,
 
 } NodeType;
 

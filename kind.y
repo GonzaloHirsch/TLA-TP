@@ -6,7 +6,7 @@
     #include "symboltable.h"
     #include "utility.h"
     #include "node.h"
-    #include "translate.h"
+    #include "translation.h"
 
     void yyerror (GenericNode ** node, char *s);
     int yylex();
@@ -65,7 +65,8 @@
 %type<node> block funblock
 %type<nodelist> inblockstatements
 %type<node> inblockstatement
-%type<node> funcall fundeclaration function
+%type<node> funcall fundeclaration function returnstatement funargs funcallargs
+%type<nodelist> arglist funarglist
 %type<node> foreach foreachbody
 %type<node> assignment vardeclassignment vardeclaration
 %type<node> type literal
@@ -73,6 +74,8 @@
 %type<node> elsetrain
 %type<node> funarg
 %type<node> arrayliteral
+%type<nodelist> numlist
+%type<node> arg
 
 %%
 
@@ -159,9 +162,8 @@ foreachbody:
         ;
 
 block:	OPEN_B inblockstatements  CLOSE_B {
-        GenericNode * ibssNode = newGenericNode(NODE_INBLOCKSTATEMENTS, 0);
-        ibssNode->children = $2;
-        $$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);
+        GenericNode * ibssNode = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENTS, 0, 1, $2);
+        $$ = newGenericNodeWithChildren(NODE_BLOCK, 0, 1, ibssNode);
         }
         ;
 
@@ -177,52 +179,74 @@ literal:        STRING_LITERAL {$$ = newGenericNode(STRING_LITERAL, $1);}
         ;
 
 arrayliteral:
-                OPEN_BRACK numlist CLOSE_BRACK {}
+                OPEN_BRACK numlist CLOSE_BRACK {$$ = newGenericNodeWithChildren(NODE_ARRAYLITERAL, 0, 1, $2);}
         ;
 
 numlist:
-        numlist COMMA NUMBER_LITERAL {;}
-        | NUMBER_LITERAL {;}
+        numlist COMMA NUMBER_LITERAL    {GenericNode * node = newGenericNode(NODE_LITERAL, $3);
+                                        $$ = addToNodeList($1,node); }
+        | NUMBER_LITERAL                {GenericNode * node = newGenericNode(NODE_LITERAL, $1);
+                                        $$ = createNodeList(node);}
         ;
 
-fundeclaration: FUNCTION VAR funargs RETURNING type {;}
+fundeclaration: FUNCTION VAR funargs RETURNING type 
+              {GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
+               $$ = newGenericNodeWithChildren(NODE_FUNDEC, 0, 3, varNode, $3, $5);}
         ;
 
-function:	FUNCTION VAR funargs funblock {;}
+function:	FUNCTION VAR funargs funblock 
+        {GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
+        $$ = newGenericNodeWithChildren(NODE_FUNCTION, 0, 3, varNode, $3, $4);}
         ;
 
 funblock:	
-                OPEN_B inblockstatements returnstatement CLOSE_B {;}
-        |       OPEN_B inblockstatements CLOSE_B {;}
+                OPEN_B inblockstatements returnstatement CLOSE_B 
+                {
+                 GenericNode * ibssNode = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENTS, 0, 1, $2);
+                 $$ = newGenericNodeWithChildren(NODE_FUNBLOCK_RET, 0, 2, ibssNode, $3);
+                }
+        |       OPEN_B inblockstatements CLOSE_B 
+                {
+                 GenericNode * ibssNode = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENTS, 0, 1, $2);
+                 $$ = newGenericNodeWithChildren(NODE_FUNBLOCK, 0, 1, ibssNode);
+                }
         ;
 
-returnstatement:	 RETURN generaloperation SEMICOLON {;}
-        |                RETURN generalexpression SEMICOLON {;}
+returnstatement:        RETURN generaloperation SEMICOLON {
+                        $$ = newGenericNodeWithChildren(NODE_RETURN_STATEMENT, 0, 1, $2);}
+        |               RETURN generalexpression SEMICOLON {
+                        $$ = newGenericNodeWithChildren(NODE_RETURN_STATEMENT, 0, 1, $2);}
         ;
 
-funargs:	OPEN_P  CLOSE_P 	{;}
-        | 	OPEN_P arglist CLOSE_P	{;}
+funargs:	OPEN_P  CLOSE_P 	{$$ = newGenericNodeWithChildren(NODE_FUNARGS, 0, 1, 0);}
+        | 	OPEN_P arglist CLOSE_P	{$$ = newGenericNodeWithChildren(NODE_FUNARGS, 0, 1, $2);}
         ;
 
-arglist:	arglist COMMA arg 	{printf("arglist\n");;}
-        | 	arg 			{;}
+arglist:	arglist COMMA arg 	{$$ = addToNodeList($1,$3); }
+        | 	arg 			{$$ = createNodeList($1);}
         ;
 
-arg:	type VAR {;}
+arg:	type VAR {GenericNode * node = newGenericNode(NODE_VARIABLE, $2);
+                  $$ = newGenericNodeWithChildren(NODE_ARG, 0, 2, $1, node);}
         ;
 
 funcall:
-        VAR funcallargs {printf("funcall\n");}
+        VAR funcallargs 
+        {GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+        $$ = newGenericNodeWithChildren(NODE_FUNCALL, 0, 2, varNode, $2);
+        }
         ;
 
 funcallargs:
-        OPEN_P CLOSE_P {;}
-        |       OPEN_P funarglist CLOSE_P {;}               
+        OPEN_P CLOSE_P
+        {$$ = newGenericNodeWithChildren(NODE_FUNCALLARGS, 0, 1, 0);}
+        |       OPEN_P funarglist CLOSE_P
+        {$$ = newGenericNodeWithChildren(NODE_FUNCALLARGS, 0, 1, $2);}             
         ;
 
 funarglist:
-        funarglist COMMA funarg {printf("funarglist\n");}
-        | funarg {;}
+        funarglist COMMA funarg {$$ = addToNodeList($1,$3);}
+        | funarg                {$$ = createNodeList($1);}
         ;
 
 funarg:
