@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 #include "symboltable.h"
 #define LENGTH 5000
 #define MAX_CONCAT 5   
@@ -29,14 +30,14 @@ typedef enum {
     NODE_LITERAL
 } NodeType;
 
-// Information about the node itself
-typedef struct Node {
+// Information about the node itinfo
+typedef struct NodeInfo {
     NodeType type;
-} Node;
+} NodeInfo;
 
 // List of nodes
 typedef struct NodeList {
-    Node self;                  // Information about the type of node
+    NodeInfo info;                  // Information about the type of node
     struct GenericNode * current;              // The current node with information
     struct NodeList * next;                // The next node on the list
 } NodeList;
@@ -45,27 +46,25 @@ typedef struct NodeList {
 // code size
 
 typedef struct GenericNode {
-    Node self;
+    NodeInfo info;
     char testString[240];
+    struct GenericNode * parent;
     NodeList * children;
 } GenericNode;
 
-typedef struct EntryPointNode {
-    Node self;
-    char testString[240];
-    NodeList * hyperstatements;
-} EntryPointNode;
-
 // Node for a functions section
 typedef struct FunctionsNode {
-    Node self;                  // Information about the type of node
+    NodeInfo info;                  // Information about the type of node
     NodeList * functions;       // List of functions declared
 } FunctionsNode;
 
-EntryPointNode * newEntryPointNode(NodeList * hyperStatements);
-void freeEntryPointNode(EntryPointNode * entryPointNode);
 NodeList * createNodeList(GenericNode * node);
 NodeList * addToNodeList(NodeList * nodeList, GenericNode * node);
-// TODO remove when everything is working
+
 GenericNode * newGenericNode(NodeType type);
+GenericNode * newGenericNodeWithChildren(NodeType type, int childrenCound, ...);
+
+void freeGenericNode(GenericNode * GenericNode);
+void freeNodeList (NodeList * nl);
+
 #endif

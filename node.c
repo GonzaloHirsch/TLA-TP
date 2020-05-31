@@ -25,25 +25,25 @@ void freeNode(Node * node){
 }
 
 
-NodeList * initNodeList(Node self, Node * actual, Node * next){
+NodeList * initNodeList(Node info, Node * actual, Node * next){
     NodeList * nList = malloc(sizeof(NodeList *));
         if(mallocError(nList)) {
         return NULL;
     }
 
-    nList->self = self;
+    nList->info = info;
     nList->actual = actual;
     nList-> next = next;
 
 }
 
-FunctionsNode * initFuncNode(Node self, NodeList * functions){
+FunctionsNode * initFuncNode(Node info, NodeList * functions){
         FunctionsNode * funcList = malloc(sizeof(FunctionsNode *));
         if(mallocError(funcList)) {
         return NULL;
     }
 
-    funcList ->self = self;
+    funcList ->info = info;
     funcList -> functions = functions;
 
     return funcList;
@@ -51,12 +51,12 @@ FunctionsNode * initFuncNode(Node self, NodeList * functions){
 
 
 
-FunctionDefinitionNode * initFuncDefNode(Node self, NodeList * params, Node * block, Node * name){
+FunctionDefinitionNode * initFuncDefNode(Node info, NodeList * params, Node * block, Node * name){
     FunctionDefinitionNode * funcDef = malloc(sizeof(FunctionDefinitionNode *));
         if(mallocError(funcDef)) {
             return NULL;
          }
-    funcDef -> self = self;
+    funcDef -> info = info;
     funcDef -> params = params;
     funcDef -> block = block;
     funcDef -> name = name;
@@ -65,13 +65,13 @@ FunctionDefinitionNode * initFuncDefNode(Node self, NodeList * params, Node * bl
 }
 
 
-FunctionCallNode * initFuncCallNode(Node self, char * name, NodeList * params){
+FunctionCallNode * initFuncCallNode(Node info, char * name, NodeList * params){
         FunctionCallNode * funcCall = malloc(sizeof(FunctionCallNode *));
         if(mallocError(funcCall)) {
             return NULL;
          }
 
-        funcCall -> self = self;
+        funcCall -> info = info;
         funcCall -> name = name;
         funcCall -> params = params;
 
@@ -81,7 +81,7 @@ FunctionCallNode * initFuncCallNode(Node self, char * name, NodeList * params){
 
 }
 
-VariableNode * initVarNode(Node self, char * name){
+VariableNode * initVarNode(Node info, char * name){
     VariableNode * varNode = malloc(sizeof(VariableNode *));
     if(mallocError(varNode)) {
         return NULL;
@@ -89,7 +89,7 @@ VariableNode * initVarNode(Node self, char * name){
 
 
     // have to update variables value
-    varNode -> self = self;
+    varNode -> info = info;
     varNode -> name = name;
 
     return varNode;
@@ -97,14 +97,14 @@ VariableNode * initVarNode(Node self, char * name){
 }
 
 
-ConstantNode * initConstNode(Node self, VarType type, void * value){
+ConstantNode * initConstNode(Node info, VarType type, void * value){
     //initialize constant depending on type later? constant needs type?
     ConstantNode * constNode = malloc(sizeof(ConstantNode *));
     if(mallocError(constNode)) {
         return NULL;
     }
 
-    constNode -> self = self;
+    constNode -> info = info;
     constNode -> type = type;
     constNode -> value = value;
 
@@ -113,13 +113,13 @@ ConstantNode * initConstNode(Node self, VarType type, void * value){
 
 }
 
-BinaryOperationNode * initBinaryOperationNode(Node self, Node * left, Node * right, char * op){
+BinaryOperationNode * initBinaryOperationNode(Node info, Node * left, Node * right, char * op){
     BinaryOperationNode * binOpNode = malloc(sizeof(BinaryOperationNode *));
     if(mallocError(binOpNode)) {
         return NULL;
     }
 
-    binOpNode -> self = self;
+    binOpNode -> info = info;
     binOpNode -> left = left;
     binOpNode -> right = right;
     binOpNode -> op = op;
@@ -129,13 +129,13 @@ BinaryOperationNode * initBinaryOperationNode(Node self, Node * left, Node * rig
 }
 
 
-UnaryOperationNode * initUnaryOperationNode(Node self, Node * expression, char * op){
+UnaryOperationNode * initUnaryOperationNode(Node info, Node * expression, char * op){
     UnaryOperationNode * unOpNode = malloc(sizeof(UnaryOperationNode *));
     if(mallocError(unOpNode)) {
         return NULL;
     }
 
-    unOpNode -> self = self;
+    unOpNode -> info = info;
     unOpNode -> expression = expression;
     unOpNode -> op = op;
 
@@ -143,13 +143,13 @@ UnaryOperationNode * initUnaryOperationNode(Node self, Node * expression, char *
 
 }
 
-BlockNode * initBlockNode(Node self, NodeList * statement){
+BlockNode * initBlockNode(Node info, NodeList * statement){
     BlockNode * blockNode = malloc(sizeof(BlockNode *));
     if(mallocError(blockNode)) {
         return NULL;
     }
 
-    blockNode -> self = self;
+    blockNode -> info = info;
     blockNode -> statement = statement;
 
     return blockNode;
@@ -157,13 +157,13 @@ BlockNode * initBlockNode(Node self, NodeList * statement){
 }
 
 
-WhileNode * initWhileNode(Node self, NodeList * statements, Node * expression, Node * ret){
+WhileNode * initWhileNode(Node info, NodeList * statements, Node * expression, Node * ret){
     WhileNode * whileNode = malloc(sizeof(WhileNode *));
     if(mallocError(whileNode)) {
         return NULL;
     }
 
-    whileNode -> self = self;
+    whileNode -> info = info;
     whileNode -> statements = statements;
     whileNode -> expression = expression;
     whileNode -> ret = ret;
@@ -172,13 +172,13 @@ WhileNode * initWhileNode(Node self, NodeList * statements, Node * expression, N
 
 }
 
-IfNode * initIfNode(Node self, Node * ifExpression, Node  * ifBlock, Node * elseIfExpression, Node * elseBlock ){
+IfNode * initIfNode(Node info, Node * ifExpression, Node  * ifBlock, Node * elseIfExpression, Node * elseBlock ){
     IfNode * ifNode = malloc(sizeof(IfNode *));
     if(mallocError(ifNode)) {
         return NULL;
     }
 
-    ifNode -> self = self;
+    ifNode -> info = info;
     ifNode -> ifExpression = ifExpression;
     ifNode -> ifBlock = ifBlock;
     ifNode -> elseIfExpression = elseIfExpression;
@@ -190,14 +190,14 @@ IfNode * initIfNode(Node self, Node * ifExpression, Node  * ifBlock, Node * else
 }
 
 
-PrintNode * initPrintNode(Node self, Node * expression){
+PrintNode * initPrintNode(Node info, Node * expression){
     PrintNode * printNode = malloc(sizeof(PrintNode *));
     if(mallocError(printNode)) {
         return NULL;
     }  
 
 
-    printNode -> self = self;
+    printNode -> info = info;
     printNode -> expression = expression;
 
 
@@ -205,13 +205,13 @@ PrintNode * initPrintNode(Node self, Node * expression){
 
 }
 
-MainNode  * initMainNode(Node self, NodeList * statements){
+MainNode  * initMainNode(Node info, NodeList * statements){
     MainNode * mainNode = malloc(sizeof(MainNode *));
     if(mallocError(mainNode)) {
         return NULL;
     }  
 
-    mainNode -> self = self;
+    mainNode -> info = info;
     mainNode -> statements = statements;
 
     return mainNode;
@@ -219,12 +219,12 @@ MainNode  * initMainNode(Node self, NodeList * statements){
 }
 
 
-StatementNode * initStatement(Node self, Node * statement){
+StatementNode * initStatement(Node info, Node * statement){
 
     StatementNode * statementNode = malloc(sizeof(StatementNode *));
     if(mallocError(statementNode)) return NULL;
 
-    statementNode -> self = self;
+    statementNode -> info = info;
     statementNode -> statement = statementNode;
 
     return statementNode;

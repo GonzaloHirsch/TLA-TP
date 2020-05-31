@@ -29,75 +29,75 @@ typedef enum {
     NODE_CONSTANT
 } NodeType;
 
-// Information about the node itself
+// Information about the node itinfo
 typedef struct Node {
     NodeType type;
 } Node;
 
 // List of nodes
 typedef struct NodeList {
-    Node self;                  // Information about the type of node
+    Node info;                  // Information about the type of node
     Node * actual;              // The actual node with information
     Node * next;                // The next node on the list
 } NodeList;
 
 // Node for a functions section
 typedef struct FunctionsNode {
-    Node self;                  // Information about the type of node
+    Node info;                  // Information about the type of node
     NodeList * functions;       // List of functions declared
 } FunctionsNode;
 
 typedef struct FunctionDefinitionNode {
-    Node self;                  //
+    Node info;                  //
     NodeList * params;
     Node * block;
     Node * name;
 } FunctionDefinitionNode;
 
 typedef struct FunctionCallNode {
-    Node self;
+    Node info;
     char * name;
     NodeList * params;
 } FunctionCallNode;
 
 typedef struct VariableNode {
-    Node self;
+    Node info;
     char * name;
 } VariableNode;
 
 typedef struct ConstantNode {
-    Node self;
+    Node info;
     VarType type;
     void * value;
 } ConstantNode;
 
 typedef struct BinaryOperationNode {
-    Node self;
+    Node info;
     Node * left;                // Left side of operation
     Node * right;               // Right side of operation
     char * op;                  // Operator for the operation
 } BinaryOperationNode;
 
 typedef struct UnaryOperationNode {
-    Node self;
+    Node info;
     Node * expression;                // Expression to be operated on
     char * op;                  // Operator for the expression
 } UnaryOperationNode;
 
 typedef struct BlockNode {
-    Node self;
+    Node info;
     NodeList * statement;
 } BlockNode;
 
 typedef struct WhileNode {
-    Node self;
+    Node info;
     NodeList * statements;
     Node * expression;
     Node * ret;
 } WhileNode;
 
 typedef struct IfNode {  //how to get the values of each node?
-    Node self;
+    Node info;
     Node * ifExpression;
     Node * ifBlock;
     Node * elseIfExpression;
@@ -105,17 +105,17 @@ typedef struct IfNode {  //how to get the values of each node?
 } IfNode;
 
 typedef struct PrintNode {
-    Node self;
+    Node info;
     Node * expression;
 } PrintNode;
 
 typedef struct MainNode {
-    Node self;
+    Node info;
     NodeList * statements;
 } MainNode;
 
 typedef struct StatementNode {
-    Node self;
+    Node info;
     Node * statement;
 } StatementNode;
 
@@ -131,18 +131,18 @@ char * dotProduct(int ** a,int ** b);
 
 Node * initNode(NodeType type);
 void freeNode(Node * node);
-NodeList * initNodeList(Node self, Node * actual, Node * next);
-FunctionsNode * initFuncNode(Node self, NodeList * functions);
-FunctionDefinitionNode * initFuncDefNode(Node self, NodeList * params, Node * block, Node * name);
-FunctionCallNode * initFuncCallNode(Node self, char * name, NodeList * params);
-VariableNode * initVarNode(Node self, char * name);
-ConstantNode * initConstNode(Node self, VarType type, void * value);
-BinaryOperationNode * initBinaryOperationNode(Node self, Node * left, Node * right, char * op);
-UnaryOperationNode * initUnaryOperationNode(Node self, Node * expression, char * op);
-BlockNode * initBlockNode(Node self, NodeList * statement);
-WhileNode * initWhileNode(Node self, NodeList * statements, Node * expression, Node * ret);
-PrintNode * initPrintNode(Node self, Node * expression);
-MainNode  * initMainNode(Node self, NodeList * statements);
-StatementNode * initStatement(Node self, Node * statement);
+NodeList * initNodeList(Node info, Node * actual, Node * next);
+FunctionsNode * initFuncNode(Node info, NodeList * functions);
+FunctionDefinitionNode * initFuncDefNode(Node info, NodeList * params, Node * block, Node * name);
+FunctionCallNode * initFuncCallNode(Node info, char * name, NodeList * params);
+VariableNode * initVarNode(Node info, char * name);
+ConstantNode * initConstNode(Node info, VarType type, void * value);
+BinaryOperationNode * initBinaryOperationNode(Node info, Node * left, Node * right, char * op);
+UnaryOperationNode * initUnaryOperationNode(Node info, Node * expression, char * op);
+BlockNode * initBlockNode(Node info, NodeList * statement);
+WhileNode * initWhileNode(Node info, NodeList * statements, Node * expression, Node * ret);
+PrintNode * initPrintNode(Node info, Node * expression);
+MainNode  * initMainNode(Node info, NodeList * statements);
+StatementNode * initStatement(Node info, Node * statement);
 
 #endif

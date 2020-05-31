@@ -7,12 +7,12 @@
     #include "utility.h"
     #include "node2.h"
 
-    void yyerror (EntryPointNode ** node, char *s);
+    void yyerror (GenericNode ** node, char *s);
     int yylex();
     
     extern int yylineno;
 
-    EntryPointNode * cstring;
+    GenericNode * codeRootNode;
 
     symvartype symboltable[MAX_VARIABLES];
 %}
@@ -27,10 +27,9 @@
     char string[5000];
     struct GenericNode * node;
     struct NodeList * nodelist;
-    struct EntryPointNode * entrypointnode;
 }
 
-%parse-param {struct EntryPointNode ** cstring}
+%parse-param {struct GenericNode ** codeRootNode}
 
 %token<string> IF ELSE_IF ELSE REPEAT WHILE UNTIL
 %token<string> SET TO_BE AS
@@ -51,7 +50,7 @@
 %token<string> DEFINE PASSING
 %token<string> ASSIGN_EQ
 
-%type<entrypointnode> entrypoint
+%type<node> entrypoint
 %type<nodelist> hyperstatements
 %type<node> hyperstatement
 %type<string> expression
@@ -72,13 +71,13 @@
 entrypoint: 	
         START hyperstatements END 	{
         printf("entrypoint\n");
-        *cstring = newEntryPointNode($2); $$ = *cstring;
-        strcpy((*cstring)->testString, "helloThere\n");
+        *codeRootNode = newGenericNode(NODE_ENTRYPOINT); (*codeRootNode)->children = $2; $$ = *codeRootNode;
+        strcpy((*codeRootNode)->testString, "helloThere\n");
         // printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));
         }
         |       START END       		{
-                *cstring = newEntryPointNode(NULL); $$ = *cstring;
-                strcpy((char * )(*cstring)->testString, "helloThere\n");
+                *codeRootNode = newGenericNode(NODE_ENTRYPOINT); $$ = *codeRootNode;
+                strcpy((char * )(*codeRootNode)->testString, "helloThere\n");
                 }
         ;
 
@@ -257,7 +256,7 @@ unity:          VAR                             {;}
 
 %%
 
-void yyerror(EntryPointNode ** cstring, char *s) {
+void yyerror(GenericNode ** codeRootNode, char *s) {
 	fprintf(stderr, "%s\n", s);
 	printf("-------------------------------------\nError: %s in line %d\n-------------------------------------\n", s, yylineno);
 	exit(0);
@@ -280,11 +279,11 @@ main(void) {
 	memset(variables, '\0', sizeof(VariableToken *) * MAX_VARIABLES);
         */
 	
-	yyparse(&cstring);
+	yyparse(&codeRootNode);
 
-        printf("%s\n", cstring -> testString);
+        printf("%s\n", codeRootNode -> testString);
 
-        freeEntryPointNode(cstring);
+        freeGenericNode(codeRootNode);
 
 /*
 	char * translation = translateToC((Token *)code);
