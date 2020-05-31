@@ -82,18 +82,11 @@ entrypoint:
                 }
         ;
 
-hyperstatements: 	hyperstatement hyperstatements 	{;}
-        |       	hyperstatement 			{
-                // strcpy($$, $1);
-                                $$ = createNodeList($1);
-                        ;
-                }
+hyperstatements: 	hyperstatement hyperstatements 	{$$ = addToNodeList($2, $1);}
+        |       	hyperstatement 			{$$ = createNodeList($1);}
         ;
 
-hyperstatement:	statement SEMICOLON 	{
-        // strcpy($$, strcat($1,";"));
-                $$ = newGenericNode(NODE_HYPERSTATEMENT);
-        }
+hyperstatement:	statement SEMICOLON 	{$$ = newGenericNode(NODE_HYPERSTATEMENT);}
         |       block   		{$$ = newGenericNode(NODE_HYPERSTATEMENT);}
         |       ifsentence        	{$$ = newGenericNode(NODE_HYPERSTATEMENT);}
         |      	while   		{$$ = newGenericNode(NODE_HYPERSTATEMENT);}

@@ -47,6 +47,7 @@ typedef struct NodeList {
 typedef struct GenericNode {
     Node self;
     char testString[240];
+    NodeList * children;
 } GenericNode;
 
 typedef struct EntryPointNode {
@@ -54,12 +55,6 @@ typedef struct EntryPointNode {
     char testString[240];
     NodeList * hyperstatements;
 } EntryPointNode;
-
-typedef struct HyperStatementsNode {
-    Node self;
-    char testString[240];
-    
-} HyperStatementsNode;
 
 // Node for a functions section
 typedef struct FunctionsNode {
