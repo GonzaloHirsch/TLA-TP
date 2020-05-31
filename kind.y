@@ -62,7 +62,7 @@
 %type<string> ifsentence
 %type<string> statement
 %type<string> block
-%type<nodelist> inblockstatements
+%type<string> inblockstatements
 %type<string> inblockstatement
 %type<string> funcall
 
@@ -71,7 +71,10 @@
 entrypoint: 	
         START hyperstatements END 	{
         printf("entrypoint\n");
-        *codeRootNode = newGenericNode(NODE_ENTRYPOINT); (*codeRootNode)->children = $2; $$ = *codeRootNode;
+        // create node for hyprestatements
+        GenericNode * hyperstatements = newGenericNode(NODE_HYPERSTATEMENTS);
+        hyperstatements->children = $2;
+        *codeRootNode = newGenericNodeWithChildren(NODE_ENTRYPOINT, 1, hyperstatements); $$ = *codeRootNode;
         strcpy((*codeRootNode)->testString, "helloThere\n");
         // printf("%s", c_string("int main() {", $2, "return 1;}", "", ""));
         }

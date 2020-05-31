@@ -4,5 +4,5 @@ else
 rm fifo
 mkfifo fifo
 cat $1 > fifo &
-gdb ./codeGenerator
+gdb ./codeGenerator -q
 fi
