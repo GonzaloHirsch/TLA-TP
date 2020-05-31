@@ -27,6 +27,7 @@ typedef enum {
     NODE_FOREACH,
     NODE_FOREACHBODY,
     NODE_BLOCK,
+    NODE_FUNBLOCK,
     NODE_ASSIGNMENT,
     NODE_LITERAL
 } NodeType;
