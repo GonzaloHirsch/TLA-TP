@@ -1,4 +1,5 @@
 #include "translation.h"
+#include "variablesTranslation.h"
 
 char * processStamentListNode(GenericNode * gn);
 char * processWhileNode(GenericNode * gn);
