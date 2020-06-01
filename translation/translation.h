@@ -20,6 +20,7 @@ char * processAssignment(GenericNode * gn);
 char * processLeaf(GenericNode * gn);
 char * processNodeList(NodeList * nl);
 char * processInBlockStatements(GenericNode * gn);
+char * processInBlockStatement(GenericNode * gn);   
 char * processHyperStatement(GenericNode * gn);
 char * processHyperStatements(GenericNode * gn);
 
