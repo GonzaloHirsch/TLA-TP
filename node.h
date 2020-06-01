@@ -99,4 +99,7 @@ GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int childr
 void freeGenericNode(GenericNode * GenericNode);
 void freeNodeList (NodeList * nl);
 
+void printGenericNode(GenericNode * gn, int tabs);
+void printNodeList (NodeList * nl, int tabs);
+
 #endif
