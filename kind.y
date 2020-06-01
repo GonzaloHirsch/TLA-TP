@@ -193,7 +193,7 @@ literal:        STRING_LITERAL {$$ = newGenericNode(STRING_LITERAL, $1);}
 arrayliteral:
                 OPEN_BRACK numlist CLOSE_BRACK {
                                         GenericNode * childNode = newGenericNode(NODE_NUMLIST,0);
-                                        childNode->children = $2
+                                        childNode->children = $2;
                                         $$ = newGenericNodeWithChildren(NODE_ARRAYLITERAL, 0, 1, childNode);}
         ;
 
@@ -236,7 +236,7 @@ returnstatement:        RETURN generaloperation SEMICOLON {
 funargs:	OPEN_P  CLOSE_P 	{$$ = newGenericNodeWithChildren(NODE_FUNARGS, 0, 1, 0);}
         | 	OPEN_P arglist CLOSE_P	{
                                         GenericNode * childNode = newGenericNode(NODE_ARGLIST,0);
-                                        childNode->children = $2
+                                        childNode->children = $2;
                                         $$ = newGenericNodeWithChildren(NODE_FUNARGS, 0, 1, childNode);
                                         }
         ;
@@ -262,7 +262,7 @@ funcallargs:
                 }
         |       OPEN_P funarglist CLOSE_P
                 {GenericNode * childNode = newGenericNode(NODE_FUNARGLIST,0);
-                childNode->children = $2
+                childNode->children = $2;
                 $$ = newGenericNodeWithChildren(NODE_FUNCALLARGS, 0, 1, childNode);
         }             
         ;
