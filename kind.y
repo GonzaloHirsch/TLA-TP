@@ -278,9 +278,11 @@ funarg:
         | NUMBER_LITERAL {$$ = newGenericNode(NODE_LITERAL,$1);}
         ;
 
-type:		INT 	{$$ = newGenericNode(NODE_INT,$1);}
-        | 	STR 	{$$ = newGenericNode(NODE_STR,$1);}
-        | 	DOUBLE 	{$$ = newGenericNode(NODE_DOUBLE,$1);}
+type:		INT 	{
+                        printf("getting INT node %s\n", $1);
+                        $$ = newGenericNode(NODE_INT,"int");}
+        | 	STR 	{$$ = newGenericNode(NODE_STR,"char *");}
+        | 	DOUBLE 	{$$ = newGenericNode(NODE_DOUBLE,"double");}
         ;
 
 generalexpression:      generalexpression AND expression {$$ = newGenericNodeWithChildren(NODE_G_EXPRESSION, "AND", 2, $1, $3);}
@@ -346,7 +348,7 @@ main(void) {
         */
 	
 	yyparse(&codeRootNode);
-
+        printGenericNode(codeRootNode, 0);
         char * code = translate(codeRootNode);
         if (code == NULL){
                 //freeGenericNode(codeRootNode);
