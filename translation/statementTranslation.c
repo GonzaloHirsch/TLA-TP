@@ -7,8 +7,11 @@ char * processStatement(GenericNode * gn) {
     char * childString = process(gn->children->current);
     if (childString == NULL){
         return NULL;
-    }
-    strcat(childString, ";");
-    printf("a statement %s\n", childString);
-    return childString;
+
+    char * buffer = malloc(1 + sizeof(childString));
+    sprintf(buffer, "%s;", childString);
+
+    printf("a statement %s", buffer);
+
+    return buffer;
 }

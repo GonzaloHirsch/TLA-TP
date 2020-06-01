@@ -246,8 +246,6 @@ char * processNodeList(NodeList * listCurrent){
 
 char * processAssignment(GenericNode * gn){
 
-    return "a = b";
-
     char * buffer = malloc(1);
     if (buffer == NULL) {
         return NULL;
