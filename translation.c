@@ -12,7 +12,6 @@ char * process(GenericNode * gn){
     if (gn == NULL){
         return value;
     }
-    char * code = malloc;
     switch (gn->info.type){
         case NODE_LIST:
             break;
@@ -36,12 +35,19 @@ char * process(GenericNode * gn){
         case NODE_FOREACHBODY:
             break;
         case NODE_BLOCK:
+            value = processBlock(gn);
             break;
         case NODE_FUNBLOCK:
             break;
         case NODE_ASSIGNMENT:
+            value = processAssignment(gn);
             break;
+        case NODE_INT:
+        case NODE_STR:
+        case NODE_DOUBLE:
+        case NODE_VARIABLE:
         case NODE_LITERAL:
+            value = processLeaf(gn);
             break;        
         case NODE_HYPERSTATEMENTS:
         case NODE_HYPERSTATEMENT:
@@ -52,12 +58,16 @@ char * process(GenericNode * gn){
         case NODE_WHILE:
             value = processWhileNode(gn);
             break;
+
+
         default:
             break;
     }
 
     return value;
 }
+
+
 
 char * processEntrypointNode(GenericNode * gn){
     if (gn == NULL){
@@ -197,9 +207,233 @@ char * processStamentListNode(GenericNode * gn){
     return buffer;
 }
 
+
+char * processNodeList(NodeList * current){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+    buffer[0] = '\0';
+
+    GenericNode * currentNode;
+    char * processedNode;
+    while (current != NULL){
+        // Getting the current Generic Node
+        currentNode = current->current;
+        if (currentNode == NULL){ 
+            break; 
+        }
+
+        // Processing the current Generic Node
+        processedNode = process(currentNode);
+        if (processedNode == NULL){
+            free(buffer);
+            break;
+        }
+
+        // Saving new memory for the extended buffer
+        buffer = realloc(buffer, strlen(processedNode) + strlen(buffer));
+        if (buffer == NULL){
+            free(processedNode);
+            free(buffer);
+            break;
+        }
+
+        // Concatenating the old buffer with the new processed info
+        strcat(buffer, processedNode);
+        free(processedNode);
+
+        current = current->next;
+    }
+
+    // Liberating the memory for the pointer to processed node
+    free(processedNode);
+
+    return buffer;
+
+}
+
+
+
+
+
+char * processAssignment(GenericNode * gn){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+    buffer[0] = '\0';
+
+    if (gn == NULL){
+        return buffer;
+    }
+
+    NodeList * child = gn -> children;
+    
+    GenericNode * var = child -> current;
+
+    char * varName = process(var);
+
+
+
+    NodeList * valueNList = child ->next;
+
+    char * valueNListProc = processNodeList(valueNList);
+
+
+
+    buffer = realloc(buffer, strlen(varName) + strlen(" = ") + strlen(valueNList) + strlen(buffer));
+    if (buffer == NULL | valueNListProc == NULL){
+            free(valueNList);
+            free(varName);
+            free(buffer);
+            return NULL;
+    }
+
+    strcat(buffer, varName);
+    strcat(buffer, " = ");
+    strcat(buffer, valueNList);
+
+    free(varName);
+    free(valueNList);
+
+    return buffer;
+}
+
+
+
+char * processLeaf(GenericNode * gn){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+    buffer[0] = '\0';
+
+    if (gn == NULL){
+        free(buffer);
+        return NULL;
+    }  
+
+
+    char * value = gn -> value;
+
+    buffer = realloc(buffer, strlen(value) + strlen(buffer));
+    if (buffer == NULL){
+        return NULL;
+    }
+
+
+    strcat(buffer, value);
+
+    
+
+    return buffer;
+
+}
+
+char * processIf(GenericNode * gn){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+    buffer[0] = '\0';
+
+    char * if_op = "if (";
+    char * p_close = ")";
+    
+    GenericNode * ge = gn -> children -> current;
+    
+    char * geProc = process(ge);
+
+    if(geProc == NULL){
+        free(buffer);
+        return NULL;
+    }
+
+    NodeList * block = gn -> children -> next;
+
+    char * blockProc = processNodeList(block);
+    if(blockProc ==  NULL){
+        free(buffer);
+        free(geProc);
+        return NULL;
+    }
+
+    buffer = realloc(buffer, strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + strlen(buffer));
+
+    if(buffer == NULL){
+        free(buffer);
+        free(geProc);
+        free(blockProc);
+        return NULL;
+    }
+    
+    strcat(buffer, if_op);
+    strcat(buffer, geProc);
+    strcat(buffer, p_close);
+    strcat(buffer, blockProc);
+
+    free(geProc);
+    free(blockProc);
+
+    return buffer;
+
+}
+
+
+
+char * processBlock(GenericNode * gn){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+    buffer[0] = '\0';
+
+    char * op_b;
+    char * cl_b;
+
+    strcpy(op_b, "{ \n");
+    strcpy(cl_b, "\n }");
+
+    if(gn == NULL){
+        free(buffer);
+        return NULL;
+    }
+
+    NodeList * child = gn -> children;
+    char * processedBlock = processNodeList(child);
+    if(processedBlock == NULL){
+        free(buffer);
+        return NULL;
+    }
+
+
+    buffer = realloc(buffer, strlen(op_b) + strlen(processedBlock) + strlen(cl_b) + strlen(buffer));
+    
+    if(buffer == NULL | child == NULL){
+        free(processedBlock);
+        free(buffer);
+        return NULL;
+    }
+
+
+    
+    strcat(buffer, op_b);
+    strcat(buffer, processedBlock);
+    strcat(buffer, cl_b);
+
+    free(processedBlock);
+
+    return buffer;
+
+}
+
 // -------------------------- EXPOSED FUNCTIONS --------------------------
 
 char * translate(GenericNode * gn){
     char * code = process(gn);
     return code;
 }
+
+
+
