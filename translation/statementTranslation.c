@@ -7,6 +7,7 @@ char * processStatement(GenericNode * gn) {
     char * childString = process(gn->children->current);
     if (childString == NULL){
         return NULL;
+    }
 
     char * buffer = malloc(1 + sizeof(childString));
     sprintf(buffer, "%s;", childString);
