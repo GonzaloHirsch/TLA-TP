@@ -373,7 +373,7 @@ char * processIf(GenericNode * gn){
     
     //Gets and process general expression. ( .... )
     GenericNode * ge = gn -> children -> current;
-    char * geProc = process(ge);
+    char * geProc = processGeneralExpression(ge);
     if(geProc == NULL){
         return NULL;
     }
