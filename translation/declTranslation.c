@@ -4,8 +4,14 @@ char * processVarDeclaration(GenericNode * gn) {
     NodeList * nl = gn->children;
     //TODO check nullity
     char * type = translate(nl->current);
+    // if (type == NULL)
+    //     printf("PROCESSVARDECLARATION FAIL ON TYPE");
+    //     return NULL;
     nl = nl->next;
     char * var = translate(nl->current);
+    // if (var == NULL)
+    //     printf("PROCESSVARDECLARATION FAIL ON VAR");
+    //     return NULL;
     char * numberLiteral = NULL;
     char * buffer;
     if (nl->next != NULL) {
@@ -16,7 +22,7 @@ char * processVarDeclaration(GenericNode * gn) {
     }
     else {
         buffer = malloc(strlen(type) + strlen(var) + 1);
-        sprintf(buffer, "%s %s[%s]\n", type, var, numberLiteral);
+        sprintf(buffer, "%s %s\n", type, var);
     }
     printf("vardeclaration %s %s %s\n", type, var, numberLiteral);
     return buffer;
