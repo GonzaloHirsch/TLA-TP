@@ -311,7 +311,7 @@ int
 main(void) {
 
         #ifdef YYDEBUG
-        yydebug = 1;
+        // yydebug = 1;
         #endif
 
         /*

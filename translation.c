@@ -8,6 +8,15 @@ char * processBlock(GenericNode * gn);
 char * processAssignment(GenericNode * gn);
 char * processLeaf(GenericNode * gn);
 
+char * processInt(GenericNode * gn);
+char * processInBlockStatements(GenericNode * gn);
+char * processHyperStatement(GenericNode * gn);
+char * processHyperStatements(GenericNode * gn);
+
+char * processVariable(GenericNode * gn);
+char * processDouble(GenericNode * gn);
+char * processStr(GenericNode * gn);
+
 // -------------------------- PRIVATE FUNCTIONS --------------------------
 
 char * process(GenericNode * gn){
@@ -46,15 +55,33 @@ char * process(GenericNode * gn){
             value = processAssignment(gn);
             break;
         case NODE_INT:
+            // TODO implement
+            value = processInt(gn);
         case NODE_STR:
+            // TODO implement
+            // value = processStr(gn);
         case NODE_DOUBLE:
+            // TODO implement
+            // value = processDouble(gn);
         case NODE_VARIABLE:
+            // TODO implement
+            // value = processVariable(gn);
+            break;
         case NODE_LITERAL:
             value = processLeaf(gn);
             break;        
         case NODE_HYPERSTATEMENTS:
+            // TODO implement
+            value = processHyperStatements(gn);
+            break;        
         case NODE_HYPERSTATEMENT:
+            // TODO implement
+            value = processHyperStatement(gn);
+            break;
         case NODE_INBLOCKSTATEMENTS:
+            // TODO implement
+            value = processInBlockStatements(gn);
+            break;
         case NODE_INBLOCKSTATEMENT:
             value = processStamentListNode(gn);
             break;
@@ -430,6 +457,28 @@ char * processBlock(GenericNode * gn){
     return buffer;
 
 }
+
+char * processInBlockStatements(GenericNode * gn) {
+    return processNodeList(gn->children);
+}
+
+char * processHyperStatement(GenericNode * gn) {
+    // Statements add the comma,
+    // won't do checks here
+    return process(gn->children->current);
+}
+
+char * processHyperStatements(GenericNode * gn) {
+    return processNodeList(gn->children);
+}
+
+//FUNCTIONS THAT NEED TO FINISH BEING IMPLEMENTED
+
+char * processInt(GenericNode * gn) {
+    printf("%s\n", gn->value);
+    return gn->value;
+}
+
 
 // -------------------------- EXPOSED FUNCTIONS --------------------------
 
