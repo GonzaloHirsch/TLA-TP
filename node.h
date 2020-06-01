@@ -55,6 +55,10 @@ typedef enum {
     NODE_FUNARGS,
     NODE_ARG,
 
+    NODE_FUNARGLIST,
+    NODE_ARGLIST,
+    NODE_NUMLIST,
+
 } NodeType;
 
 // Information about the node itinfo
