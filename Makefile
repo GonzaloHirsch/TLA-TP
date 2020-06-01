@@ -3,7 +3,7 @@
 all:
 	yacc -d kind.y --debug -Wconflicts-rr
 	lex grammar.l
-	gcc -g lex.yy.c y.tab.c symboltable.c utility.c node.c -o codeGenerator
+	gcc -g lex.yy.c y.tab.c symboltable.c translation.c utility.c node.c -o codeGenerator
 
 test:
 	make all

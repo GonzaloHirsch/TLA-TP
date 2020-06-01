@@ -13,6 +13,8 @@
     
     extern int yylineno;
 
+    extern char * translate(GenericNode * gn);
+
     GenericNode * codeRootNode;
 
     symvartype symboltable[MAX_VARIABLES];
