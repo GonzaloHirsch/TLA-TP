@@ -27,6 +27,7 @@ char * process(GenericNode * gn){
             value = processElseTrain(gn);
             break;
         case NODE_STATEMENT:
+            value = processStatement(gn);
             break;
         case NODE_VARDECLARATION:
             value = processVarDeclaration(gn);
@@ -480,7 +481,7 @@ char * processGeneralExpression(GenericNode * gn){
 //FUNCTIONS THAT NEED TO FINISH BEING IMPLEMENTED
 
 char * processInt(GenericNode * gn) {
-    printf("%s\n", gn->value);
+    printf("Int with value %s\n", gn->value);
     return gn->value;
 }
 

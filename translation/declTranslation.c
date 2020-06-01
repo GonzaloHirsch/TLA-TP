@@ -11,11 +11,11 @@ char * processVarDeclaration(GenericNode * gn) {
     if (nl->next != NULL) {
         nl = nl->next;
         numberLiteral = translate(nl->current);
-        buffer = malloc(strlen(type) + strlen(var) + strlen(numberLiteral) + 2); // 2 for brackets
+        buffer = malloc(strlen(type) + strlen(var) + strlen(numberLiteral) + 2 + 1); // 2 for brackets
         sprintf(buffer, "%s %s[%s]\n", type, var, numberLiteral);
     }
     else {
-        buffer = malloc(strlen(type) + strlen(var));
+        buffer = malloc(strlen(type) + strlen(var) + 1);
         sprintf(buffer, "%s %s[%s]\n", type, var, numberLiteral);
     }
     return buffer;
@@ -28,7 +28,7 @@ char * processVarDeclassignment(GenericNode * gn) {
     char * var = translate(nl->current);
     nl = nl->next;
     char * value = translate(nl->current);
-    char * buffer = malloc(strlen(type) + strlen(var) + strlen(value));
+    char * buffer = malloc(strlen(type) + strlen(var) + strlen(value) + 1);
     sprintf(buffer, "%s %s = %s", type, var, value);
     return buffer;
 }
