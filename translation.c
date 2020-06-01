@@ -4,6 +4,9 @@ char * processStamentListNode(GenericNode * gn);
 char * processWhileNode(GenericNode * gn);
 char * process(GenericNode * gn);
 char * processEntrypointNode(GenericNode * gn);
+char * processBlock(GenericNode * gn);
+char * processAssignment(GenericNode * gn);
+char * processLeaf(GenericNode * gn);
 
 // -------------------------- PRIVATE FUNCTIONS --------------------------
 
@@ -282,9 +285,9 @@ char * processAssignment(GenericNode * gn){
 
 
 
-    buffer = realloc(buffer, strlen(varName) + strlen(" = ") + strlen(valueNList) + strlen(buffer));
+    buffer = realloc(buffer, strlen(varName) + strlen(" = ") + strlen(valueNListProc) + strlen(buffer));
     if (buffer == NULL | valueNListProc == NULL){
-            free(valueNList);
+            // free(valueNList);
             free(varName);
             free(buffer);
             return NULL;
@@ -292,7 +295,7 @@ char * processAssignment(GenericNode * gn){
 
     strcat(buffer, varName);
     strcat(buffer, " = ");
-    strcat(buffer, valueNList);
+    strcat(buffer, valueNListProc);
 
     free(varName);
     free(valueNList);
