@@ -328,7 +328,6 @@ char * processAssignment(GenericNode * gn){
     strcat(buffer, valueNListProc);
 
     free(varName);
-    free(valueNList);
 
     return buffer;
 }
