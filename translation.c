@@ -122,7 +122,7 @@ char * processEntrypointNode(GenericNode * gn){
     GenericNode * statementsNode = statementsListNode->current;
     char * statements = process(statementsNode);
     if (statements == NULL){
-        free(statements);
+        //free(statements);
         return NULL;
     }
 
@@ -130,14 +130,14 @@ char * processEntrypointNode(GenericNode * gn){
     size_t bufferSize = strlen("int main(){return 0;}") + strlen(statements) + 1;
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
-        free(statements);
+        //free(statements);
         return NULL;
     }
 
     // Printing the strings into the buffer
     sprintf(buffer, "int main(){%sreturn 0;}", statements);
 
-    free(statements);
+    //free(statements);
 
     return buffer;
 }
@@ -177,16 +177,16 @@ char * processWhileNode(GenericNode * gn){
     size_t bufferSize = strlen("while(){}") + strlen(block) + strlen(expression) + 1;
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
-        free(block);
-        free(expression);
+        ////free(block);
+        ////free(expression);
         return NULL;
     }
 
     // Printing the strings into the buffer
     sprintf(buffer, "while(%s){%s}", expression, block);
 
-    free(block);
-    free(expression);
+    ////free(block);
+    ////free(expression);
 
     return buffer;
 }
@@ -215,15 +215,15 @@ char * processStamentListNode(GenericNode * gn){
         // Processing the current Generic Node
         processedNode = process(currentNode);
         if (processedNode == NULL){
-            free(buffer);
+            ////free(buffer);
             break;
         }
 
         // Saving new memory for the extended buffer
         buffer = realloc(buffer, strlen(processedNode) + strlen(buffer));
         if (buffer == NULL){
-            free(processedNode);
-            free(buffer);
+            //free(processedNode);
+            //free(buffer);
             break;
         }
 
@@ -234,7 +234,7 @@ char * processStamentListNode(GenericNode * gn){
     }
 
     // Liberating the memory for the pointer to processed node
-    free(processedNode);
+    //free(processedNode);
 
     return buffer;
 }
@@ -260,27 +260,27 @@ char * processNodeList(NodeList * current){
         // Processing the current Generic Node
         processedNode = process(currentNode);
         if (processedNode == NULL){
-            free(buffer);
+            //free(buffer);
             break;
         }
 
         // Saving new memory for the extended buffer
         buffer = realloc(buffer, strlen(processedNode) + strlen(buffer));
         if (buffer == NULL){
-            free(processedNode);
-            free(buffer);
+            //free(processedNode);
+            //free(buffer);
             break;
         }
 
         // Concatenating the old buffer with the new processed info
         strcat(buffer, processedNode);
-        free(processedNode);
+        //free(processedNode);
 
         current = current->next;
     }
 
     // Liberating the memory for the pointer to processed node
-    free(processedNode);
+    //free(processedNode);
 
     return buffer;
 
@@ -317,9 +317,9 @@ char * processAssignment(GenericNode * gn){
 
     buffer = realloc(buffer, strlen(varName) + strlen(" = ") + strlen(valueNListProc) + strlen(buffer));
     if (buffer == NULL | valueNListProc == NULL){
-            // free(valueNList);
-            free(varName);
-            free(buffer);
+            // //free(valueNList);
+            //free(varName);
+            //free(buffer);
             return NULL;
     }
 
@@ -327,7 +327,7 @@ char * processAssignment(GenericNode * gn){
     strcat(buffer, " = ");
     strcat(buffer, valueNListProc);
 
-    free(varName);
+    //free(varName);
 
     return buffer;
 }
@@ -342,7 +342,7 @@ char * processLeaf(GenericNode * gn){
     buffer[0] = '\0';
 
     if (gn == NULL){
-        free(buffer);
+        //free(buffer);
         return NULL;
     }  
 
@@ -378,7 +378,7 @@ char * processIf(GenericNode * gn){
     char * geProc = process(ge);
 
     if(geProc == NULL){
-        free(buffer);
+        //free(buffer);
         return NULL;
     }
 
@@ -386,17 +386,17 @@ char * processIf(GenericNode * gn){
 
     char * blockProc = processNodeList(block);
     if(blockProc ==  NULL){
-        free(buffer);
-        free(geProc);
+        //free(buffer);
+        //free(geProc);
         return NULL;
     }
 
     buffer = realloc(buffer, strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + strlen(buffer));
 
     if(buffer == NULL){
-        free(buffer);
-        free(geProc);
-        free(blockProc);
+        //free(buffer);
+        //free(geProc);
+        //free(blockProc);
         return NULL;
     }
     
@@ -405,8 +405,8 @@ char * processIf(GenericNode * gn){
     strcat(buffer, p_close);
     strcat(buffer, blockProc);
 
-    free(geProc);
-    free(blockProc);
+    //free(geProc);
+    //free(blockProc);
 
     return buffer;
 
@@ -428,14 +428,14 @@ char * processBlock(GenericNode * gn){
     strcpy(cl_b, "\n }");
 
     if(gn == NULL){
-        free(buffer);
+        //free(buffer);
         return NULL;
     }
 
     NodeList * child = gn -> children;
     char * processedBlock = processNodeList(child);
     if(processedBlock == NULL){
-        free(buffer);
+        //free(buffer);
         return NULL;
     }
 
@@ -443,8 +443,8 @@ char * processBlock(GenericNode * gn){
     buffer = realloc(buffer, strlen(op_b) + strlen(processedBlock) + strlen(cl_b) + strlen(buffer));
     
     if(buffer == NULL){
-        free(processedBlock);
-        free(buffer);
+        //free(processedBlock);
+        //free(buffer);
         return NULL;
     }
 
@@ -454,7 +454,7 @@ char * processBlock(GenericNode * gn){
     strcat(buffer, processedBlock);
     strcat(buffer, cl_b);
 
-    free(processedBlock);
+    //free(processedBlock);
 
     return buffer;
 
@@ -505,21 +505,21 @@ char * processGeneralExpression(GenericNode * gn){
         GenericNode * exp2 = gn -> children -> next ->current;
         char * exp2Proc = process(exp2);
         if(exp2Proc == NULL){
-            free(buffer);
+            //free(buffer);
             return NULL;
         }
         buffer = realloc(buffer, strlen(exp1Proc) + strlen(op) + strlen(exp2Proc) + strlen(buffer));
         if(buffer == NULL){
-            free(exp1Proc);
-            free(exp2Proc);
+            //free(exp1Proc);
+            //free(exp2Proc);
             return NULL;
         }
         strcat(buffer, exp1Proc);
         strcat(buffer, op);
         strcat(buffer, exp2Proc);
 
-        free(exp1Proc);
-        free(exp2Proc);
+        //free(exp1Proc);
+        //free(exp2Proc);
 
         return buffer;
 
@@ -529,13 +529,13 @@ char * processGeneralExpression(GenericNode * gn){
 
     buffer = realloc(buffer, strlen(exp1Proc) + strlen(buffer));
     if(buffer == NULL){
-        free(exp1Proc);
+        //free(exp1Proc);
         return NULL;
     }
 
     strcat(buffer, exp1Proc);
 
-    free(exp1Proc);
+    //free(exp1Proc);
 
     return buffer;
 }
