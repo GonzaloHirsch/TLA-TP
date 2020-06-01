@@ -334,7 +334,7 @@ main(void) {
 
         printf("%s\n", code);
         
-        freeGenericNode(codeRootNode);
+        //freeGenericNode(codeRootNode);
 /*
 
 	char * translation = translateToC((Token *)code);
