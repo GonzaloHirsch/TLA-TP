@@ -121,11 +121,11 @@ ifsentence:	IF OPEN_P generalexpression CLOSE_P block
         ;
 
 elsetrain:	ELSE block
-                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 0, 1, $2);}
+                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, "ELSE", 1, $2);}
         |       ELSE_IF OPEN_P generalexpression CLOSE_P block
-                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 0, 2, $3, $5);}
+                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, "ELSE_IF_1", 2, $3, $5);}
         |       ELSE_IF OPEN_P generalexpression CLOSE_P block elsetrain
-                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, 0, 3, $3, $5, $6);}
+                {$$ = newGenericNodeWithChildren(NODE_ELSETRAIN, "ELSE_IF_2", 3, $3, $5, $6);}
         ;
 
 while:	WHILE OPEN_P generalexpression CLOSE_P block

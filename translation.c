@@ -9,6 +9,8 @@ char * processAssignment(GenericNode * gn);
 char * processLeaf(GenericNode * gn);
 char * processIf(GenericNode * gn);
 char * processGeneralExpression(GenericNode * gn);
+char * processExpression(GenericNode * gn);
+char * processElseTrain(GenericNode * gn);
 
 
 // -------------------------- PRIVATE FUNCTIONS --------------------------
@@ -68,6 +70,10 @@ char * process(GenericNode * gn){
 
         case NODE_G_EXPRESSION:
             value = processGeneralExpression(gn);
+            break;
+
+        case NODE_EXPRESSION:
+            value = processExpression(gn);
             break;
 
 
@@ -504,6 +510,205 @@ char * processGeneralExpression(GenericNode * gn){
 
     return buffer;
 }
+
+
+
+
+char * processExpression(GenericNode * gn){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+    buffer[0] = '\0';
+
+    GenericNode * exp1 = gn ->children -> current;
+    char * exp1Proc = process(exp1);
+    if(exp1Proc == NULL){
+        free(buffer);
+        return NULL;
+    }
+
+    char * opString = gn -> value;
+    char * op;
+    if(strcmp(opString, "EQ") == 0){
+        op = " == ";
+    }
+    else if(strcmp(opString, "GT") == 0){
+        op = " > ";
+    }
+    else if(strcmp(opString, "GE") == 0){
+        op = " >= ";
+    }
+    else if(strcmp(opString, "LT") == 0){
+        op = " < ";
+    }
+    else if(strcmp(opString, "LE") == 0){
+        op = " >= ";
+    }
+    else if(strcmp(opString, "NE") == 0){
+        op = " != ";
+    }
+    else if(strcmp(opString, "NOT") == 0){
+        op = " !";
+
+        buffer = realloc(buffer, strlen(op) + strlen(exp1Proc) + strlen(buffer));
+        if(buffer == NULL){
+            free(exp1Proc);
+            return NULL;
+        }
+
+        strcat(buffer, op);
+        strcat(buffer, exp1Proc);
+
+        free(exp1Proc);
+
+        return buffer;
+
+    }
+    
+    // is not an unary expression
+
+    GenericNode * exp2 = gn -> children -> next -> current;
+    char * exp2Proc = process(exp2);
+    if(exp2Proc == NULL){
+        free(buffer);
+        free(exp1Proc);
+        return NULL;
+    }
+
+
+
+
+    buffer = realloc(buffer, strlen(op) + strlen(exp1Proc) + strlen(exp2Proc) + strlen(buffer));
+    if(buffer == NULL){
+        free(exp1Proc);
+        free(exp2Proc);
+        return NULL;
+    }
+
+    //example:  var1 >= var2
+    strcat(buffer, exp1Proc);
+    strcat(buffer, op);
+    strcat(buffer, exp2Proc);
+    free(exp1Proc);
+    free(exp2Proc);
+
+
+    return buffer;
+
+}
+
+
+char * processElseTrain(GenericNode * gn){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+
+    char * elseType = gn -> value; //Need to know what is the else type to parse correctly
+
+    char * initial;
+
+
+
+
+    if(strcmp(elseType, "ELSE") == 0){
+        initial = " else { \n";
+        GenericNode * block = gn -> children ->current;
+        char * blockProc = process(block);
+        if(blockProc == NULL){
+            free(buffer);
+            return NULL;
+        }
+        buffer = realloc(buffer, strlen(initial) + strlen(blockProc) + strlen(buffer));
+        if(buffer == NULL){
+            free(blockProc);
+            return NULL;
+        }
+        strcat(buffer, initial);
+        strcat(buffer, blockProc);
+        free(blockProc);
+
+        return buffer;
+
+    }
+    
+    //is an elif
+
+    initial = "else if( ";
+    char * c_par = " ) ";
+
+    GenericNode * ge = gn -> children -> current;
+    char * geProc = process(ge);
+
+    if(geProc == NULL){
+        free(buffer);
+        return NULL;
+    }
+
+    GenericNode * block = gn -> children -> next ->current;
+    char * blockProc = process(block);
+        if(blockProc == NULL){
+            free(buffer);
+            free(geProc);
+            return NULL;
+        }
+
+    if(strcmp(elseType, "ELSE_IF_2") == 0){
+        GenericNode * elseIf = gn -> children -> next ->next -> current;
+        char * elseIfProc = process(elseIf);
+        if(elseIfProc == NULL){
+            free(buffer);
+            free(geProc);
+            free(blockProc);
+            return NULL;
+        }
+        buffer = realloc(buffer, strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc) + strlen(elseIfProc) + strlen(buffer));
+        if(buffer == NULL){
+            free(geProc);
+            free(blockProc);
+            free(elseIfProc);
+            return NULL;
+        }
+
+        strcat(buffer,initial);
+        strcat(buffer,geProc);
+        strcat(buffer,c_par);
+        strcat(buffer,blockProc);
+        strcat(buffer,elseIfProc);
+        free(geProc);
+        free(blockProc);
+        free(elseIfProc);
+
+        return buffer;
+
+    }
+    else{ //elif type 1
+        buffer = realloc(buffer, strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc) + strlen(buffer));
+        if(buffer == NULL){
+            free(geProc);
+            free(blockProc);
+            return NULL;
+        }
+
+        strcat(buffer,initial);
+        strcat(buffer,geProc);
+        strcat(buffer,c_par);
+        strcat(buffer,blockProc);
+        free(geProc);
+        free(blockProc);
+
+        return buffer;
+
+    }
+
+
+
+    return buffer;
+}
+
+
+
 
 // -------------------------- EXPOSED FUNCTIONS --------------------------
 
