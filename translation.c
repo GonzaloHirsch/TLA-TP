@@ -131,8 +131,6 @@ char * processEntrypointNode(GenericNode * gn){
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
         free(statements);
-        free(statementsListNode);
-        free(statementsNode);
         return NULL;
     }
 
@@ -181,10 +179,6 @@ char * processWhileNode(GenericNode * gn){
     if (buffer == NULL){
         free(block);
         free(expression);
-        free(expressionListNode);
-        free(expressionNode);
-        free(blockListNode);
-        free(blockNode);
         return NULL;
     }
 

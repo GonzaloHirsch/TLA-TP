@@ -13,7 +13,6 @@ mac:
 	yacc -d kind.y --debug
 	lex grammar.l
 	gcc -g lex.yy.c y.tab.c symboltable.c translation.c utility.c node.c -o codeGenerator
-	./test.sh
 
 debug_mac:
 	yacc -d kind.y --debug

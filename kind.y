@@ -333,9 +333,10 @@ main(void) {
         }
 
         printf("%s\n", code);
-
+        
         freeGenericNode(codeRootNode);
 /*
+
 	char * translation = translateToC((Token *)code);
 	//We should always call get functions after translateToC
 	char * functionsTranslation = getFunctions();
