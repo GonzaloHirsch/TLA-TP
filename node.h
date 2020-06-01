@@ -64,6 +64,7 @@ typedef enum {
 // Information about the node itinfo
 typedef struct NodeInfo {
     NodeType type;
+    VarType varType;
 } NodeInfo;
 
 // List of nodes
