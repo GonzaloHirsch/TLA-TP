@@ -1,5 +1,4 @@
 #include "translation.h"
-#include "variablesTranslation.h"
 
 char * processStamentListNode(GenericNode * gn);
 char * processWhileNode(GenericNode * gn);
@@ -19,9 +18,6 @@ char * processInBlockStatements(GenericNode * gn);
 char * processHyperStatement(GenericNode * gn);
 char * processHyperStatements(GenericNode * gn);
 
-char * processVariable(GenericNode * gn);
-char * processDouble(GenericNode * gn);
-char * processStr(GenericNode * gn);
 
 // -------------------------- PRIVATE FUNCTIONS --------------------------
 
@@ -66,13 +62,13 @@ char * process(GenericNode * gn){
             value = processInt(gn);
         case NODE_STR:
             // TODO implement
-            // value = processStr(gn);
+            value = processStr(gn);
         case NODE_DOUBLE:
             // TODO implement
-            // value = processDouble(gn);
+            value = processDouble(gn);
         case NODE_VARIABLE:
             // TODO implement
-            // value = processVariable(gn);
+            value = processVariable(gn);
             break;
         case NODE_LITERAL:
             value = processLeaf(gn);

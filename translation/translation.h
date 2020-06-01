@@ -4,6 +4,8 @@
 #include "../node.h"
 #include <string.h>
 #include <stdlib.h>
+#include "./variablesTranslation.h"
+
 
 char * translate(GenericNode * gn);
 

@@ -3,7 +3,7 @@
 all:
 	yacc -d kind.y --debug -Wconflicts-rr
 	lex grammar.l
-	gcc -g lex.yy.c y.tab.c translation/symboltable.c translation/translation.c utility.c node.c -o codeGenerator
+	gcc -g lex.yy.c y.tab.c translation/*.c utility.c node.c -o codeGenerator
 
 test:
 	make all
@@ -12,12 +12,12 @@ test:
 mac:
 	yacc -d kind.y --debug
 	lex grammar.l
-	gcc -g lex.yy.c y.tab.c translation/symboltable.c translation/translation.c utility.c node.c -o codeGenerator
+	gcc -g lex.yy.c y.tab.c translation/*.c utility.c node.c -o codeGenerator
 
 debug_mac:
 	yacc -d kind.y --debug
 	lex grammar.l
-	gcc -g lex.yy.c y.tab.c translation/symboltable.c utility.c translation/translation.c node.c -o codeGenerator
+	gcc -g lex.yy.c y.tab.c translation/symboltable.c utility.c translation/translation.c translation/*.c node.c -o codeGenerator
 	./debug.sh tests/test11-firstparseable.tst
 
 clean:
@@ -27,5 +27,5 @@ clean:
 debug:
 	yacc -d kind.y --debug -Wconflicts-rr
 	lex grammar.l
-	gcc -g lex.yy.c y.tab.c translation/symboltable.c translation/translation.c utility.c node.c -o codeGenerator
+	gcc -g lex.yy.c y.tab.c translation/*.c utility.c node.c -o codeGenerator
 	./debug.sh tests/test11-firstparseable.tst
