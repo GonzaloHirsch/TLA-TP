@@ -12,3 +12,8 @@ char * processStr(GenericNode * gn) {
     printf("str with value %s\n", gn->value);
     return gn->value;
 }
+
+char * processInt(GenericNode * gn) {
+    printf("Int with value %s\n", gn->value);
+    return gn->value;
+}

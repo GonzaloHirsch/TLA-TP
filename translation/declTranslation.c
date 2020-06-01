@@ -18,6 +18,7 @@ char * processVarDeclaration(GenericNode * gn) {
         buffer = malloc(strlen(type) + strlen(var) + 1);
         sprintf(buffer, "%s %s[%s]\n", type, var, numberLiteral);
     }
+    printf("vardeclaration %s %s %s\n", type, var, numberLiteral);
     return buffer;
 }
 char * processVarDeclassignment(GenericNode * gn) {
@@ -29,6 +30,7 @@ char * processVarDeclassignment(GenericNode * gn) {
     nl = nl->next;
     char * value = translate(nl->current);
     char * buffer = malloc(strlen(type) + strlen(var) + strlen(value) + 1);
+    printf("Var declassignment %s %s %s\n", type, var, value);
     sprintf(buffer, "%s %s = %s", type, var, value);
     return buffer;
 }

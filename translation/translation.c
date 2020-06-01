@@ -49,10 +49,13 @@ char * process(GenericNode * gn){
             break;
         case NODE_INT:
             value = processInt(gn);
+            break;
         case NODE_STR:
             value = processStr(gn);
+            break;
         case NODE_DOUBLE:
             value = processDouble(gn);
+            break;
         case NODE_VARIABLE:
             value = processVariable(gn);
             break;
@@ -477,14 +480,6 @@ char * processGeneralExpression(GenericNode * gn){
 
     return buffer;
 }
-
-//FUNCTIONS THAT NEED TO FINISH BEING IMPLEMENTED
-
-char * processInt(GenericNode * gn) {
-    printf("Int with value %s\n", gn->value);
-    return gn->value;
-}
-
 
 
 char * processExpression(GenericNode * gn){

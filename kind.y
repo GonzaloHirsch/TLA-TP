@@ -149,9 +149,18 @@ vardeclaration:
         ;
 
 vardeclassignment: 
-          type VAR ASSIGN_EQ generaloperation {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, $2, $4);}
-        | type VAR ASSIGN_EQ literal {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, $2, $4);}
-        | type VAR ASSIGN_EQ generalexpression {$$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, $2, $4);}
+        type VAR ASSIGN_EQ generaloperation {
+            GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
+            $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, varNode, $4);
+        }
+        | type VAR ASSIGN_EQ literal {
+            GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
+            $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, varNode, $4);
+        }
+        | type VAR ASSIGN_EQ generalexpression {
+            GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
+            $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, varNode, $4);
+        }
         ;
 
 foreach:

@@ -21,7 +21,6 @@ char * processGeneralExpression(GenericNode * gn);
 char * processExpression(GenericNode * gn);
 
 
-char * processInt(GenericNode * gn);
 char * processInBlockStatements(GenericNode * gn);
 char * processHyperStatement(GenericNode * gn);
 char * processHyperStatements(GenericNode * gn);
