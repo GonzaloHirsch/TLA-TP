@@ -356,33 +356,20 @@ char * processLeaf(GenericNode * gn){
 
 
 char * processBlock(GenericNode * gn){
-    char * buffer = malloc(1);
-    if (buffer == NULL) {
-        return NULL;
-    }
-    buffer[0] = '\0';
-
-    char * op_b;
-    char * cl_b;
-
-    strcpy(op_b, "{ \n");
-    strcpy(cl_b, "\n }");
-
-    if(gn == NULL){
-        //free(buffer);
-        return NULL;
-    }
+    if(gn == NULL) return NULL;
+    
+    char * buffer;
+    char * op_b = "{\n";
+    char * cl_b = "\n}";
 
     NodeList * child = gn -> children;
-    char * processedBlock = processNodeList(child);
+    char * processedBlock = "INBLOCKSTATEMENTS";//processNodeList(child);
     if(processedBlock == NULL){
         //free(buffer);
         return NULL;
     }
 
-
-    buffer = realloc(buffer, strlen(op_b) + strlen(processedBlock) + strlen(cl_b) + strlen(buffer));
-    
+    buffer = malloc( 1 + strlen(op_b) + strlen(processedBlock) + strlen(cl_b) + strlen(buffer));
     if(buffer == NULL){
         //free(processedBlock);
         //free(buffer);
@@ -390,15 +377,11 @@ char * processBlock(GenericNode * gn){
     }
 
 
-    
-    strcat(buffer, op_b);
-    strcat(buffer, processedBlock);
-    strcat(buffer, cl_b);
+    sprintf(buffer, "%s%s%s", op_b, processedBlock, cl_b);
 
     //free(processedBlock);
 
     return buffer;
-
 }
 
 char * processInBlockStatements(GenericNode * gn) {

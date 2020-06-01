@@ -14,13 +14,13 @@ char * processIf(GenericNode * gn){
 
     //Gets and process the block statement of the if.
     GenericNode * block = gn -> children -> next -> current;
-    char * blockProc = "BLOCK \n"; //processBlock(block);
+    char * blockProc = processBlock(block);
     if(blockProc ==  NULL){
         //free(geProc);
         return NULL;
     }
 
-    buffer = malloc(strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc));
+    buffer = malloc(strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + 1);
     if(buffer == NULL){
         //free(buffer);
         //free(geProc);
@@ -28,7 +28,7 @@ char * processIf(GenericNode * gn){
         return NULL;
     }
 
-    sprintf(buffer, "%s%s%s\n%s", if_op, geProc, p_close, blockProc);
+    sprintf(buffer, "%s%s%s%s", if_op, geProc, p_close, blockProc);
 
     //free(geProc);
     //free(blockProc);
@@ -51,7 +51,7 @@ char * processIfElse(GenericNode * gn){
 
     //Gets and process the block statement of the if.
     GenericNode * block = gn -> children -> next -> current;
-    char * blockProc = "BLOCK \n"; //processBlock(block);
+    char * blockProc = processBlock(block);
     if(blockProc ==  NULL){
         //free(geProc);
         return NULL;
@@ -65,7 +65,7 @@ char * processIfElse(GenericNode * gn){
         return NULL;
     }
 
-    buffer = malloc(strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + strlen(elseTrainProc));
+    buffer = malloc(strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + strlen(elseTrainProc) + 1);
     if(buffer == NULL){
         //free(buffer);
         //free(geProc);
@@ -73,7 +73,7 @@ char * processIfElse(GenericNode * gn){
         return NULL;
     }
 
-    sprintf(buffer, "%s%s%s\n%s\n%s", if_op, geProc, p_close, blockProc, elseTrainProc);
+    sprintf(buffer, "%s%s%s%s%s", if_op, geProc, p_close, blockProc, elseTrainProc);
 
     //free(geProc);
     //free(blockProc);
