@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#include "symboltable.h"
+#include "translation/symboltable.h"
 #define LENGTH 5000
 #define MAX_CONCAT 5   
 

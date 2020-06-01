@@ -3,10 +3,10 @@
     #include <stdlib.h>
     #include <ctype.h>
     #include <string.h>
-    #include "symboltable.h"
+    #include "translation/symboltable.h"
     #include "utility.h"
     #include "node.h"
-    #include "translation.h"
+    #include "translation/translation.h"
 
     void yyerror (GenericNode ** node, char *s);
     int yylex();
