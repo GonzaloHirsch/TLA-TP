@@ -72,7 +72,7 @@ char * process(GenericNode * gn){
             value = processInBlockStatements(gn);
             break;
         case NODE_INBLOCKSTATEMENT:
-            value = processStamentListNode(gn);
+            value = processInBlockStatements(gn);
             break;
         case NODE_WHILE:
             value = processWhileNode(gn);
@@ -187,23 +187,23 @@ char * processWhileNode(GenericNode * gn){
     return buffer;
 }
 
-char * processStamentListNode(GenericNode * gn){
+
+char * processNodeList(NodeList * listCurrent){
+    if (listCurrent == NULL) return NULL;
+    
     char * buffer = malloc(1);
-    if (buffer == NULL) {
-        return NULL;
-    }
-    buffer[0] = '\0';
+    int endBuffer = 0;                  //Store the position of the last byte of the buffer
+    if (buffer == NULL) return NULL;
 
-    if (gn == NULL){
-        return buffer;
-    }    
+    buffer[0] = '\0';  
 
-    NodeList * current = gn->children;
     GenericNode * currentNode;
     char * processedNode;
-    while (current != NULL){
+
+    //Iteration through the statement list.
+    while(listCurrent != NULL){
         // Getting the current Generic Node
-        currentNode = current->current;
+        currentNode = listCurrent->current;
         if (currentNode == NULL){ 
             break; 
         }
@@ -211,31 +211,36 @@ char * processStamentListNode(GenericNode * gn){
         // Processing the current Generic Node
         processedNode = process(currentNode);
         if (processedNode == NULL){
-            ////free(buffer);
+            //free(buffer);
             break;
         }
-
-        // Saving new memory for the extended buffer
-        buffer = realloc(buffer, strlen(processedNode) + strlen(buffer));
+        
+        // Saving new memory for the extended buffer                             
+        buffer = realloc(buffer, 1 + strlen(buffer) +  strlen(processedNode));
         if (buffer == NULL){
             //free(processedNode);
             //free(buffer);
             break;
         }
 
-        // Concatenating the old buffer with the new processed info
-        strcat(buffer, processedNode);
+        // Concatenating the old buffer with the new processed node.
+        sprintf(buffer + endBuffer, "%s", processedNode);
 
-        current = current->next;
+        //The new end of the buffer.
+        endBuffer += strlen(processedNode);
+
+        listCurrent = listCurrent->next;
     }
 
-    // Liberating the memory for the pointer to processed node
+    // Free the memory for the pointer to processed node
     //free(processedNode);
 
     return buffer;
 }
 
 
+
+/*
 
 char * processNodeList(NodeList * current){
     char * buffer = malloc(1);
@@ -281,6 +286,8 @@ char * processNodeList(NodeList * current){
     return buffer;
 
 }
+
+*/
 
 
 
@@ -369,20 +376,20 @@ char * processBlock(GenericNode * gn){
     char * op_b = "{\n";
     char * cl_b = "\n}";
 
-    NodeList * child = gn -> children;
-    char * processedBlock = "INBLOCKSTATEMENTS";//processNodeList(child);
+    //Get the child node which has a inblockstament list.
+    GenericNode * child = gn->children->current;
+    char * processedBlock = processInBlockStatements(child);
     if(processedBlock == NULL){
         //free(buffer);
         return NULL;
     }
 
-    buffer = malloc( 1 + strlen(op_b) + strlen(processedBlock) + strlen(cl_b) + strlen(buffer));
+    buffer = malloc( 1 + strlen(op_b) + strlen(processedBlock) + strlen(cl_b));
     if(buffer == NULL){
         //free(processedBlock);
         //free(buffer);
         return NULL;
     }
-
 
     sprintf(buffer, "%s%s%s", op_b, processedBlock, cl_b);
 
@@ -392,6 +399,7 @@ char * processBlock(GenericNode * gn){
 }
 
 char * processInBlockStatements(GenericNode * gn) {
+    printf("%s\n", processNodeList(gn->children));  
     return processNodeList(gn->children);
 }
 

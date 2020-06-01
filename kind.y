@@ -173,7 +173,8 @@ foreachbody:
         ;
 
 block:	OPEN_B inblockstatements  CLOSE_B {
-        GenericNode * ibssNode = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENTS, 0, 1, $2);
+        GenericNode * ibssNode = newGenericNode(NODE_INBLOCKSTATEMENTS, 0);
+        ibssNode->children = $2;
         $$ = newGenericNodeWithChildren(NODE_BLOCK, 0, 1, ibssNode);
         }
         ;
