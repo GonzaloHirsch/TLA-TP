@@ -117,7 +117,7 @@ inblockstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_INB
 ifsentence:	IF OPEN_P generalexpression CLOSE_P block
                 {$$ = newGenericNodeWithChildren(NODE_IFSENTENCE, 0, 2, $3, $5);}
         |       IF OPEN_P generalexpression CLOSE_P block elsetrain
-                {$$ = newGenericNodeWithChildren(NODE_IFSENTENCE, 0 ,3, $3, $5, $6);}
+                {$$ = newGenericNodeWithChildren(NODE_IFSENTENCE_ELSE, 0,3, $3, $5, $6);}
         ;
 
 elsetrain:	ELSE block
@@ -328,7 +328,7 @@ main(void) {
 
         char * code = translate(codeRootNode);
         if (code == NULL){
-                freeGenericNode(codeRootNode);
+                //freeGenericNode(codeRootNode);
                 return 1;
         }
 
