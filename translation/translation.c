@@ -42,8 +42,10 @@ char * process(GenericNode * gn){
         case NODE_STATEMENT:
             break;
         case NODE_VARDECLARATION:
+            value = processVarDeclaration(gn);
             break;
         case NODE_VARDECLASSIGNMENT:
+            value = processVarDeclassignment(gn);
             break;
         case NODE_FOREACH:
             break;
