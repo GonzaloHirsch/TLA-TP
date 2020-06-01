@@ -65,9 +65,10 @@ char * processProdOp(GenericNode * gn){
     int isLeftArray = gn->children->current->info.varType == DOUBLE_ARRAY_TYPE || gn->children->current->info.varType == INTEGER_ARRAY_TYPE;
     int isRightArray = gn->children->next->current->info.varType == DOUBLE_ARRAY_TYPE || gn->children->next->current->info.varType == INTEGER_ARRAY_TYPE;
 
-    if (isLeftArray || isRightArray){
+    /*if (isLeftArray || isRightArray){
         gn->info.varType = DOUBLE_ARRAY_TYPE;
     } else if if 
+    */
 
     // Calculating and allocating buffer
     size_t bufferSize = strlen("*") + strlen(rightSide) + strlen(leftSide) + 1;
