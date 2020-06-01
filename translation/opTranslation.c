@@ -5,6 +5,7 @@ char * processProdOp(GenericNode * gn);
 char * processDivOp(GenericNode * gn);
 char * processCrossOp(GenericNode * gn);
 char * processSubOp(GenericNode * gn);
+VarType determineOperationResult(VarType left, VarType right);
 
 // ------------- EXPOSED FUNCTIONS -------------
 
@@ -61,7 +62,12 @@ char * processProdOp(GenericNode * gn){
         return NULL;
     }
 
-    if ()
+    int isLeftArray = gn->children->current->info.varType == DOUBLE_ARRAY_TYPE || gn->children->current->info.varType == INTEGER_ARRAY_TYPE;
+    int isRightArray = gn->children->next->current->info.varType == DOUBLE_ARRAY_TYPE || gn->children->next->current->info.varType == INTEGER_ARRAY_TYPE;
+
+    if (isLeftArray || isRightArray){
+        gn->info.varType = DOUBLE_ARRAY_TYPE;
+    } else if if 
 
     // Calculating and allocating buffer
     size_t bufferSize = strlen("*") + strlen(rightSide) + strlen(leftSide) + 1;
@@ -83,4 +89,82 @@ char * processCrossOp(GenericNode * gn){
 
 char * processSubOp(GenericNode * gn){
 
+}
+
+VarType determineOperationResult(VarType left, VarType right){
+    if (left == right){
+        return left;
+    }
+    // STRING TYPE COMBINATIONS
+    if ((right == STRING_TYPE && left != STRING_TYPE) || (left == STRING_TYPE && right != STRING_TYPE)){
+        // ERROR
+    }
+    // INTEGER TYPE COMBINATIONS
+    if (left == INTEGER_TYPE){
+        if (right == INTEGER_ARRAY_TYPE || right == DOUBLE_ARRAY_TYPE || right == DOUBLE_TYPE){
+            return right;
+        } else if (right == STRING_TYPE){
+            // ERROR
+        }
+    }
+    if (right == INTEGER_TYPE){
+        if (left == INTEGER_ARRAY_TYPE || left == DOUBLE_ARRAY_TYPE || left == DOUBLE_TYPE){
+            return right;
+        } else if (left == STRING_TYPE){
+            // ERROR
+        }
+    }
+    // DOUBLE TYPE COMBINATIONS
+    if (left == DOUBLE_TYPE){
+        if (right == INTEGER_TYPE){
+            return left;
+        } else if (right == DOUBLE_ARRAY_TYPE || right == INTEGER_ARRAY_TYPE){
+            return DOUBLE_ARRAY_TYPE;
+        } else if (right == STRING_TYPE){
+            // ERROR
+        }
+    }
+    if (right == DOUBLE_TYPE){
+        if (left == INTEGER_TYPE){
+            return right;
+        } else if (left == DOUBLE_ARRAY_TYPE || left == INTEGER_ARRAY_TYPE){
+            return DOUBLE_ARRAY_TYPE;
+        } else if (left == STRING_TYPE){
+            // ERROR
+        }
+    }
+    // INTEGER ARRAY TYPE COMBINATIONS
+    if (left == INTEGER_ARRAY_TYPE){
+        if (right == INTEGER_ARRAY_TYPE || right == INTEGER_TYPE){
+            return left;
+        } else if (right == DOUBLE_ARRAY_TYPE){
+            return right;
+        } else if (right == STRING_TYPE) {
+            // ERROR
+        }
+    }
+    if (right == INTEGER_ARRAY_TYPE){
+        if (left == INTEGER_ARRAY_TYPE || left == INTEGER_TYPE){
+            return right;
+        } else if (left == DOUBLE_ARRAY_TYPE){
+            return left;
+        } else if (left == STRING_TYPE) {
+            // ERROR
+        }
+    }
+    // DOUBLE ARRAY TYPE COMBINATIONS
+    if (left == DOUBLE_ARRAY_TYPE){
+        if (right == INTEGER_ARRAY_TYPE || right == INTEGER_TYPE || right == DOUBLE_ARRAY_TYPE){
+            return right;
+        } else if (right == STRING_TYPE) {
+            // ERROR
+        }
+    }
+    if (right == DOUBLE_ARRAY_TYPE){
+        if (left == INTEGER_ARRAY_TYPE || left == INTEGER_TYPE || left == DOUBLE_ARRAY_TYPE){
+            return left;
+        } else if (left == STRING_TYPE) {
+            // ERROR
+        }
+    }
 }
