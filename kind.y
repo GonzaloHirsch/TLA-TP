@@ -311,7 +311,7 @@ int
 main(void) {
 
         #ifdef YYDEBUG
-        yydebug = 1;
+        // yydebug = 1;
         #endif
 
         /*
@@ -333,9 +333,10 @@ main(void) {
         }
 
         printf("%s\n", code);
-
-        freeGenericNode(codeRootNode);
+        
+        //freeGenericNode(codeRootNode);
 /*
+
 	char * translation = translateToC((Token *)code);
 	//We should always call get functions after translateToC
 	char * functionsTranslation = getFunctions();
