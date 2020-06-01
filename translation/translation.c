@@ -60,31 +60,24 @@ char * process(GenericNode * gn){
             value = processAssignment(gn);
             break;
         case NODE_INT:
-            // TODO implement
             value = processInt(gn);
         case NODE_STR:
-            // TODO implement
             value = processStr(gn);
         case NODE_DOUBLE:
-            // TODO implement
             value = processDouble(gn);
         case NODE_VARIABLE:
-            // TODO implement
             value = processVariable(gn);
             break;
         case NODE_LITERAL:
             value = processLeaf(gn);
             break;        
         case NODE_HYPERSTATEMENTS:
-            // TODO implement
             value = processHyperStatements(gn);
             break;        
         case NODE_HYPERSTATEMENT:
-            // TODO implement
             value = processHyperStatement(gn);
             break;
         case NODE_INBLOCKSTATEMENTS:
-            // TODO implement
             value = processInBlockStatements(gn);
             break;
         case NODE_INBLOCKSTATEMENT:
