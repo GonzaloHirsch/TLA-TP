@@ -7,6 +7,9 @@ char * processEntrypointNode(GenericNode * gn);
 char * processBlock(GenericNode * gn);
 char * processAssignment(GenericNode * gn);
 char * processLeaf(GenericNode * gn);
+char * processIf(GenericNode * gn);
+char * processGeneralExpression(GenericNode * gn);
+
 
 char * processInt(GenericNode * gn);
 char * processInBlockStatements(GenericNode * gn);
@@ -33,6 +36,7 @@ char * process(GenericNode * gn){
             value = processEntrypointNode(gn);
             break;
         case NODE_IFSENTENCE:
+            value = processIf(gn);
             break;
         case NODE_ELSETRAIN:
             break;
@@ -87,6 +91,10 @@ char * process(GenericNode * gn){
             break;
         case NODE_WHILE:
             value = processWhileNode(gn);
+            break;
+
+        case NODE_G_EXPRESSION:
+            value = processGeneralExpression(gn);
             break;
 
 
@@ -236,6 +244,7 @@ char * processStamentListNode(GenericNode * gn){
 
     return buffer;
 }
+
 
 
 char * processNodeList(NodeList * current){
@@ -440,7 +449,7 @@ char * processBlock(GenericNode * gn){
 
     buffer = realloc(buffer, strlen(op_b) + strlen(processedBlock) + strlen(cl_b) + strlen(buffer));
     
-    if(buffer == NULL | child == NULL){
+    if(buffer == NULL){
         free(processedBlock);
         free(buffer);
         return NULL;
@@ -472,13 +481,78 @@ char * processHyperStatements(GenericNode * gn) {
     return processNodeList(gn->children);
 }
 
+
+
+
+char * processGeneralExpression(GenericNode * gn){
+    char * buffer = malloc(1);
+    if (buffer == NULL) {
+        return NULL;
+    }
+    buffer[0] = '\0';
+    char * operatorValue = gn -> value;
+    char * op;
+
+    if(strcmp(operatorValue, "AND") == 0){
+        op = " && ";
+    }
+    else if(strcmp(operatorValue, "OR") == 0)
+    {   
+        op = " | ";
+    }
+    else{
+        op = "";
+    }
+
+    GenericNode * exp1 = gn -> children ->current;
+    char * exp1Proc = process(exp1);
+
+
+    if(strcmp(op, "") != 0){ //there is an operator to parse, then there is another expression
+        GenericNode * exp2 = gn -> children -> next ->current;
+        char * exp2Proc = process(exp2);
+        if(exp2Proc == NULL){
+            free(buffer);
+            return NULL;
+        }
+        buffer = realloc(buffer, strlen(exp1Proc) + strlen(op) + strlen(exp2Proc) + strlen(buffer));
+        if(buffer == NULL){
+            free(exp1Proc);
+            free(exp2Proc);
+            return NULL;
+        }
+        strcat(buffer, exp1Proc);
+        strcat(buffer, op);
+        strcat(buffer, exp2Proc);
+
+        free(exp1Proc);
+        free(exp2Proc);
+
+        return buffer;
+
+    }
+
+    // there is no other expression
+
+    buffer = realloc(buffer, strlen(exp1Proc) + strlen(buffer));
+    if(buffer == NULL){
+        free(exp1Proc);
+        return NULL;
+    }
+
+    strcat(buffer, exp1Proc);
+
+    free(exp1Proc);
+
+    return buffer;
+}
+
 //FUNCTIONS THAT NEED TO FINISH BEING IMPLEMENTED
 
 char * processInt(GenericNode * gn) {
     printf("%s\n", gn->value);
     return gn->value;
 }
-
 
 // -------------------------- EXPOSED FUNCTIONS --------------------------
 
