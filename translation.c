@@ -7,6 +7,9 @@ char * processEntrypointNode(GenericNode * gn);
 char * processBlock(GenericNode * gn);
 char * processAssignment(GenericNode * gn);
 char * processLeaf(GenericNode * gn);
+char * processIf(GenericNode * gn);
+char * processGeneralExpression(GenericNode * gn);
+
 
 // -------------------------- PRIVATE FUNCTIONS --------------------------
 
