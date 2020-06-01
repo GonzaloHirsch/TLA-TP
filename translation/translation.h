@@ -8,6 +8,7 @@
 #include "./declTranslation.h"
 #include "./ifTranslation.h"
 #include "./statementTranslation.h"
+#include "./expressionTranslation.h"
 
 //----------INTERNAL FUNCTIONS---------------------------
 char * processStamentListNode(GenericNode * gn);
@@ -17,10 +18,7 @@ char * processEntrypointNode(GenericNode * gn);
 char * processBlock(GenericNode * gn);
 char * processAssignment(GenericNode * gn);
 char * processLeaf(GenericNode * gn);
-char * processGeneralExpression(GenericNode * gn);
-char * processExpression(GenericNode * gn);
-
-
+char * processNodeList(NodeList * nl);
 char * processInBlockStatements(GenericNode * gn);
 char * processHyperStatement(GenericNode * gn);
 char * processHyperStatements(GenericNode * gn);
