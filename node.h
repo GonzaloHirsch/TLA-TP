@@ -91,6 +91,7 @@ typedef struct FunctionsNode {
 
 NodeList * createNodeList(GenericNode * node);
 NodeList * addToNodeList(NodeList * nodeList, GenericNode * node);
+NodeList * prependToNodeList(NodeList * nodeList, GenericNode * node);
 
 GenericNode * newGenericNode(NodeType type, char * value);
 GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int childrenCound, ...);

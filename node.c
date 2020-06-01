@@ -49,6 +49,13 @@ NodeList * addToNodeList(NodeList * nodeList, GenericNode * node) {
     return nodeList;
 }
 
+NodeList * prependToNodeList(NodeList * nodeList, GenericNode * node) {
+    NodeList * nl = createNodeList(node);
+    nl->next = nodeList;
+    return nl;
+}
+
+
 GenericNode * newGenericNode(NodeType type, char * value) {
     GenericNode * gn = malloc(sizeof(GenericNode));
     gn->info.type = type;

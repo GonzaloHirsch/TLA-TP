@@ -95,7 +95,7 @@ entrypoint:
                 }
         ;
 
-hyperstatements: 	hyperstatement hyperstatements 	{$$ = addToNodeList($2, $1);}
+hyperstatements: 	hyperstatement hyperstatements 	{$$ = prependToNodeList($2, $1);}
         |       	hyperstatement 			{$$ = createNodeList($1);}
         ;
 
@@ -106,7 +106,7 @@ hyperstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_HYPER
         |       function 		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, 1, $1);}
         ;
 
-inblockstatements:	inblockstatement inblockstatements 	{$$ = addToNodeList($2, $1);}
+inblockstatements:	inblockstatement inblockstatements 	{$$ = prependToNodeList($2, $1);}
         | 		inblockstatement 			{$$ = createNodeList($1);}
         ;
 inblockstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENT, 0, 1, $1);}
