@@ -147,56 +147,6 @@ char * processHyperStatements(GenericNode * gn) {
     return processNodeList(gn->children);
 }
 
-char * processWhileNode(GenericNode * gn){
-    if (gn == NULL){
-        return NULL;
-    }    
-
-    // Getting the nodelist with the expression
-    NodeList * expressionListNode = gn->children;
-    if (expressionListNode == NULL){
-        return NULL;
-    }
-
-    // Getting the node with the expression and processing it
-    GenericNode * expressionNode = expressionListNode->current;
-    char * expression = process(expressionNode);
-    if (expression == NULL){
-        return NULL;
-    }
-
-    // Getting the nodelist with the block
-    NodeList * blockListNode = expressionListNode->next;
-    if (blockListNode == NULL){
-        return NULL;
-    }
-
-    // Getting the node with the block and processing it 
-    GenericNode * blockNode = blockListNode->current;
-    char * block = process(blockNode);
-    if (block == NULL){
-        return NULL;
-    }
-
-    // Calculating the length of the buffer
-    size_t bufferSize = strlen("while(){}") + strlen(block) + strlen(expression) + 1;
-    char * buffer = malloc(bufferSize);
-    if (buffer == NULL){
-        ////free(block);
-        ////free(expression);
-        return NULL;
-    }
-
-    // Printing the strings into the buffer
-    sprintf(buffer, "while(%s){%s}", expression, block);
-
-    ////free(block);
-    ////free(expression);
-
-    return buffer;
-}
-
-
 char * processNodeList(NodeList * listCurrent){
     if (listCurrent == NULL) return NULL;
     
@@ -256,7 +206,7 @@ char * processAssignment(GenericNode * gn){
     //Process the right value of the expression(literal, generalExp or genOp)
     char * rightValueProc = process(rightValue);
 
-    buffer = malloc(1 + strlen(varName) + strlen(" = ") + strlen(rightValueProc) + strlen(";\n"));
+    buffer = malloc(1 + strlen(varName) + strlen(" = ") + strlen(rightValueProc));
     if (buffer == NULL){
         //free(valueNListProc);
         //free(varName);
@@ -264,7 +214,7 @@ char * processAssignment(GenericNode * gn){
         return NULL;
     }
 
-    sprintf(buffer, "%s = %s;\n", varName, rightValueProc);
+    sprintf(buffer, "%s = %s", varName, rightValueProc);
 
     //free(varName);
     //free(varNListProc)
@@ -303,9 +253,6 @@ char * processLeaf(GenericNode * gn){
 
 }
 
-
-
-
 char * processBlock(GenericNode * gn){
     if(gn == NULL) return NULL;
     
@@ -342,6 +289,55 @@ char * processInBlockStatements(GenericNode * gn) {
 
 char * processInBlockStatement(GenericNode * gn){
     processStatement(gn);
+}
+
+char * processWhileNode(GenericNode * gn){
+    if (gn == NULL){
+        return NULL;
+    }    
+
+    // Getting the nodelist with the expression
+    NodeList * expressionListNode = gn->children;
+    if (expressionListNode == NULL){
+        return NULL;
+    }
+
+    // Getting the node with the expression and processing it
+    GenericNode * expressionNode = expressionListNode->current;
+    char * expression = process(expressionNode);
+    if (expression == NULL){
+        return NULL;
+    }
+
+    // Getting the nodelist with the block
+    NodeList * blockListNode = expressionListNode->next;
+    if (blockListNode == NULL){
+        return NULL;
+    }
+
+    // Getting the node with the block and processing it 
+    GenericNode * blockNode = blockListNode->current;
+    char * block = process(blockNode);
+    if (block == NULL){
+        return NULL;
+    }
+
+    // Calculating the length of the buffer
+    size_t bufferSize = strlen("while(){}") + strlen(block) + strlen(expression) + 1;
+    char * buffer = malloc(bufferSize);
+    if (buffer == NULL){
+        ////free(block);
+        ////free(expression);
+        return NULL;
+    }
+
+    // Printing the strings into the buffer
+    sprintf(buffer, "while(%s){%s}", expression, block);
+
+    ////free(block);
+    ////free(expression);
+
+    return buffer;
 }
 
 // -------------------------- EXPOSED FUNCTIONS --------------------------

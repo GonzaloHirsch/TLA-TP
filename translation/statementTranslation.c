@@ -9,8 +9,8 @@ char * processStatement(GenericNode * gn) {
         return NULL;
     }
 
-    char * buffer = malloc(1 + sizeof(childString));
-    sprintf(buffer, "%s;", childString);
+    char * buffer = malloc(1+ strlen(";\n") + strlen(childString));
+    sprintf(buffer, "%s;\n", childString);
 
     printf("a statement %s", buffer);
 
