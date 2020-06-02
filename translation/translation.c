@@ -1,6 +1,5 @@
 #include "translation.h"
 
-VarType determineVarType(GenericNode * gn);
 
 VarType determineVarType(GenericNode * gn){
     // Determining the type of the leaf
@@ -101,12 +100,14 @@ char * process(GenericNode * gn){
             value = processExpression(gn);
             break;
         case NODE_G_OPERATION:
-            //return "gen_operation";
             value = processOperation(gn);
             break;
         case NODE_OPERATION:
             //value = "operation";
             value = processOperation(gn);
+            break;
+        case NODE_ARRAYLITERAL:
+            value = processArray(gn);
             break;
 
 

@@ -283,9 +283,7 @@ funarg:
         | NUMBER_LITERAL {$$ = newGenericNode(NODE_LITERAL,$1);}
         ;
 
-type:		INT 	{
-                        printf("getting INT node %s\n", $1);
-                        $$ = newGenericNode(NODE_INT,"int");}
+type:		INT 	{$$ = newGenericNode(NODE_INT,"int");}
         | 	STR 	{$$ = newGenericNode(NODE_STR,"char *");}
         | 	DOUBLE 	{$$ = newGenericNode(NODE_DOUBLE,"double");}
         ;
@@ -325,7 +323,7 @@ operation:      unity                            {$$ = newGenericNodeWithChildre
 
 unity:          VAR                             {$$ = newGenericNode(NODE_VARIABLE, $1);}
         |       NUMBER_LITERAL                  {$$ = newGenericNode(NODE_LITERAL, $1);}
-        |       arrayliteral                    {$$ = newGenericNodeWithChildren(NODE_ARRAYLITERAL, 0, 1, $1);}
+        |       arrayliteral                    {$$ = $1;}
 
 %%
 
