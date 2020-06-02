@@ -245,44 +245,29 @@ char * processNodeList(NodeList * listCurrent){
 
 
 char * processAssignment(GenericNode * gn){
+    if (gn == NULL) return NULL;
 
-    char * buffer = malloc(1);
-    if (buffer == NULL) {
+    char * buffer;
+    GenericNode * var = gn->children->current;
+    GenericNode * rightValue = gn->children->next->current;
+
+    //Process the variable
+    char * varName = process(var);
+    //Process the right value of the expression(literal, generalExp or genOp)
+    char * rightValueProc = process(rightValue);
+
+    buffer = malloc(1 + strlen(varName) + strlen(" = ") + strlen(rightValueProc) + strlen(";\n"));
+    if (buffer == NULL){
+        //free(valueNListProc);
+        //free(varName);
+        //free(buffer);
         return NULL;
     }
-    buffer[0] = '\0';
 
-    if (gn == NULL){
-        return buffer;
-    }
-
-    NodeList * child = gn -> children;
-    
-    GenericNode * var = child -> current;
-
-    char * varName = process(var);
-
-
-
-    NodeList * valueNList = child ->next;
-
-    char * valueNListProc = processNodeList(valueNList);
-
-
-
-    buffer = realloc(buffer, strlen(varName) + strlen(" = ") + strlen(valueNListProc) + strlen(buffer));
-    if (buffer == NULL | valueNListProc == NULL){
-            // //free(valueNList);
-            //free(varName);
-            //free(buffer);
-            return NULL;
-    }
-
-    strcat(buffer, varName);
-    strcat(buffer, " = ");
-    strcat(buffer, valueNListProc);
+    sprintf(buffer, "%s = %s;\n", varName, rightValueProc);
 
     //free(varName);
+    //free(varNListProc)
 
     return buffer;
 }

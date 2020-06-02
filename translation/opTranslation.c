@@ -5,6 +5,7 @@ char * processProdOp(GenericNode * gn);
 char * processDivOp(GenericNode * gn);
 char * processCrossOp(GenericNode * gn);
 char * processSubOp(GenericNode * gn);
+char * processBinaryOp(GenericNode * gn);
 VarType determineOperationResult(VarType left, VarType right);
 
 // ------------- EXPOSED FUNCTIONS -------------
@@ -20,7 +21,7 @@ char * processOperation(GenericNode * gn){
     if (strcmp(opValue, "PLAIN")){
         value = processPlainOp(gn);
     } else if (strcmp(opValue, "PROD") || strcmp(opValue, "DIV") || strcmp(opValue, "CROSS")){
-        value = processBinaryOp(gn);
+       // value = processBinaryOp(gn);
     } else if (strcmp(opValue, "SUBS")){
         value = processSubOp(gn);
     } else {
