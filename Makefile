@@ -28,4 +28,4 @@ debug:
 	yacc -d kind.y --debug -Wconflicts-rr
 	lex grammar.l
 	gcc -g lex.yy.c y.tab.c translation/*.c utility.c node.c -o codeGenerator
-	./debug.sh tests/test11-firstparseable.tst
+	./debug.sh tests/test12-multiplication.tst

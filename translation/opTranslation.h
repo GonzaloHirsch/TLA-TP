@@ -84,5 +84,5 @@ int main(){
 	//_prodDoubleArrDouble(_prodDoubleArrDouble(b, 3.5, NELEMS(b), malloc(sizeof(double) * NELEMS(b))), 2.5, NELEMS(_prodDoubleArrDouble(b, 3.5, NELEMS(b), malloc(sizeof(double) * NELEMS(b)))), malloc(sizeof(double) * NELEMS(b)));
 	printIntArr(a->arr, a->size);
 	return 0;
-}
+
 */

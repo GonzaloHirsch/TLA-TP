@@ -85,11 +85,12 @@ char * process(GenericNode * gn){
             value = processExpression(gn);
             break;
         case NODE_G_OPERATION:
-            return "gen_operation";
+            //return "gen_operation";
             value = processOperation(gn);
             break;
         case NODE_OPERATION:
-            value = "operation";
+            //value = "operation";
+            value = processOperation(gn);
             break;
 
 
@@ -223,35 +224,32 @@ char * processAssignment(GenericNode * gn){
     return buffer;
 }
 
-
-
 char * processLeaf(GenericNode * gn){
-    char * buffer = malloc(1);
-    if (buffer == NULL) {
-        return NULL;
-    }
-    buffer[0] = '\0';
-
     if (gn == NULL){
-        //free(buffer);
-        return NULL;
-    }  
-
-
-    char * value = gn -> value;
-
-    buffer = realloc(buffer, strlen(value) + strlen(buffer));
-    if (buffer == NULL){
         return NULL;
     }
 
+    // Determining the type of the leaf
+    VarType type;
+    if (gn->value[0] == '\"'){
+        type = STRING_TYPE;
+    } else {
+        int i = 0;
+        for (i = 0; i < strlen(gn->value); i++){
+            if (gn->value[i] == '.'){
+                type = DOUBLE_TYPE;
+            }
+        }
+        type = INTEGER_TYPE;
+    }
+    gn->info.varType = type;
 
-    strcat(buffer, value);
-
-    
+    // Creating the buffer
+    size_t bufferSize = 1 + strlen(gn->value);
+    char * buffer = malloc(bufferSize);
+    sprintf(buffer, "%s", gn->value);
 
     return buffer;
-
 }
 
 char * processBlock(GenericNode * gn){
@@ -289,7 +287,7 @@ char * processInBlockStatements(GenericNode * gn) {
 }
 
 char * processInBlockStatement(GenericNode * gn){
-    processStatement(gn);
+    return processStatement(gn);
 }
 
 char * processWhileNode(GenericNode * gn){
