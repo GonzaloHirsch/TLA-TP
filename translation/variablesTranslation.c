@@ -91,7 +91,7 @@ char * processArray(GenericNode * gn){
         strcat(buffer, arrayAuxSetSize);
         strcat(buffer, countChar);
         strcat(buffer, endLine);
-
+        gn->info.varType = INTEGER_ARRAY_TYPE;
     }
     //If the first element of the array is an double--> All the array has to be double
     else if(determineVarType(numList->current) == DOUBLE_TYPE){
@@ -135,6 +135,7 @@ char * processArray(GenericNode * gn){
         strcat(buffer, arrayAuxSetSize);
         strcat(buffer, countChar);
         strcat(buffer, endLine);
+        gn->info.varType = DOUBLE_ARRAY_TYPE;
     }
     else{
         // TODO: ERROR
