@@ -122,7 +122,7 @@ char * processEntrypointNode(GenericNode * gn){
     }
 
     // Calculating the length of the buffer
-    size_t bufferSize = strlen("int main(){return 0;}") + strlen(statements) + 1;
+    size_t bufferSize = strlen("int main(){\n\nreturn 0;}") + strlen(statements) + 1;
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
         //free(statements);
@@ -130,7 +130,7 @@ char * processEntrypointNode(GenericNode * gn){
     }
 
     // Printing the strings into the buffer
-    sprintf(buffer, "int main(){%sreturn 0;}", statements);
+    sprintf(buffer, "int main(){\n%s\nreturn 0;}", statements);
 
     //free(statements);
 
@@ -195,6 +195,7 @@ char * processNodeList(NodeList * listCurrent){
 
 
 char * processAssignment(GenericNode * gn){
+
     if (gn == NULL) return NULL;
 
     char * buffer;
@@ -292,50 +293,36 @@ char * processInBlockStatement(GenericNode * gn){
 }
 
 char * processWhileNode(GenericNode * gn){
-    if (gn == NULL){
-        return NULL;
-    }    
-
-    // Getting the nodelist with the expression
-    NodeList * expressionListNode = gn->children;
-    if (expressionListNode == NULL){
-        return NULL;
-    }
+    if (gn == NULL) return NULL;  
 
     // Getting the node with the expression and processing it
-    GenericNode * expressionNode = expressionListNode->current;
+    GenericNode * expressionNode = gn->children->current;
     char * expression = process(expressionNode);
     if (expression == NULL){
         return NULL;
     }
 
-    // Getting the nodelist with the block
-    NodeList * blockListNode = expressionListNode->next;
-    if (blockListNode == NULL){
-        return NULL;
-    }
-
     // Getting the node with the block and processing it 
-    GenericNode * blockNode = blockListNode->current;
+    GenericNode * blockNode = gn->children->next->current;
     char * block = process(blockNode);
     if (block == NULL){
         return NULL;
     }
 
     // Calculating the length of the buffer
-    size_t bufferSize = strlen("while(){}") + strlen(block) + strlen(expression) + 1;
+    size_t bufferSize = 1 + strlen("while(  )") + strlen(block) + strlen(expression);
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
-        ////free(block);
-        ////free(expression);
+        //free(block);
+        //free(expression);
         return NULL;
     }
 
-    // Printing the strings into the buffer
-    sprintf(buffer, "while(%s){%s}", expression, block);
+    // Saving the strings into the buffer
+    sprintf(buffer, "while( %s )%s", expression, block);
 
-    ////free(block);
-    ////free(expression);
+    //free(block);
+    //free(expression);
 
     return buffer;
 }

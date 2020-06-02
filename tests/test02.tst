@@ -1,13 +1,7 @@
 start
     while (expre == 100) {
-        if (expr == 10) {
-            expre == 10;
-        } else if (expre == 100) {
-            ex == 10;
-        } else if (expre == 10000) {
-            eeee < 10;
-        } else {
-            expre == 20;
-        }
+        a = 1;
+        b = 2;
+        c = 3;
     }
 end
