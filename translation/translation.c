@@ -1,6 +1,22 @@
 #include "translation.h"
 
+VarType determineVarType(GenericNode * gn);
 
+VarType determineVarType(GenericNode * gn){
+    // Determining the type of the leaf
+    VarType type;
+    if (gn->value[0] == '\"'){
+        return STRING_TYPE;
+    } else {
+        int i = 0;
+        for (i = 0; i < strlen(gn->value); i++){
+            if (gn->value[i] == '.'){
+                return DOUBLE_TYPE;
+            }
+        }
+        return INTEGER_TYPE;
+    }
+}
 
 // -------------------------- PRIVATE FUNCTIONS --------------------------
 
@@ -229,20 +245,7 @@ char * processLeaf(GenericNode * gn){
         return NULL;
     }
 
-    // Determining the type of the leaf
-    VarType type;
-    if (gn->value[0] == '\"'){
-        type = STRING_TYPE;
-    } else {
-        int i = 0;
-        for (i = 0; i < strlen(gn->value); i++){
-            if (gn->value[i] == '.'){
-                type = DOUBLE_TYPE;
-            }
-        }
-        type = INTEGER_TYPE;
-    }
-    gn->info.varType = type;
+    gn->info.varType = determineVarType(gn);
 
     // Creating the buffer
     size_t bufferSize = 1 + strlen(gn->value);
