@@ -23,8 +23,9 @@ GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int childr
     va_end(childrenList);
 
     if(value != 0){
-        createdNode->value = malloc(strlen(value) * sizeof(char));
+        createdNode->value = malloc(strlen(value) + 1);
         strcpy(createdNode->value, value);
+
     }
     else{
         createdNode->value = 0;
@@ -61,7 +62,7 @@ GenericNode * newGenericNode(NodeType type, char * value) {
     GenericNode * gn = malloc(sizeof(GenericNode));
     gn->info.type = type;
     if(value != 0){
-        gn->value = malloc(strlen(value) * sizeof(char));
+        gn->value = malloc(strlen(value) + 1);
         strcpy(gn->value, value);
     }
     else{

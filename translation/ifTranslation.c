@@ -38,9 +38,12 @@ char * processIf(GenericNode * gn){
 }
 
 char * processIfElse(GenericNode * gn){
+    if(gn == NULL) return NULL;
+
     char * buffer;
     char * if_op = "if (";
     char * p_close = ")";
+
     
     //Gets and process general expression. ( .... )
     GenericNode * ge = gn -> children -> current;
@@ -59,13 +62,13 @@ char * processIfElse(GenericNode * gn){
 
     // Process the else train
     GenericNode * elseTrain = gn -> children -> next -> next -> current; //Get the node of the else train.
-    char * elseTrainProc = "ELSETRAIN\n";//processElseTrain(elseTrain);
+    char * elseTrainProc = processElseTrain(elseTrain);
     if(elseTrainProc == NULL){
         //free(elseTrainProc);
         return NULL;
     }
 
-    buffer = malloc(strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + strlen(elseTrainProc) + 1);
+    buffer = malloc(1+ strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + strlen(elseTrainProc) );
     if(buffer == NULL){
         //free(buffer);
         //free(geProc);
@@ -83,106 +86,103 @@ char * processIfElse(GenericNode * gn){
 }
 
 char * processElseTrain(GenericNode * gn){
-    char * buffer = malloc(1);
-    if (buffer == NULL) {
-        return NULL;
-    }
+    char * buffer;
 
-    char * elseType = gn -> value; //Need to know what is the else type to parse correctly
-
+    // Need to know what is the else type to parse correctly
+    char * elseType = gn -> value;
     char * initial;
 
-
-
-
+    // Its a simple "ELSE"
     if(strcmp(elseType, "ELSE") == 0){
-        initial = " else { \n";
+        initial = " else";
         GenericNode * block = gn -> children ->current;
+
         char * blockProc = process(block);
         if(blockProc == NULL){
-            free(buffer);
             return NULL;
         }
-        buffer = realloc(buffer, strlen(initial) + strlen(blockProc) + strlen(buffer));
+
+        buffer = malloc(1 +  strlen(initial) + strlen(blockProc));
         if(buffer == NULL){
-            free(blockProc);
+            //free(blockProc);
             return NULL;
         }
-        strcat(buffer, initial);
-        strcat(buffer, blockProc);
-        free(blockProc);
+
+        sprintf(buffer, "%s%s", initial, blockProc);
+        //free(blockProc);
 
         return buffer;
 
     }
     
-    //is an elif
+    // Its an "ELIF"
 
     initial = "else if( ";
     char * c_par = " ) ";
 
-    GenericNode * ge = gn -> children -> current;
-    char * geProc = process(ge);
+    GenericNode * ge = gn->children->current;
 
+    //Process the general expression that both types of else if have.
+    char * geProc = process(ge);
     if(geProc == NULL){
-        free(buffer);
         return NULL;
     }
 
+    //Process the block that both types of else if have.
     GenericNode * block = gn -> children -> next ->current;
     char * blockProc = process(block);
         if(blockProc == NULL){
-            free(buffer);
-            free(geProc);
+            //free(geProc);
             return NULL;
         }
 
-    if(strcmp(elseType, "ELSE_IF_2") == 0){
-        GenericNode * elseIf = gn -> children -> next ->next -> current;
+
+    //Elif type 1 --> With no else train.
+    if(strcmp(elseType, "ELSE_IF_1") == 0){ 
+
+        buffer = malloc(1 + strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc));
+        if(buffer == NULL){
+            //free(geProc);
+            //free(blockProc);
+            return NULL;
+        }
+
+        sprintf(buffer,"%s%s%s%s", initial, geProc, c_par, blockProc);
+        free(geProc);
+        free(blockProc);
+
+        return buffer;
+
+    }
+
+    //Else if type 2 --> Same as before but with else train
+    else if(strcmp(elseType, "ELSE_IF_2") == 0){
+
+        GenericNode * elseIf = gn -> children -> next -> next -> current;
+
         char * elseIfProc = process(elseIf);
         if(elseIfProc == NULL){
-            free(buffer);
-            free(geProc);
-            free(blockProc);
-            return NULL;
-        }
-        buffer = realloc(buffer, strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc) + strlen(elseIfProc) + strlen(buffer));
-        if(buffer == NULL){
-            free(geProc);
-            free(blockProc);
-            free(elseIfProc);
+            //free(geProc);
+            //free(blockProc);
             return NULL;
         }
 
-        strcat(buffer,initial);
-        strcat(buffer,geProc);
-        strcat(buffer,c_par);
-        strcat(buffer,blockProc);
-        strcat(buffer,elseIfProc);
-        free(geProc);
-        free(blockProc);
-        free(elseIfProc);
+        buffer = malloc(1 + strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc) + strlen(elseIfProc));
+        if(buffer == NULL){
+            //free(geProc);
+            //free(blockProc);
+            //free(elseIfProc);
+            return NULL;
+        }
+
+        sprintf(buffer, "%s%s%s%s%s", initial, geProc, c_par, blockProc, elseIfProc);
+        //free(geProc);
+        //free(blockProc);
+        //free(elseIfProc);
 
         return buffer;
 
     }
-    else{ //elif type 1
-        buffer = realloc(buffer, strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc) + strlen(buffer));
-        if(buffer == NULL){
-            free(geProc);
-            free(blockProc);
-            return NULL;
-        }
 
-        strcat(buffer,initial);
-        strcat(buffer,geProc);
-        strcat(buffer,c_par);
-        strcat(buffer,blockProc);
-        free(geProc);
-        free(blockProc);
-
-        return buffer;
-
-    }
-    return buffer;
+    return NULL;
 }
