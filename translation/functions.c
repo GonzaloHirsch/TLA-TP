@@ -78,19 +78,15 @@ char * _sumStrStr(char * str1, char * str2);
 
 // Subs Int Arr & Int
 IntArr * _subsIntArrInt(IntArr * arr, int num);
-IntArr * _subsIntIntArr(int num, IntArr * arr);
 
 // Subs Int Arr & Double
 DoubleArr * _subsIntArrDouble(IntArr * arr, double num);
-DoubleArr * _subsDoubleIntArr(double num, IntArr * arr);
 
 // Subs Double Arr & Double
 DoubleArr * _subsDoubleArrDouble(DoubleArr * arr, double num);
-DoubleArr * _subsDoubleDoubleArr(double num, DoubleArr * arr);
 
 // Subs Double Arr & Int
 DoubleArr * _subsDoubleArrInt(DoubleArr * arr, int num);
-DoubleArr * _subsIntDoubleArr(int num, DoubleArr * arr);
 
 // Subs Double Arr & Double Arr
 DoubleArr * _subsDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2);
@@ -325,9 +321,6 @@ IntArr * _subsIntArrInt(IntArr * arr, int num){
 	res->size = arr->size;
 	return res;
 }
-IntArr * _subsIntIntArr(int num, IntArr * arr){
-	return _subsIntArrInt(arr, num);
-}
 
 // Subs Int Arr & Double
 DoubleArr * _subsIntArrDouble(IntArr * arr, double num){
@@ -337,9 +330,6 @@ DoubleArr * _subsIntArrDouble(IntArr * arr, double num){
 	res->arr = resArr;
 	res->size = arr->size;
 	return res;
-}
-DoubleArr * _subsDoubleIntArr(double num, IntArr * arr){
-	return _subsIntArrDouble(arr, num);
 }
 
 // Subs Double Arr & Double
@@ -351,9 +341,6 @@ DoubleArr * _subsDoubleArrDouble(DoubleArr * arr, double num){
 	res->size = arr->size;
 	return res;
 }
-DoubleArr * _subsDoubleDoubleArr(double num, DoubleArr * arr){
-	return _subsDoubleArrDouble(arr, num);
-}
 
 // Subs Double Arr & Int
 DoubleArr * _subsDoubleArrInt(DoubleArr * arr, int num){
@@ -363,9 +350,6 @@ DoubleArr * _subsDoubleArrInt(DoubleArr * arr, int num){
 	res->arr = resArr;
 	res->size = arr->size;
 	return res;
-}
-DoubleArr * _subsIntDoubleArr(int num, DoubleArr * arr){
-	return _subsDoubleArrInt(arr, num);
 }
 
 // Subs Double Arr & Double Arr
