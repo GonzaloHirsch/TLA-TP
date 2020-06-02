@@ -9,6 +9,7 @@
 #include "./ifTranslation.h"
 #include "./statementTranslation.h"
 #include "./expressionTranslation.h"
+#include "./opTranslation.h"
 
 //----------INTERNAL FUNCTIONS---------------------------
 char * processStamentListNode(GenericNode * gn);

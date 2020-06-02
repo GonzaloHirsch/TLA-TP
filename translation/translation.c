@@ -84,9 +84,9 @@ char * process(GenericNode * gn){
         case NODE_EXPRESSION:
             value = processExpression(gn);
             break;
-
         case NODE_G_OPERATION:
-            value = "general_operation";
+            return "gen_operation";
+            value = processOperation(gn);
             break;
         case NODE_OPERATION:
             value = "operation";
