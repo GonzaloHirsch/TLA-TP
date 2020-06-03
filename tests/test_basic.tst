@@ -1,3 +1,3 @@
 start
-    print "hello';
+    print "hello";
 end

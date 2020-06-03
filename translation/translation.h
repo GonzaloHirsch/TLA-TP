@@ -10,6 +10,7 @@
 #include "./statementTranslation.h"
 #include "./expressionTranslation.h"
 #include "./opTranslation.h"
+#include "./foreachTranslation.h"
 
 //----------INTERNAL FUNCTIONS---------------------------
 char * processStamentListNode(GenericNode * gn);

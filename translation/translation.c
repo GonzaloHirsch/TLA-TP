@@ -51,9 +51,11 @@ char * process(GenericNode * gn){
             value = processVarDeclassignment(gn);
             break;
         case NODE_FOREACH:
+            value = processForEach(gn);
             break;
-        case NODE_FOREACHBODY:
-            break;
+        // case NODE_FOREACHBODY:
+        //     value = processForEachBody(gn);
+        //     break;
         case NODE_BLOCK:
             value = processBlock(gn);
             break;
@@ -106,7 +108,6 @@ char * process(GenericNode * gn){
             value = processOperation(gn);
             break;
         case NODE_OPERATION:
-            //value = "operation";
             value = processOperation(gn);
             break;
         case NODE_ARRAYLITERAL:

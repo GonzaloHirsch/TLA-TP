@@ -178,11 +178,14 @@ print:          PRINT unity     {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, 
 
 foreach:
         VAR DOT FOREACH OPEN_P VAR RIGHT_ARROW foreachbody CLOSE_P 
-        {$$ = newGenericNodeWithChildren(NODE_FOREACH, 0, 3, $1, $5, $7);}
+        {
+                GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+                GenericNode * metaVarNode = newGenericNode(NODE_VARIABLE, $5);
+                $$ = newGenericNodeWithChildren(NODE_FOREACH, 0, 3, varNode, metaVarNode, $7);}
         ; 
 foreachbody:
         statement {$$ = newGenericNodeWithChildren(NODE_FOREACHBODY, 0, 1, $1);}
-        | funblock {$$ = newGenericNodeWithChildren(NODE_FOREACHBODY, 0, 1, $1);}
+        | block {$$ = newGenericNodeWithChildren(NODE_FOREACHBODY, 0, 1, $1);}
         ;
 
 block:	OPEN_B inblockstatements  CLOSE_B {
@@ -361,7 +364,7 @@ main(void) {
         */
 	
 	yyparse(&codeRootNode);
-        //printGenericNode(codeRootNode, 0);
+        printGenericNode(codeRootNode, 0);
         char * code = translate(codeRootNode);
         if (code == NULL){
                 //freeGenericNode(codeRootNode);

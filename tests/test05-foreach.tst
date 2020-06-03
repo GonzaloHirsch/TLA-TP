@@ -1,23 +1,6 @@
 start
-    var
-    .
-    forEach
-    (x->
-        {
-        x == y;
-        x == 1234;
-        while (x == 4) {
-            printf("hola");
-            if (a == 21234) {
-                printf("s", 12341);
-            }
-            else if (b == 2425) {
-                printf("%s", 12343, 41234, 12345);
-            }
-            else {
-                x = 212;
-            }
-        }
-    }
+    int[] arr = [1,2,3,4,5];
+    arr.forEach(x->
+        print x
     );
 end
