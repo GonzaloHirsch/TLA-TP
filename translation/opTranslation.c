@@ -468,36 +468,36 @@ char * processSubOp(GenericNode * gn){
 
     // Determining the operation
     if (leftType == INTEGER_ARRAY_TYPE && rightType == INTEGER_TYPE){
-        operation = "_subIntArrInt(,)";
+        operation = "_subsIntArrInt(,)";
         newType = INTEGER_ARRAY_TYPE;
     } else if (leftType == INTEGER_TYPE && rightType == INTEGER_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_TYPE){
-        operation = "_subIntArrDouble(,)";
+        operation = "_subsIntArrDouble(,)";
         newType = DOUBLE_ARRAY_TYPE;
     } else if (leftType == DOUBLE_TYPE && rightType == INTEGER_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == DOUBLE_TYPE){
-        operation = "_subDoubleArrDouble(,)";
+        operation = "_subsDoubleArrDouble(,)";
         newType = DOUBLE_ARRAY_TYPE;
     } else if (leftType == DOUBLE_TYPE && rightType == DOUBLE_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_TYPE){
-        operation = "_subDoubleArrInt(,)";
+        operation = "_subsDoubleArrInt(,)";
         newType = DOUBLE_ARRAY_TYPE;
     } else if (leftType == INTEGER_TYPE && rightType == DOUBLE_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE){
-        operation = "_subDoubleArrDoubleArr(,)";
+        operation = "_subsDoubleArrDoubleArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
     } else if (leftType == INTEGER_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE){
-        operation = "_subIntArrIntArr(,)";
+        operation = "_subsIntArrIntArr(,)";
         newType = INTEGER_ARRAY_TYPE;
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE){
-        operation = "_subDoubleArrIntArr(,)";
+        operation = "_subsDoubleArrIntArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE){
-        operation = "_subIntArrDoubleArr(,)";
+        operation = "_subsIntArrDoubleArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
     } else if (leftType == INTEGER_TYPE && rightType == INTEGER_TYPE){
         operation = "-";
@@ -525,29 +525,29 @@ char * processSubOp(GenericNode * gn){
 
     // Generating the output
     if (leftType == INTEGER_ARRAY_TYPE && rightType == INTEGER_TYPE){
-        sprintf(buffer, "_subIntArrInt(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsIntArrInt(%s,%s)", leftSide, rightSide);
     } else if (leftType == INTEGER_TYPE && rightType == INTEGER_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_TYPE){
-        sprintf(buffer, "_subIntArrDouble(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsIntArrDouble(%s,%s)", leftSide, rightSide);
     } else if (leftType == DOUBLE_TYPE && rightType == INTEGER_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == DOUBLE_TYPE){
-        sprintf(buffer, "_subDoubleArrDouble(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsDoubleArrDouble(%s,%s)", leftSide, rightSide);
     } else if (leftType == DOUBLE_TYPE && rightType == DOUBLE_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_TYPE){
-        sprintf(buffer, "_subDoubleArrInt(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsDoubleArrInt(%s,%s)", leftSide, rightSide);
     } else if (leftType == INTEGER_TYPE && rightType == DOUBLE_ARRAY_TYPE){
         // ERROR -> Operation not permited
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE){
-        sprintf(buffer, "_subDoubleArrDoubleArr(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsDoubleArrDoubleArr(%s,%s)", leftSide, rightSide);
     } else if (leftType == INTEGER_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE){
-        sprintf(buffer, "_subIntArrIntArr(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsIntArrIntArr(%s,%s)", leftSide, rightSide);
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE){
-        sprintf(buffer, "_subDoubleArrIntArr(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsDoubleArrIntArr(%s,%s)", leftSide, rightSide);
     } else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE){
-        sprintf(buffer, "_subIntArrDoubleArr(%s,%s)", leftSide, rightSide);
+        sprintf(buffer, "_subsIntArrDoubleArr(%s,%s)", leftSide, rightSide);
     } else if (leftType == INTEGER_TYPE && rightType == INTEGER_TYPE){
         sprintf(buffer, "%s-%s", leftSide, rightSide);
     } else if (leftType == DOUBLE_TYPE && rightType == DOUBLE_TYPE){
