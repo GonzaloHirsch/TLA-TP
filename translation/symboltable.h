@@ -33,6 +33,7 @@ symvartype * symAddString(char * name);
 symvartype * symAddDouble(char * name);
 symvartype * symAddDoubleArr(char * name);
 symvartype * symAddIntArr(char * name);
+symvartype * symAdd(char * name, VarType type);
 
 // Functions to set values to variables
 symvartype * symSetInt(char * name, int value);
@@ -40,6 +41,7 @@ symvartype * symSetString(char * name, char * value);
 symvartype * symSetDouble(char * name, double value);
 symvartype * symSetDoubleArr(char * name, double * values);
 symvartype * symSetDoubleArr(char * name, double * values);
+void symSet(char * name, VarType type, void * value);
 
 /*
 symvartype * symLook(char * name, symvartype * symvartable);

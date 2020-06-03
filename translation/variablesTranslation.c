@@ -5,7 +5,7 @@ char * processVariable(GenericNode * gn) {
     printf("BEFORE THE VAR\n");
     symvartype * var = symLook(gn->value);
     if (var == NULL){
-        return NULL;
+        var = symAdd(gn->value, gn->info.varType);
     }
     printf("AFTER THE VAR\n");
     gn->info.varType = var->type;

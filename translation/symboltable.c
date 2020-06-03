@@ -119,6 +119,26 @@ symvartype * symAddIntArr(char * name){
     return sp;
 }
 
+symvartype * symAdd(char * name, VarType type) {
+    switch(type) {
+        case STRING_TYPE:
+            return symAddString(name);
+            break;
+        case INTEGER_TYPE:
+            return symAddInt(name);
+            break;
+        case DOUBLE_TYPE:
+            return symAddDouble(name);
+            break;
+        case INTEGER_ARRAY_TYPE:
+            return symAddIntArr(name);
+            break;
+        case DOUBLE_ARRAY_TYPE:
+            return symAddDoubleArr(name);
+            break;
+    }
+}
+
 symvartype * symSetInt(char * name, int value){
     symvartype * sp = symLook(name);
     if(sp->type == INTEGER_TYPE){
@@ -153,6 +173,26 @@ symvartype * symSetDouble(char * name, double value){
     }
     
     return 0;
+}
+
+void symSet(char * name, VarType type, void * value) {
+    switch(type) {
+        case STRING_TYPE:
+            symSetString(name, (char *) value);
+            break;
+        case INTEGER_TYPE:
+            symSetInt(name, *((int *) value));
+            break;
+        case DOUBLE_TYPE:
+            symSetDouble(name, *((double *) value));
+            break;
+        case INTEGER_ARRAY_TYPE:
+            perror("not implemented: symSet for INTEGER_ARRAY_TYPE");
+            break;
+        case DOUBLE_ARRAY_TYPE:
+            perror("not implemented: symSet for DOUBLE_ARRAY_TYPE");
+            break;
+    }
 }
 
 
