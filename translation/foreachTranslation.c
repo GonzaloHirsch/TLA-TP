@@ -7,6 +7,9 @@ char * processForEach(GenericNode * gn) {
     // The VAR part
     NodeList * nl = gn->children;
     char * varName = translate(nl->current);
+    symvartype * svt;
+    svt = symLook(varName);
+    char * type = "double";
     //TODO check if var exists...
     
     // The METAVAR part
@@ -17,17 +20,18 @@ char * processForEach(GenericNode * gn) {
     // The foreachbody part
     nl = nl->next;
     // TODO error shouldn't get this far (bc yacc works OK), but maybe check
-    gn = nl->current;
+    GenericNode * foreachBody = nl->current;
 
-    char * resultingTemplate = "void _arrFunc%ld(double %s) {\n" //function declaration with global counter
+    char * resultingTemplate = "void _arrFunc%ld(%s %s) {\n" //function declaration with global counter
                                 "%s\n"    // the BLOCK/STATEMENT part (here 'body')
                                 "}\n"     // Blocks inside blocks are not a problem here
                                 "for(int __i = 0; __i < %s->size; __i++)\n" // this %s should be sth like arrayName->length
-                                "\tarrFunc%ld(%s->arr[__i]);";    
+                                "\t_arrFunc%ld(%s->arr[__i]);";    
 
-    char * body = translate(gn);
+    char * body = translate(foreachBody->children->current);
 
-    char * bff = malloc(strlen(varName)*2 + strlen(metaVarName)*2 + strlen(resultingTemplate) - 7);
-    sprintf(bff, resultingTemplate, metaVarName, metaVarName, varName, varName);
+    char * bff = malloc(strlen(type) + strlen(varName)*2 + strlen(metaVarName) + strlen(body) + strlen(resultingTemplate) - 9 + 16); //16 for the dubious length of the global variable 
+    sprintf(bff, resultingTemplate, lambdaCount, type, metaVarName, body, varName, lambdaCount, varName);
+    lambdaCount++;
     return bff;
 }

@@ -364,7 +364,7 @@ main(void) {
         */
 	
 	yyparse(&codeRootNode);
-        printGenericNode(codeRootNode, 0);
+        // printGenericNode(codeRootNode, 0);
         char * code = translate(codeRootNode);
         if (code == NULL){
                 //freeGenericNode(codeRootNode);
