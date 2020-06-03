@@ -41,17 +41,20 @@ char * processVarDeclaration(GenericNode * gn) {
 char * processVarDeclassignment(GenericNode * gn) {
     if(gn == NULL) return NULL;
 
+    char * buffer;
     NodeList * nl = gn->children;
 
     // Get the type
-    char * type = translate(nl->current);
+    GenericNode * typeNode = nl->current;
+    char * type = translate(typeNode);
     if(type == NULL){
         return NULL;
     }
 
     //Get the variable
     nl = nl->next;
-    char * var = translate(nl->current);
+    GenericNode * varNode = nl->current;
+    char * var = translate(varNode);
     if(var == NULL){
         //free(type);
         return NULL;
@@ -59,16 +62,29 @@ char * processVarDeclassignment(GenericNode * gn) {
 
     //Get the right value.
     nl = nl->next;
-    char * value = translate(nl->current);
+    GenericNode * valueNode = nl->current;
+    char * value = translate(valueNode);
     if(value == NULL){
         //free(type);
         //free(var);
         return NULL;
     }
 
-    char * buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen(" =  ") + 1);
-    sprintf(buffer, "%s %s = %s", type, var, value);
+    if(typeNode->info.varType == INTEGER_ARRAY_TYPE){
+        char * intArrDec = "int _%s[] = %s;\nIntArr * %s = malloc(sizeof(IntArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
+        buffer = malloc(1 + strlen(intArrDec) + 6*strlen(var) +strlen(value) );
+        sprintf(buffer, intArrDec, var, value, var, var, var, var,var);
 
-    printf("Var declassignment %s\n", buffer);
+    }
+    else if(typeNode->info.varType == DOUBLE_ARRAY_TYPE){
+        char * doubleArrDec = "double _%s[] = %s;\nDoubleArr * %s = malloc(sizeof(DoubleArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
+        buffer = malloc(1 + strlen(doubleArrDec) + 6*strlen(var) +strlen(value) );
+        sprintf(buffer, doubleArrDec, var, value, var, var, var, var,var);
+    }
+    else{
+        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen(" =  ") + 1);
+        sprintf(buffer, "%s %s = %s", type, var, value);
+    }
+    
     return buffer;
 }

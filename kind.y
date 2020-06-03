@@ -52,6 +52,7 @@
 %token<string> START END
 %token<string> DEFINE PASSING
 %token<string> ASSIGN_EQ
+%token<string> INT_ARR DOUBLE_ARR
 
 %type<node> entrypoint
 %type<nodelist> hyperstatements
@@ -165,6 +166,10 @@ vardeclassignment:
         | type VAR ASSIGN_EQ generalexpression {
             GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
             $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, varNode, $4);
+                }
+        | type VAR ASSIGN_EQ arrayliteral {
+            GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
+            $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, varNode, $4);    
         }
         ;
 
@@ -286,6 +291,8 @@ funarg:
 type:		INT 	{$$ = newGenericNode(NODE_INT,"int");}
         | 	STR 	{$$ = newGenericNode(NODE_STR,"char *");}
         | 	DOUBLE 	{$$ = newGenericNode(NODE_DOUBLE,"double");}
+        |       INT_ARR         {$$ = newGenericNode(NODE_ARR_INT,0);}
+        |       DOUBLE_ARR      {$$ = newGenericNode(NODE_ARR_DOUBLE,0);}
         ;
 
 generalexpression:      generalexpression AND expression {$$ = newGenericNodeWithChildren(NODE_G_EXPRESSION, "AND", 2, $1, $3);}
@@ -323,7 +330,7 @@ operation:      unity                            {$$ = newGenericNodeWithChildre
 
 unity:          VAR                             {$$ = newGenericNode(NODE_VARIABLE, $1);}
         |       NUMBER_LITERAL                  {$$ = newGenericNode(NODE_LITERAL, $1);}
-        |       arrayliteral                    {$$ = $1;}
+        ;
 
 %%
 

@@ -8,6 +8,8 @@ char * processVariable(GenericNode * gn);
 char * processDouble(GenericNode * gn);
 char * processStr(GenericNode * gn);
 char * processInt(GenericNode * gn);
+char * processArrayTypeInt(GenericNode * gn);
+char * processArrayTypeDouble(GenericNode * gn);
 char * processArray(GenericNode * gn);
 
 #endif

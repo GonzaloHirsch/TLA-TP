@@ -109,7 +109,12 @@ char * process(GenericNode * gn){
         case NODE_ARRAYLITERAL:
             value = processArray(gn);
             break;
-
+        case NODE_ARR_INT:
+            value = processArrayTypeInt(gn);
+            break;
+        case NODE_ARR_DOUBLE:
+            value = processArrayTypeDouble(gn);
+            break;
 
         default:
             break;

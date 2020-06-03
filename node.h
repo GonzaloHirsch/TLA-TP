@@ -44,6 +44,8 @@ typedef enum {
     NODE_INT,
     NODE_DOUBLE,
     NODE_STR,
+    NODE_ARR_INT,
+    NODE_ARR_DOUBLE,
 
     NODE_FUNDEC,
     NODE_FUNCTION,

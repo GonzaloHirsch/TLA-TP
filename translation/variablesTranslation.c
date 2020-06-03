@@ -21,6 +21,72 @@ char * processInt(GenericNode * gn) {
     return gn->value;
 }
 
+char * processArrayTypeInt(GenericNode * gn){
+    gn->info.varType = INTEGER_ARRAY_TYPE;
+    return "IntArr * ";
+}
+
+char * processArrayTypeDouble(GenericNode * gn){
+    gn->info.varType = DOUBLE_ARRAY_TYPE;
+    return "DoubleArr * ";
+}
+
+
+
+char * processArray(GenericNode * gn){
+    if(gn == NULL) return NULL;
+
+    char * openB = "{";
+    char * closeB = "};"; 
+    char * currentValue;
+    int type;
+
+    char * buffer;
+
+    // Gets the numlist.
+    NodeList * numList = gn->children->current->children;
+
+
+    //Just for the first value
+    type = determineVarType(numList->current);
+    currentValue = numList->current->value;
+    buffer = malloc(1 + strlen(openB) + strlen(currentValue));
+    sprintf(buffer, "%s%s", openB, currentValue);
+
+    numList = numList->next;
+    
+    while(numList != NULL){
+
+        // Has to match with the type of the first one.
+        if(determineVarType(numList->current) == type){
+            currentValue = numList->current->value;
+
+            buffer = realloc(buffer, 1 + strlen(buffer) + strlen(", ") + strlen(currentValue));
+            strcat(buffer, ", ");
+            strcat(buffer, currentValue);
+        }
+        else{
+            // ERROR
+        }
+
+        numList = numList->next;
+    }
+
+    buffer = realloc(buffer, 1 + strlen(buffer) + strlen(closeB));
+    strcat(buffer, closeB);
+
+    if(type == INTEGER_TYPE){
+        gn->info.varType = INTEGER_ARRAY_TYPE; 
+    }
+    else{
+        gn->info.varType = DOUBLE_ARRAY_TYPE;
+    }
+
+    return buffer;
+    
+}
+
+/*
 char * processArray(GenericNode * gn){
 
     if(gn == NULL) return NULL;
@@ -34,7 +100,7 @@ char * processArray(GenericNode * gn){
     char * doubleArrayAuxName = "doubleArray_";
 
     //TODO: make malloc dynamic with realloc.
-    char * intArrayAuxInit = "->arr = malloc(sizeof(int)*100);\n";
+    char * intArrayAuxInit = "->arr = malloc(sizeof(int));\n";
     char * doubleArrayAuxInit="->arr = malloc(sizeof(double)*100);\n";
 
     char * arrayAuxSetSize = "->size = ";
@@ -142,6 +208,7 @@ char * processArray(GenericNode * gn){
     }
 
     return buffer;
-
     
 }
+
+*/

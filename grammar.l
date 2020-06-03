@@ -28,8 +28,10 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 ";"            	return SEMICOLON;
 "."             return DOT;
 "int"           return INT;
+"int[]"         return INT_ARR;
 "str"           return STR;
 "double"        return DOUBLE;
+"double[]"      return DOUBLE_ARR;
 "forEach"       return FOREACH;
 "->"            return RIGHT_ARROW;
 "="             return ASSIGN_EQ;
