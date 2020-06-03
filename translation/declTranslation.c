@@ -59,7 +59,7 @@ char * processVarDeclassignment(GenericNode * gn) {
     if (strcmp(type, "int") == 0){
         gn->info.varType = INTEGER_TYPE;
         symAddInt(nl->current->value);
-    } else if (strcmp(type, "int[]") == 0){
+    } else if (strcmp(type, "IntArr * ") == 0){
         gn->info.varType = INTEGER_ARRAY_TYPE;
         symAddIntArr(nl->current->value);
     } else if (strcmp(type, "str") == 0){
@@ -68,7 +68,7 @@ char * processVarDeclassignment(GenericNode * gn) {
     } else if (strcmp(type, "double") == 0){
         gn->info.varType = DOUBLE_TYPE;
         symAddDouble(nl->current->value);
-    } else if (strcmp(type, "double[]") == 0){
+    } else if (strcmp(type, "DoubleArr * ") == 0){
         gn->info.varType = DOUBLE_ARRAY_TYPE;
         symAddDoubleArr(nl->current->value);
     } else {
