@@ -44,15 +44,13 @@ int checkVariableIndexStatus(int varIndex){
 // ---------------------------- EXPOSED FUNCTIONS ----------------------------
 
 symvartype * symLook(char * name){
-    symvartype sp;
-
+    symvartype * sp;
     for(int i =0; i < MAX_VARIABLES ; i++){
-        sp = symboltable[i];
+        sp = &(symboltable[i]);
         // printf("THE VAR IS CALLED %s\n", sp.name);
-        if(sp.name && !strcmp(sp.name, name))
-            return symboltable + i * sizeof(symvartype);
+        if(sp->name != NULL && !strcmp(sp->name, name))
+            return sp;
     }
-
     return 0;
 }
 
@@ -61,11 +59,10 @@ symvartype * symAddInt(char * name){
     if (!checkVariableBeforeAdd(name, symboltable)){ return 0; }
     if (!checkVariableIndexStatus(nextFreeFunctionSlot)){ return 0; }
 
-    symvartype * sp = &symboltable[nextFreeFunctionSlot++];
+    symvartype * sp = &(symboltable[nextFreeFunctionSlot++]);
     strcpy(sp->name, name);
     sp->type = INTEGER_TYPE;
     sp->value = malloc(sizeof(int));
-    printf("JUST ADDED %s\n", symboltable[nextFreeFunctionSlot - 1].name);
     return sp;
 }
 
@@ -74,10 +71,9 @@ symvartype * symAddString(char * name){
     if (!checkVariableBeforeAdd(name, symboltable)){ return 0; }
     if (!checkVariableIndexStatus(nextFreeFunctionSlot)){ return 0; }
 
-    symvartype * sp = &symboltable[nextFreeFunctionSlot++];
+    symvartype * sp = &(symboltable[nextFreeFunctionSlot++]);
     strcpy(sp->name, name);
     sp->type = STRING_TYPE;
-    printf("JUST ADDED %s\n", symboltable[nextFreeFunctionSlot - 1].name);
     return sp;
 }
 
@@ -86,11 +82,10 @@ symvartype * symAddDouble(char * name){
     if (!checkVariableBeforeAdd(name, symboltable)){ return 0; }
     if (!checkVariableIndexStatus(nextFreeFunctionSlot)){ return 0; }
 
-    symvartype * sp = &symboltable[nextFreeFunctionSlot++];
+    symvartype * sp = &(symboltable[nextFreeFunctionSlot++]);
     strcpy(sp->name, name);
     sp->type = DOUBLE_TYPE;
     sp->value = malloc(sizeof(double));
-    printf("JUST ADDED %s\n", symboltable[nextFreeFunctionSlot - 1].name);
     return sp;
 }
 
@@ -98,11 +93,10 @@ symvartype * symAddDoubleArr(char * name){
     if (!checkVariableBeforeAdd(name, symboltable)){ return 0; }
     if (!checkVariableIndexStatus(nextFreeFunctionSlot)){ return 0; }
 
-    symvartype * sp = &symboltable[nextFreeFunctionSlot++];
+    symvartype * sp = &(symboltable[nextFreeFunctionSlot++]);
     strcpy(sp->name, name);
     sp->type = DOUBLE_ARRAY_TYPE;
     sp->value = malloc(sizeof(double *));
-    printf("JUST ADDED %s\n", symboltable[nextFreeFunctionSlot - 1].name);
     return sp;
 }
 
@@ -111,11 +105,10 @@ symvartype * symAddIntArr(char * name){
     if (!checkVariableBeforeAdd(name, symboltable)){ return 0; }
     if (!checkVariableIndexStatus(nextFreeFunctionSlot)){ return 0; }
 
-    symvartype * sp = &symboltable[nextFreeFunctionSlot++];
+    symvartype * sp = &(symboltable[nextFreeFunctionSlot++]);
     strcpy(sp->name, name);
     sp->type = INTEGER_ARRAY_TYPE;
     sp->value = malloc(sizeof(int *));
-    printf("JUST ADDED %s\n", symboltable[nextFreeFunctionSlot - 1].name);
     return sp;
 }
 

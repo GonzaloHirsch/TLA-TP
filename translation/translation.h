@@ -29,8 +29,7 @@ VarType determineVarType(GenericNode * gn);
 
 //----------------------------------------------------------
 
-
-
+char * getHeadersAndFunctions();
 char * translate(GenericNode * gn);
 
 #endif

@@ -17,8 +17,6 @@ char * processOperation(GenericNode * gn){
 
     char * value;
 
-    printf("MY OP VALUE %s\n", opValue);
-
     if (strcmp(opValue, "PLAIN") == 0){
         value = processPlainOp(gn);
     } else if (strcmp(opValue, "PROD") == 0){

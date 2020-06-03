@@ -82,7 +82,6 @@
 
 entrypoint: 	
         START hyperstatements END 	{
-        printf("entrypoint\n");
         // create node for hyprestatements
         GenericNode * hyperstatements = newGenericNode(NODE_HYPERSTATEMENTS, 0);
         hyperstatements->children = $2;
@@ -356,12 +355,15 @@ main(void) {
         */
 	
 	yyparse(&codeRootNode);
-        printGenericNode(codeRootNode, 0);
+        //printGenericNode(codeRootNode, 0);
         char * code = translate(codeRootNode);
         if (code == NULL){
                 //freeGenericNode(codeRootNode);
                 return 1;
         }
+
+        char * headersAndFunctions = getHeadersAndFunctions();
+        printf("%s\n", headersAndFunctions);
 
         printf("%s\n", code);
         
