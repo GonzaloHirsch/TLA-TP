@@ -7,10 +7,22 @@ char * processForEach(GenericNode * gn) {
     // The VAR part
     NodeList * nl = gn->children;
     char * varName = translate(nl->current);
+    
+    //TODO check if var exists
+    // and other integrity checks
     symvartype * svt;
     svt = symLook(varName);
-    char * type = "double";
-    //TODO check if var exists...
+    
+    char * type;
+
+    switch(svt->type) {
+        case INTEGER_ARRAY_TYPE:
+            type = "int";
+            break;
+        case DOUBLE_ARRAY_TYPE:
+            type = "double";
+            break;
+    }
     
     // The METAVAR part
     nl = nl->next;
