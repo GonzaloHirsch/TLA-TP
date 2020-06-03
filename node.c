@@ -201,7 +201,9 @@ const char * getNodeTypeString (NodeType type) {
         case NODE_ARR_DOUBLE:
             return "NODE_ARR_DOUBLE";
             break;
-
+        case NODE_STRING_LITERAL:
+            return "NODE_STRING_LITERAL";
+            break;
 
         default:
             return "DEFAULT";

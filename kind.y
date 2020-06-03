@@ -195,7 +195,7 @@ assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGen
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, 2, varNode, $3);}
         ;
 
-literal:        STRING_LITERAL {$$ = newGenericNode(STRING_LITERAL, $1);}
+literal:        STRING_LITERAL {$$ = newGenericNode(NODE_STRING_LITERAL, $1);}
         ;
 
 arrayliteral:

@@ -68,6 +68,9 @@ char * process(GenericNode * gn){
         case NODE_STR:
             value = processStr(gn);
             break;
+        case NODE_STRING_LITERAL:
+            return gn->value;
+            break;
         case NODE_DOUBLE:
             value = processDouble(gn);
             break;
