@@ -189,6 +189,18 @@ const char * getNodeTypeString (NodeType type) {
         case NODE_OPERATION:
             return "NODE_OPERATION";
             break;
+        case NODE_ARRAYLITERAL:
+            return "NODE_ARRAYLITERAL";
+            break;
+        case NODE_NUMLIST:
+            return "NODE_NUMLIST";
+            break;
+        case NODE_ARR_INT:
+            return "NODE_ARR_INT";
+            break;
+        case NODE_ARR_DOUBLE:
+            return "NODE_ARR_DOUBLE";
+            break;
 
 
         default:
