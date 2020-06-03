@@ -1,3 +1,3 @@
 start
-    var == 10;
+    print "hello';
 end

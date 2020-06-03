@@ -66,12 +66,12 @@
 %type<node> block funblock
 %type<nodelist> inblockstatements
 %type<node> inblockstatement
-%type<node> funcall fundeclaration function returnstatement funargs funcallargs
+%type<node> funcall fundeclaration function returnstatement funargs funcallargs 
 %type<nodelist> arglist funarglist
 %type<node> foreach foreachbody
 %type<node> assignment vardeclassignment vardeclaration
 %type<node> type literal
-%type<node> while
+%type<node> while print
 %type<node> elsetrain
 %type<node> funarg
 %type<node> arrayliteral
@@ -138,6 +138,7 @@ statement:
         |       fundeclaration          {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
         |       funcall                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
         |       foreach                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
+        |       print                   {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, 1, $1);}
         ;
 
 vardeclaration:
@@ -169,6 +170,11 @@ vardeclassignment:
             $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, 3, $1, varNode, $4);    
         }
         ;
+
+print:          PRINT unity     {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, 1, $2);}  
+        |       PRINT literal   {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, 1, $2);}
+        ;
+
 
 foreach:
         VAR DOT FOREACH OPEN_P VAR RIGHT_ARROW foreachbody CLOSE_P 

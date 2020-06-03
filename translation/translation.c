@@ -69,7 +69,7 @@ char * process(GenericNode * gn){
             value = processStr(gn);
             break;
         case NODE_STRING_LITERAL:
-            return gn->value;
+            value = processLeaf(gn);
             break;
         case NODE_DOUBLE:
             value = processDouble(gn);
@@ -118,7 +118,9 @@ char * process(GenericNode * gn){
         case NODE_ARR_DOUBLE:
             value = processArrayTypeDouble(gn);
             break;
-
+        case NODE_PRINT:
+            value = processPrint(gn);
+            break;
         default:
             break;
     }
@@ -333,6 +335,46 @@ char * processWhileNode(GenericNode * gn){
 
     //free(block);
     //free(expression);
+
+    return buffer;
+}
+
+char * processPrint(GenericNode * gn){
+
+    if(gn == NULL) return NULL;
+
+    char * buffer;
+    
+    GenericNode * childNode = gn->children->current;
+    char * childNodeProc = process(childNode);
+
+
+    switch (childNode->info.varType)
+    {
+    case INTEGER_ARRAY_TYPE:
+        buffer = malloc(1 + strlen("_printIntArr()") + strlen(childNodeProc));
+        sprintf(buffer,"_printIntArr(%s)",childNodeProc);
+        break;
+    case DOUBLE_ARRAY_TYPE:
+        buffer = malloc(1 + strlen("_printDoubleArr()") + strlen(childNodeProc));
+        sprintf(buffer,"_printDoubleArr(%s)",childNodeProc);
+        break;
+    case STRING_TYPE:
+        buffer = malloc(1 + strlen("printf(%s,)") + strlen(childNodeProc));
+        sprintf(buffer, "printf(%%s,%s)", childNodeProc);
+        break;
+    case INTEGER_TYPE:
+        buffer = malloc(1 + strlen("printf(%d,)") + strlen(childNodeProc));
+        sprintf(buffer, "printf(%%d,%s)", childNodeProc);
+        break;
+    case DOUBLE_TYPE:
+        buffer = malloc(1 + strlen("printf(%f,)") + strlen(childNodeProc));
+        sprintf(buffer, "printf(%%f,%s)", childNodeProc);
+        break;
+    default:
+        return NULL;
+        // ERROR
+    }
 
     return buffer;
 }

@@ -24,6 +24,7 @@ char * processInBlockStatements(GenericNode * gn);
 char * processInBlockStatement(GenericNode * gn);   
 char * processHyperStatement(GenericNode * gn);
 char * processHyperStatements(GenericNode * gn);
+char * processPrint(GenericNode *);
 
 VarType determineVarType(GenericNode * gn);
 

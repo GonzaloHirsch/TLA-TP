@@ -10,4 +10,8 @@ start
     } else {
         arr = arr - 10;
     }
+
+    print arr ;
+    print x ;
+
 end

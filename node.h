@@ -61,6 +61,8 @@ typedef enum {
     NODE_ARGLIST,
     NODE_NUMLIST,
 
+    NODE_PRINT,
+
 } NodeType;
 
 // Information about the node itinfo
