@@ -361,15 +361,15 @@ char * processPrint(GenericNode * gn){
         break;
     case STRING_TYPE:
         buffer = malloc(1 + strlen("printf(%s,)") + strlen(childNodeProc));
-        sprintf(buffer, "printf(%%s,%s)", childNodeProc);
+        sprintf(buffer, "printf(\"%%s\\n\",%s)", childNodeProc);
         break;
     case INTEGER_TYPE:
         buffer = malloc(1 + strlen("printf(%d,)") + strlen(childNodeProc));
-        sprintf(buffer, "printf(%%d,%s)", childNodeProc);
+        sprintf(buffer, "printf(\"%%d\\n\",%s)", childNodeProc);
         break;
     case DOUBLE_TYPE:
         buffer = malloc(1 + strlen("printf(%f,)") + strlen(childNodeProc));
-        sprintf(buffer, "printf(%%f,%s)", childNodeProc);
+        sprintf(buffer, "printf(\"%%f\\n\",%s)", childNodeProc);
         break;
     default:
         return NULL;
