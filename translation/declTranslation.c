@@ -91,20 +91,26 @@ char * processVarDeclassignment(GenericNode * gn) {
         return NULL;
     }
 
-    if(typeNode->info.varType == INTEGER_ARRAY_TYPE){
+    if(typeNode->info.varType == INTEGER_ARRAY_TYPE && valueNode->info.varType == INTEGER_ARRAY_TYPE){
         char * intArrDec = "int _%s[] = %s;\nIntArr * %s = malloc(sizeof(IntArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
         buffer = malloc(1 + strlen(intArrDec) + 6*strlen(var) +strlen(value) );
         sprintf(buffer, intArrDec, var, value, var, var, var, var,var);
     }
-    else if(typeNode->info.varType == DOUBLE_ARRAY_TYPE){
+    else if(typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == DOUBLE_ARRAY_TYPE){
         char * doubleArrDec = "double _%s[] = %s;\nDoubleArr * %s = malloc(sizeof(DoubleArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
         buffer = malloc(1 + strlen(doubleArrDec) + 6*strlen(var) +strlen(value) );
         sprintf(buffer, doubleArrDec, var, value, var, var, var, var,var);
     }
-    else{
+    else if(typeNode->info.varType == valueNode->info.varType){
         buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen(" =  ") + 1);
         sprintf(buffer, "%s %s = %s", type, var, value);
     }
+    else{
+        // ERROR
+        printf("ERROR\n;");
+        return NULL;
+    }
+    
 
     printf("HEY YO, BEFORE TYPE");
     

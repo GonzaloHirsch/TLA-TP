@@ -62,18 +62,16 @@ char * processArray(GenericNode * gn){
     
     while(numList != NULL){
 
-        // Has to match with the type of the first one.
-        if(determineVarType(numList->current) == type){
-            currentValue = numList->current->value;
-
-            buffer = realloc(buffer, 1 + strlen(buffer) + strlen(", ") + strlen(currentValue));
-            strcat(buffer, ", ");
-            strcat(buffer, currentValue);
-        }
-        else{
-            // ERROR
+        // If one of the elements its double, the whole array will be double
+        if(determineVarType(numList->current) == DOUBLE_TYPE){
+            type = DOUBLE_TYPE;
         }
 
+        currentValue = numList->current->value;
+        buffer = realloc(buffer, 1 + strlen(buffer) + strlen(", ") + strlen(currentValue));
+        strcat(buffer, ", ");
+        strcat(buffer, currentValue);
+        
         numList = numList->next;
     }
 
