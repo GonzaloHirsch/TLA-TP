@@ -2,6 +2,13 @@
 
 char * processVariable(GenericNode * gn) {
     printf("variable with value %s\n", gn->value);
+    printf("BEFORE THE VAR\n");
+    symvartype * var = symLook(gn->value);
+    if (var == NULL){
+        return NULL;
+    }
+    printf("AFTER THE VAR\n");
+    gn->info.varType = var->type;
     return gn->value;
 }
 char * processDouble(GenericNode * gn) {
@@ -30,8 +37,6 @@ char * processArrayTypeDouble(GenericNode * gn){
     gn->info.varType = DOUBLE_ARRAY_TYPE;
     return "DoubleArr * ";
 }
-
-
 
 char * processArray(GenericNode * gn){
     if(gn == NULL) return NULL;

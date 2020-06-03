@@ -54,6 +54,27 @@ char * processVarDeclassignment(GenericNode * gn) {
     //Get the variable
     nl = nl->next;
     GenericNode * varNode = nl->current;
+
+    // Determining the type and inserting the variable, must be done before processing variable to get accourate type
+    if (strcmp(type, "int") == 0){
+        gn->info.varType = INTEGER_TYPE;
+        symAddInt(nl->current->value);
+    } else if (strcmp(type, "int[]") == 0){
+        gn->info.varType = INTEGER_ARRAY_TYPE;
+        symAddIntArr(nl->current->value);
+    } else if (strcmp(type, "str") == 0){
+        gn->info.varType = STRING_TYPE;
+        symAddString(nl->current->value);
+    } else if (strcmp(type, "double") == 0){
+        gn->info.varType = DOUBLE_TYPE;
+        symAddDouble(nl->current->value);
+    } else if (strcmp(type, "double[]") == 0){
+        gn->info.varType = DOUBLE_ARRAY_TYPE;
+        symAddDoubleArr(nl->current->value);
+    } else {
+        // ERROR
+    }
+
     char * var = translate(varNode);
     if(var == NULL){
         //free(type);
@@ -74,7 +95,6 @@ char * processVarDeclassignment(GenericNode * gn) {
         char * intArrDec = "int _%s[] = %s;\nIntArr * %s = malloc(sizeof(IntArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
         buffer = malloc(1 + strlen(intArrDec) + 6*strlen(var) +strlen(value) );
         sprintf(buffer, intArrDec, var, value, var, var, var, var,var);
-
     }
     else if(typeNode->info.varType == DOUBLE_ARRAY_TYPE){
         char * doubleArrDec = "double _%s[] = %s;\nDoubleArr * %s = malloc(sizeof(DoubleArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
@@ -85,6 +105,8 @@ char * processVarDeclassignment(GenericNode * gn) {
         buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen(" =  ") + 1);
         sprintf(buffer, "%s %s = %s", type, var, value);
     }
+
+    printf("HEY YO, BEFORE TYPE");
     
     return buffer;
 }

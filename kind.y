@@ -16,8 +16,6 @@
     extern char * translate(GenericNode * gn);
 
     GenericNode * codeRootNode;
-
-    symvartype symboltable[MAX_VARIABLES];
 %}
 
 %start entrypoint
@@ -291,8 +289,8 @@ funarg:
 type:		INT 	{$$ = newGenericNode(NODE_INT,"int");}
         | 	STR 	{$$ = newGenericNode(NODE_STR,"char *");}
         | 	DOUBLE 	{$$ = newGenericNode(NODE_DOUBLE,"double");}
-        |       INT_ARR         {$$ = newGenericNode(NODE_ARR_INT,0);}
-        |       DOUBLE_ARR      {$$ = newGenericNode(NODE_ARR_DOUBLE,0);}
+        |       INT_ARR         {$$ = newGenericNode(NODE_ARR_INT,"int[]");}
+        |       DOUBLE_ARR      {$$ = newGenericNode(NODE_ARR_DOUBLE,"double[]");}
         ;
 
 generalexpression:      generalexpression AND expression {$$ = newGenericNodeWithChildren(NODE_G_EXPRESSION, "AND", 2, $1, $3);}

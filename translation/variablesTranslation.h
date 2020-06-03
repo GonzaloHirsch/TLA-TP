@@ -3,6 +3,7 @@
 
 #include "../node.h"
 #include "./translation.h"
+#include "./symboltable.h"
 
 char * processVariable(GenericNode * gn);
 char * processDouble(GenericNode * gn);
