@@ -11,6 +11,7 @@
 #include "./expressionTranslation.h"
 #include "./opTranslation.h"
 #include "./foreachTranslation.h"
+#define EXIT_FAILURE -1
 
 //----------INTERNAL FUNCTIONS---------------------------
 char * processStamentListNode(GenericNode * gn);

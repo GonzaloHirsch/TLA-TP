@@ -22,7 +22,8 @@ VarType determineVarType(GenericNode * gn){
 char * process(GenericNode * gn){
     char * value = NULL;
     if (gn == NULL){
-        return value;
+        fprintf(stderr, "Error allocating memory");
+        exit(EXIT_FAILURE);
     }
     switch (gn->info.type){
         case NODE_LIST:
