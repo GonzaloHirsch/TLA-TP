@@ -14,13 +14,20 @@ char * processForEach(GenericNode * gn) {
     svt = symLook(varName);
     
     char * type;
+    VarType metaVarVarType;
 
     switch(svt->type) {
         case INTEGER_ARRAY_TYPE:
             type = "int";
+            metaVarVarType = INTEGER_TYPE;
             break;
         case DOUBLE_ARRAY_TYPE:
             type = "double";
+            metaVarVarType = DOUBLE_TYPE;
+            break;
+        default:
+            perror("Not a valid type for forEach. Aborting...\n");
+            exit(1);
             break;
     }
     
@@ -33,6 +40,8 @@ char * processForEach(GenericNode * gn) {
     nl = nl->next;
     // TODO error shouldn't get this far (bc yacc works OK), but maybe check
     GenericNode * foreachBody = nl->current;
+
+    changeDescendantVarType(foreachBody->children->current, metaVarName, metaVarVarType, 1); //1 for isMeta
 
     char * resultingTemplate = "void _arrFunc%ld(%s %s) {\n" //function declaration with global counter
                                 "%s\n"    // the BLOCK/STATEMENT part (here 'body')

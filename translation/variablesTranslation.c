@@ -5,7 +5,8 @@ char * processVariable(GenericNode * gn) {
     if (var == NULL){
         var = symAdd(gn->value, gn->info.varType);
     }
-    gn->info.varType = var->type;
+    if (!gn->info.isMeta)
+        gn->info.varType = var->type;
     return gn->value;
 }
 char * processDouble(GenericNode * gn) {

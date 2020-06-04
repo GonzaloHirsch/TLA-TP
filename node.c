@@ -81,6 +81,22 @@ void printGenericNode(GenericNode * gn, int tabs) {
     }
 }
 
+void changeDescendantVarType(GenericNode * gn, char * varName, VarType targetVarType, int isMeta) {
+    if (gn->info.type == NODE_VARIABLE && strcmp(gn->value, varName) == 0)
+        gn->info.varType = targetVarType;
+    else
+        changeDescendantVarTypeForList(gn->children, varName, targetVarType, isMeta);
+    if (isMeta)
+        gn->info.isMeta = isMeta;
+}
+
+void changeDescendantVarTypeForList(NodeList * nl, char * varName, VarType targetVarType, int isMeta) {
+    if (nl == NULL)
+        return;
+    changeDescendantVarType(nl->current, varName, targetVarType, isMeta);
+    changeDescendantVarTypeForList(nl->next, varName, targetVarType, isMeta);
+}
+
 void printNodeList (NodeList * nl, int tabs) {
     if (nl == NULL)
         return;

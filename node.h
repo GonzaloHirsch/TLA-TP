@@ -69,6 +69,7 @@ typedef enum {
 typedef struct NodeInfo {
     NodeType type;
     VarType varType;
+    int isMeta;
 } NodeInfo;
 
 // List of nodes
@@ -100,6 +101,9 @@ NodeList * prependToNodeList(NodeList * nodeList, GenericNode * node);
 
 GenericNode * newGenericNode(NodeType type, char * value);
 GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int childrenCound, ...);
+
+void changeDescendantVarType(GenericNode * gn, char * varName, VarType targetVarType, int isMeta);
+void changeDescendantVarTypeForList(NodeList * nl, char * varName, VarType targetVarType, int isMeta);
 
 void freeGenericNode(GenericNode * GenericNode);
 void freeNodeList (NodeList * nl);
