@@ -114,11 +114,14 @@ char * processVarDeclassignment(GenericNode * gn) {
         // This means its the value of an array function
         if (value[0] == '_'){
             char * intArrDec = "IntArr * %s = %s;\n";
-            buffer = malloc(1 + strlen(intArrDec) + strlen(var) +strlen(value) );
+            buffer = malloc(1 + strlen(intArrDec) + strlen(var) +strlen(value) - 4 );
             sprintf(buffer, intArrDec, var, value);
         } else {
-            char * intArrDec = "int _%s[] = %s;\nIntArr * %s = malloc(sizeof(IntArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
-            buffer = malloc(1 + strlen(intArrDec) + 6*strlen(var) +strlen(value) );
+            char * intArrDec =  "int _%s[] = %s;\n"
+                                "IntArr * %s = malloc(sizeof(IntArr));\n"
+                                "%s->arr = _%s;\n"
+                                "%s->size = NELEMS(_%s);\n";
+            buffer = malloc(1 + strlen(intArrDec) + 6*strlen(var) +strlen(value) - 14 );
             sprintf(buffer, intArrDec, var, value, var, var, var, var,var);
         }
     }
@@ -126,11 +129,14 @@ char * processVarDeclassignment(GenericNode * gn) {
         // This means its the value of an array function
         if (value[0] == '_'){
             char * doubleArrDec = "DoubleArr * %s = %s;\n";
-            buffer = malloc(1 + strlen(doubleArrDec) + strlen(var) +strlen(value) );
+            buffer = malloc(1 + strlen(doubleArrDec) + strlen(var) +strlen(value) -4);
             sprintf(buffer, doubleArrDec, var, value);
         } else {
-            char * doubleArrDec = "double _%s[] = %s;\nDoubleArr * %s = malloc(sizeof(DoubleArr));\n%s->arr = _%s;\n%s->size = NELEMS(_%s);\n";
-            buffer = malloc(1 + strlen(doubleArrDec) + 6*strlen(var) +strlen(value) );
+            char * doubleArrDec =   "double _%s[] = %s;\n"
+                                    "DoubleArr * %s = malloc(sizeof(DoubleArr));\n"
+                                    "%s->arr = _%s;\n"
+                                    "%s->size = NELEMS(_%s);\n";
+            buffer = malloc(1 + strlen(doubleArrDec) + 6*strlen(var) +strlen(value) -14 );
             sprintf(buffer, doubleArrDec, var, value, var, var, var, var,var);
         }
     }
