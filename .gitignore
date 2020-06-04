@@ -82,3 +82,5 @@ tests/*.c
 codeGenerator.dSYM/Contents/Info.plist
 
 tests/a.out
+
+a.out
