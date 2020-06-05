@@ -82,7 +82,7 @@ void printGenericNode(GenericNode * gn, int tabs) {
 }
 
 void changeDescendantVarType(GenericNode * gn, char * varName, VarType targetVarType, int isMeta) {
-    if (gn->info.type == NODE_VARIABLE && strcmp(gn->value, varName) == 0){
+    if (gn->info.type == NODE_VARIABLE_REF && strcmp(gn->value, varName) == 0){
         gn->info.varType = targetVarType;
         if (isMeta)
             gn->info.isMeta = isMeta;
