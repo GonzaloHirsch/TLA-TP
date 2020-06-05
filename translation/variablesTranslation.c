@@ -12,6 +12,23 @@ char * processVariable(GenericNode * gn) {
     */
     return gn->value;
 }
+
+char * processReferencedVariable(GenericNode * gn){
+    if(gn->info.isMeta){
+        return gn->value;
+    }
+
+    symvartype * var = symLook(gn->value);
+    if(var == NULL){
+        fprintf(stderr, "ERROR: referencing undeclared variable. \n");
+        exit(EXIT_FAILURE_);
+    }
+    // If the node is variable, assign its type that just the variable knows.
+    gn->info.varType = var->type;
+
+    return gn->value;
+}
+
 char * processDouble(GenericNode * gn) {
     gn->info.varType = DOUBLE_TYPE;
     return gn->value;

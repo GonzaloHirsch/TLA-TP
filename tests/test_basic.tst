@@ -1,8 +1,7 @@
 start
-    int x;
-    double d;
 
-    int a = 3;
-    a = 10;
-    notvar = "hello";
+    int a = 1;
+    double c = 0.2;
+    double d = a + c;
+   
 end

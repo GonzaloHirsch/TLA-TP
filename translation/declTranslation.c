@@ -91,7 +91,7 @@ char * processVarDeclassignment(GenericNode * gn) {
         //free(type);
         //free(var);
         //free(value);
-        fprintf(stderr, "ERROR: Duplicate variable declaration");
+        fprintf(stderr, "ERROR: Duplicate variable declaration\n");
         exit(EXIT_FAILURE_);
     }
     //If the variable doesn't exists, we add it based on the var type.
@@ -99,7 +99,7 @@ char * processVarDeclassignment(GenericNode * gn) {
     if(varAdded == NULL){
         //free(type);
         //free(var);
-        fprintf(stderr, "ERROR: Failure creating the variable");
+        fprintf(stderr, "ERROR: Failure creating the variable\n");
         exit(EXIT_FAILURE_);
     }
 
@@ -141,7 +141,7 @@ char * processVarDeclassignment(GenericNode * gn) {
         sprintf(buffer, "%s %s = %s", type, var, value);
     }
     else{
-        fprintf(stderr, "ERROR: Duplicate variable declaration");
+        fprintf(stderr, "ERROR: Invalid varible assigment in declaration\n");
         exit(EXIT_FAILURE_);
     }
         

@@ -179,7 +179,7 @@ print:          PRINT unity     {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, 
 foreach:
         VAR DOT FOREACH OPEN_P VAR RIGHT_ARROW foreachbody CLOSE_P 
         {
-                GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+                GenericNode * varNode = newGenericNode(NODE_VARIABLE_REF, $1);
                 GenericNode * metaVarNode = newGenericNode(NODE_VARIABLE, $5);
                 $$ = newGenericNodeWithChildren(NODE_FOREACH, 0, 3, varNode, metaVarNode, $7);}
         ; 
@@ -195,11 +195,11 @@ block:	OPEN_B inblockstatements  CLOSE_B {
         }
         ;
 
-assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_REF, $1);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, 2, varNode, $3);}
-        |	VAR ASSIGN_EQ generaloperation 	{       GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+        |	VAR ASSIGN_EQ generaloperation 	{       GenericNode * varNode = newGenericNode(NODE_VARIABLE_REF, $1);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, 2, varNode, $3);}
-        |       VAR ASSIGN_EQ generalexpression {       GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1);
+        |       VAR ASSIGN_EQ generalexpression {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_REF, $1);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, 2, varNode, $3);}
         ;
 
@@ -316,7 +316,7 @@ expression: expunity EQ  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSI
         |   NOT expunity          {$$ = newGenericNodeWithChildren(NODE_EXPRESSION, "NOT", 1, $2);}
         ;
 
-expunity:       VAR               {$$ = newGenericNode(NODE_VARIABLE, $1);}
+expunity:       VAR               {$$ = newGenericNode(NODE_VARIABLE_REF, $1);}
         |       NUMBER_LITERAL    {$$ = newGenericNode(NODE_LITERAL, $1);}
         ;
 
@@ -334,7 +334,7 @@ operation:      unity                            {$$ = newGenericNodeWithChildre
         ;
 
 
-unity:          VAR                             {$$ = newGenericNode(NODE_VARIABLE, $1);}
+unity:          VAR                             {$$ = newGenericNode(NODE_VARIABLE_REF, $1);}
         |       NUMBER_LITERAL                  {$$ = newGenericNode(NODE_LITERAL, $1);}
         ;
 

@@ -80,6 +80,9 @@ char * process(GenericNode * gn){
         case NODE_VARIABLE:
             value = processVariable(gn);
             break;
+        case NODE_VARIABLE_REF:
+            value = processReferencedVariable(gn);
+            break;
         case NODE_LITERAL:
             value = processLeaf(gn);
             break;        
@@ -237,14 +240,9 @@ char * processAssignment(GenericNode * gn){
     //Process the right value of the expression(literal, generalExp or genOp)
     char * valueProc = process(valueNode);
 
-    // Get the variable and check if it exists
-    symvartype * var = symLook(varName);
-    if(var == NULL){
-        fprintf(stderr, "ERROR: Variable not found in assigment \n");
-        exit(EXIT_FAILURE_);
-    }
+   
     //Check if the value assigned to the variable is valid.
-    if(var->type != valueNode->info.varType){
+    if(varNode->info.varType != valueNode->info.varType){
         fprintf(stderr, "ERROR: Incompatible assigment of variable\n");
         exit(EXIT_FAILURE_);
     }

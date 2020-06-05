@@ -6,6 +6,7 @@
 #include "./symboltable.h"
 
 char * processVariable(GenericNode * gn);
+char * processReferencedVariable(GenericNode * gn);
 char * processDouble(GenericNode * gn);
 char * processStr(GenericNode * gn);
 char * processInt(GenericNode * gn);

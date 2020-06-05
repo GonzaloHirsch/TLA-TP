@@ -42,8 +42,11 @@ char * processPlainOp(GenericNode * gn){
     if (gn->children == NULL){
         return NULL;
     }
-    char * value = process(gn->children->current);
-    gn->info.varType = gn->children->current->info.varType;
+
+    GenericNode * childNode = gn->children->current;
+    char * value = process(childNode);
+
+    gn->info.varType = childNode->info.varType;
     return value;
 }
 
@@ -58,15 +61,16 @@ char * processProdOp(GenericNode * gn){
         return NULL;
     }
 
+
     if (gn->children->next == NULL){
         return NULL;
     }
-
     // Processing the right side of the operation
     char * rightSide = process(gn->children->next->current);
     if (rightSide == NULL){
         return NULL;
     }
+
 
     // Var types to determine the name of the operation
     VarType leftType = gn->children->current->info.varType;
