@@ -31,7 +31,7 @@ char * processGeneralExpression(GenericNode * gn){
             //free(buffer);
             return NULL;
         }
-        buffer = realloc(buffer, strlen(exp1Proc) + strlen(op) + strlen(exp2Proc) + strlen(buffer));
+        buffer = realloc(buffer, 1 + strlen(exp1Proc) + strlen(op) + strlen(exp2Proc) + strlen(buffer));
         if(buffer == NULL){
             //free(exp1Proc);
             //free(exp2Proc);
@@ -55,8 +55,10 @@ char * processGeneralExpression(GenericNode * gn){
         //free(exp1Proc);
         return NULL;
     }
-
     strcat(buffer, exp1Proc);
+
+    // A general expression is of integer type.
+    gn->info.varType = INTEGER_TYPE;
 
     //free(exp1Proc);
 
@@ -101,7 +103,13 @@ char * processExpression(GenericNode * gn){
     else if(strcmp(opString, "NOT") == 0){
         op = " !";
 
-        buffer = realloc(buffer, strlen(op) + strlen(exp1Proc) + strlen(buffer));
+        // check that if exp1 its a variable, its a valid type.
+        if(exp1->info.varType != INTEGER_TYPE && exp1->info.varType != DOUBLE_TYPE){
+            perror("Invalid type in expression\n");
+            exit(EXIT_FAILURE_);
+        }
+
+        buffer = realloc(buffer,! + strlen(op) + strlen(exp1Proc) + strlen(buffer));
         if(buffer == NULL){
             free(exp1Proc);
             return NULL;
@@ -126,6 +134,11 @@ char * processExpression(GenericNode * gn){
         return NULL;
     }
 
+     // check that if exp1 or exp2 are a variable, its a valid type.
+        if((exp1->info.varType != INTEGER_TYPE && exp1->info.varType != DOUBLE_TYPE) || (exp2->info.varType != INTEGER_TYPE && exp2->info.varType != DOUBLE_TYPE)){
+            perror("Invalid type in expression\n");
+            exit(EXIT_FAILURE_);
+        }
 
 
 

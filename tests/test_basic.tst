@@ -1,7 +1,10 @@
 start
+    int a = 2 < 3;
 
-    int a = 1;
-    double c = 0.2;
-    double d = a + c;
-   
+    if(a == 1){
+        print a;
+    }
+
+    a = 3;
+    double c = 3.3;
 end
