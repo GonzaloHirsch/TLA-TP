@@ -41,12 +41,12 @@ char * processVarDeclaration(GenericNode * gn) {
     if (nl->next != NULL) {
         nl = nl->next;
         numberLiteral = translate(nl->current);
-        buffer = malloc(strlen(type) + strlen(var) + strlen(numberLiteral) + 6 + 1); // 2 for brackets, 1 for space,1 for \n,  1 for \0
-        sprintf(buffer, "%s %s[%s]\n", type, var, numberLiteral);
+        buffer = malloc(strlen(type) + strlen(var) + strlen(numberLiteral) +strlen(" []") + 1); // 2 for brackets, 1 for space,1 for \n,  1 for \0
+        sprintf(buffer, "%s %s[%s]", type, var, numberLiteral);
     }
     else {
-        buffer = malloc(strlen(type) + strlen(var) + 3 + 1);
-        sprintf(buffer, "%s %s\n", type, var);
+        buffer = malloc(strlen(type) + strlen(var) + strlen(" ") + 1);
+        sprintf(buffer, "%s %s", type, var);
     }
 
     return buffer;

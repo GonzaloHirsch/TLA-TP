@@ -229,15 +229,28 @@ char * processAssignment(GenericNode * gn){
     if (gn == NULL) return NULL;
 
     char * buffer;
-    GenericNode * var = gn->children->current;
-    GenericNode * rightValue = gn->children->next->current;
+    GenericNode * varNode = gn->children->current;
+    GenericNode * valueNode = gn->children->next->current;
 
     //Process the variable
-    char * varName = process(var);
+    char * varName = process(varNode);
     //Process the right value of the expression(literal, generalExp or genOp)
-    char * rightValueProc = process(rightValue);
+    char * valueProc = process(valueNode);
 
-    buffer = malloc(1 + strlen(varName) + strlen(" = ") + strlen(rightValueProc));
+    // Get the variable and check if it exists
+    symvartype * var = symLook(varName);
+    if(var == NULL){
+        fprintf(stderr, "ERROR: Variable not found in assigment \n");
+        exit(EXIT_FAILURE_);
+    }
+    //Check if the value assigned to the variable is valid.
+    if(var->type != valueNode->info.varType){
+        fprintf(stderr, "ERROR: Incompatible assigment of variable\n");
+        exit(EXIT_FAILURE_);
+    }
+    
+
+    buffer = malloc(1 + strlen(varName) + strlen(" = ") + strlen(valueProc));
     if (buffer == NULL){
         //free(valueNListProc);
         //free(varName);
@@ -245,7 +258,7 @@ char * processAssignment(GenericNode * gn){
         return NULL;
     }
 
-    sprintf(buffer, "%s = %s", varName, rightValueProc);
+    sprintf(buffer, "%s = %s", varName, valueProc);
 
     //free(varName);
     //free(varNListProc)

@@ -3,4 +3,6 @@ start
     double d;
 
     int a = 3;
+    a = 10;
+    notvar = "hello";
 end
