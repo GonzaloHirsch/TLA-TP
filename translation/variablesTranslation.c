@@ -1,12 +1,15 @@
 #include "variablesTranslation.h"
 
 char * processVariable(GenericNode * gn) {
-    symvartype * var = symLook(gn->value);
+    //This is a wrong implementation, always add string type.
+    //Should delegate to parent --> commented, then delete this.
+    /*symvartype * var = symLook(gn->value);
     if (var == NULL){
         var = symAdd(gn->value, gn->info.varType);
     }
     if (!gn->info.isMeta)
         gn->info.varType = var->type;
+    */
     return gn->value;
 }
 char * processDouble(GenericNode * gn) {

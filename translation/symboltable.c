@@ -51,7 +51,7 @@ symvartype * symLook(char * name){
         if(sp->name != NULL && !strcmp(sp->name, name))
             return sp;
     }
-    return 0;
+    return NULL;
 }
 
 symvartype * symAddInt(char * name){

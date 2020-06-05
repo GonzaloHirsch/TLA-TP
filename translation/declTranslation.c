@@ -4,52 +4,48 @@ char * processVarDeclaration(GenericNode * gn) {
     if(gn == NULL) return NULL;
 
     NodeList * nl = gn->children;
+    GenericNode * typeNode = nl->current;
     char * type = translate(nl->current);
     if (type == NULL){
-        printf("PROCESSVARDECLARATION FAIL ON TYPE");
         return NULL;
     }   
 
     nl = nl->next;
-    char * var = translate(nl->current);
+    GenericNode * varNode = nl->current;
+    char * var = translate(varNode);
     if (var == NULL){
-        printf("PROCESSVARDECLARATION FAIL ON VAR");
         //free(type)
         return NULL;
     }
 
-    if (strcmp(type, "int") == 0){
-        nl->current->info.varType = INTEGER_TYPE;
-        symAddInt(nl->current->value);
-    } else if (strcmp(type, "IntArr * ") == 0){
-        nl->current->info.varType = INTEGER_ARRAY_TYPE;
-        symAddIntArr(nl->current->value);
-    } else if (strcmp(type, "str") == 0){
-        nl->current->info.varType = STRING_TYPE;
-        symAddString(nl->current->value);
-    } else if (strcmp(type, "double") == 0){
-        nl->current->info.varType = DOUBLE_TYPE;
-        symAddDouble(nl->current->value);
-    } else if (strcmp(type, "DoubleArr * ") == 0){
-        nl->current->info.varType = DOUBLE_ARRAY_TYPE;
-        symAddDoubleArr(nl->current->value);
-    } else {
-        // ERROR
+    // Check if the already variable exists
+    if(symLook(varNode->value) != NULL){
+        //free(type)
+        //free(var)
+        fprintf(stderr, "ERROR: Duplicate variable declaration");
+        exit(EXIT_FAILURE_);
+    }
+
+    //If the variable doesn't exists, we add it based on the var type.
+    symvartype * varAdded = symAdd(varNode->value, typeNode->info.varType);
+    if(varAdded == NULL){
+        //free(type);
+        //free(var);
+        fprintf(stderr, "ERROR: Failure creating the variable");
+        exit(EXIT_FAILURE_);
     }
 
     char * numberLiteral = NULL;
     char * buffer;
 
-
-
     if (nl->next != NULL) {
         nl = nl->next;
         numberLiteral = translate(nl->current);
-        buffer = malloc(strlen(type) + strlen(var) + strlen(numberLiteral) + 4 + 1); // 2 for brackets, 1 for space,1 for \n,  1 for \0
+        buffer = malloc(strlen(type) + strlen(var) + strlen(numberLiteral) + 6 + 1); // 2 for brackets, 1 for space,1 for \n,  1 for \0
         sprintf(buffer, "%s %s[%s]\n", type, var, numberLiteral);
     }
     else {
-        buffer = malloc(strlen(type) + strlen(var) + 1 + 1);
+        buffer = malloc(strlen(type) + strlen(var) + 3 + 1);
         sprintf(buffer, "%s %s\n", type, var);
     }
 
@@ -74,26 +70,6 @@ char * processVarDeclassignment(GenericNode * gn) {
     nl = nl->next;
     GenericNode * varNode = nl->current;
 
-    // Determining the type and inserting the variable, must be done before processing variable to get accourate type
-    if (strcmp(type, "int") == 0){
-        gn->info.varType = INTEGER_TYPE;
-        symAddInt(nl->current->value);
-    } else if (strcmp(type, "IntArr * ") == 0){
-        gn->info.varType = INTEGER_ARRAY_TYPE;
-        symAddIntArr(nl->current->value);
-    } else if (strcmp(type, "str") == 0){
-        gn->info.varType = STRING_TYPE;
-        symAddString(nl->current->value);
-    } else if (strcmp(type, "double") == 0){
-        gn->info.varType = DOUBLE_TYPE;
-        symAddDouble(nl->current->value);
-    } else if (strcmp(type, "DoubleArr * ") == 0){
-        gn->info.varType = DOUBLE_ARRAY_TYPE;
-        symAddDoubleArr(nl->current->value);
-    } else {
-        // ERROR
-    }
-
     char * var = translate(varNode);
     if(var == NULL){
         //free(type);
@@ -110,6 +86,26 @@ char * processVarDeclassignment(GenericNode * gn) {
         return NULL;
     }
 
+    // Check if the variable already exists.
+    if(symLook(varNode->value) != NULL){
+        //free(type);
+        //free(var);
+        //free(value);
+        fprintf(stderr, "ERROR: Duplicate variable declaration");
+        exit(EXIT_FAILURE_);
+    }
+    //If the variable doesn't exists, we add it based on the var type.
+    symvartype * varAdded = symAdd(varNode->value, typeNode->info.varType);
+    if(varAdded == NULL){
+        //free(type);
+        //free(var);
+        fprintf(stderr, "ERROR: Failure creating the variable");
+        exit(EXIT_FAILURE_);
+    }
+
+
+    // Create the buffer depending on the varType.
+    // The type of the typeNode has to match the type of the valueNode.
     if(typeNode->info.varType == INTEGER_ARRAY_TYPE && valueNode->info.varType == INTEGER_ARRAY_TYPE){
         // This means its the value of an array function
         if (value[0] == '_'){
@@ -145,9 +141,8 @@ char * processVarDeclassignment(GenericNode * gn) {
         sprintf(buffer, "%s %s = %s", type, var, value);
     }
     else{
-        // ERROR
-        printf("ERROR\n;");
-        return NULL;
+        fprintf(stderr, "ERROR: Duplicate variable declaration");
+        exit(EXIT_FAILURE_);
     }
         
     return buffer;

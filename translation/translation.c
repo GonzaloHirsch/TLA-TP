@@ -23,7 +23,7 @@ char * process(GenericNode * gn){
     char * value = NULL;
     if (gn == NULL){
         fprintf(stderr, "Error allocating memory");
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE_);
     }
     switch (gn->info.type){
         case NODE_LIST:
