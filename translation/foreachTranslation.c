@@ -47,7 +47,7 @@ char * processForEach(GenericNode * gn) {
                                 "%s\n"    // the BLOCK/STATEMENT part (here 'body')
                                 "}\n"     // Blocks inside blocks are not a problem here
                                 "for(int __i = 0; __i < %s->size; __i++)\n" // this %s should be sth like arrayName->length
-                                "\t_arrFunc%ld(%s->arr[__i]);";    
+                                "\t_arrFunc%ld(%s->arr[__i])";    
 
     char * body = translate(foreachBody->children->current);
 

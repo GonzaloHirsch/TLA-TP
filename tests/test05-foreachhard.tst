@@ -10,10 +10,10 @@ start
             print "less than 3";
             print x;
         } else if (x < 7) {
-            int i = 0;
-            while (i < x) {
+            int j = 0;
+            while (j < x) {
                 print "I'm in a wheeel!";
-                i = i + 1;
+                j = j + 1;
             }
             print "less than 5";
             print x;

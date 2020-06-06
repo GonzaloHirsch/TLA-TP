@@ -1,10 +1,5 @@
 start
-    int a = 2 < 3;
-
-    if(a == 1){
-        print a;
-    }
-
-    a = 3;
-    double c = 3.3;
+    int b;
+    int[] a = [1,2,3];
+    a.forEach(b -> {print b;});
 end

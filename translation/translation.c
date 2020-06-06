@@ -155,7 +155,7 @@ char * processEntrypointNode(GenericNode * gn){
     }
 
     // Calculating the length of the buffer
-    size_t bufferSize = strlen("int main(){\n\nreturn 0;}") + strlen(statements) + 1;
+    size_t bufferSize = strlen("int main(){\n\nreturn 0;}\n") + strlen(statements) + 1;
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
         //free(statements);
@@ -163,7 +163,7 @@ char * processEntrypointNode(GenericNode * gn){
     }
 
     // Printing the strings into the buffer
-    sprintf(buffer, "int main(){\n%s\nreturn 0;}", statements);
+    sprintf(buffer, "int main(){\n%s\nreturn 0;\n}", statements);
 
     //free(statements);
 
