@@ -80,8 +80,8 @@ char * processVarDeclassignment(GenericNode * gn){
         //free(type);
         //free(var);
         //free(value);
-        fprintf(stderr, "ERROR: Duplicate variable declaration\n");
-        exit(EXIT_FAILURE_);
+        compilationError = ERROR_DUPLICATED_VARIABLE;
+        return NULL;
     }
     //If the variable doesn't exists, we add it based on the var type.
     symvartype * varAdded = symAdd(varNode->value, typeNode->info.varType);
@@ -133,8 +133,8 @@ char * processVarDeclassignment(GenericNode * gn){
         sprintf(buffer, "%s = %s", var, value);
     }
     else{
-        fprintf(stderr, "ERROR: Invalid varible assigment in declaration\n");
-        exit(EXIT_FAILURE_);
+        compilationError = ERROR_INCOMPATIBLE_ASSIGNMENT;
+        return NULL;
     }
         
     return buffer;
@@ -176,7 +176,7 @@ char * getVarDeclarations(){
 
             buffer = realloc(buffer, 1 + strlen(" ;\n") + strlen(buffer) + strlen(name) + strlen(type));
             if(buffer == NULL){
-                return NULL;
+                exit(1);
             }
             strcat(buffer, type);
             strcat(buffer, " ");
@@ -185,7 +185,7 @@ char * getVarDeclarations(){
         }
     } while (current != NULL);
     
-    /** TODO: Probablye free al symvar related memory */
+    /** TODO: Probably free al symvar related memory */
 
     return buffer;
     

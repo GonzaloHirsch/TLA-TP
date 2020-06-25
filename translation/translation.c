@@ -456,6 +456,18 @@ void compose_error_message(char *buffer, int line)
     case ERROR_INVALID_OPERATION_TYPES:
         msg = "Invalid operation types";
         break;
+    case ERROR_UNDEFINED_VARIABLE:
+        msg = "Reference to undefined variable";
+        break;
+    case ERROR_INCOMPATIBLE_ASSIGNMENT:
+        msg = "Incompatible assignment to variable";
+        break;
+    case ERROR_UNASSIGNED_VARIABLE:
+        msg = "Reference to unassigned variable";
+        break;
+    case ERROR_DUPLICATED_VARIABLE:
+        msg = "Dublicate variable declaration";
+        break;
     case ERROR_GENERIC:
     default:
         msg = "Unkown error";

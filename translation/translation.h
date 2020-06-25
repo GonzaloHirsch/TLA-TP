@@ -21,9 +21,10 @@ typedef enum CompilationErrors
     ERROR_UNDEFINED_VARIABLE,
     ERROR_INCOMPATIBLE_ASSIGNMENT,
     ERROR_UNASSIGNED_VARIABLE,
+    ERROR_DUPLICATED_VARIABLE,
 } CompilationErrors;
 
-//----------INTERNAL FUNCTIONS---------------------------
+//----------INTERNAL FUNCTIONS---------------------------   
 char *processStamentListNode(GenericNode *gn);
 char *processWhileNode(GenericNode *gn);
 char *process(GenericNode *gn);
