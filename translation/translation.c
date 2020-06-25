@@ -495,6 +495,10 @@ char *translate_program(GenericNode *gn, void (*error_fun)(GenericNode **, char 
     rootProgramNode = gn;
     handle_error = error_fun;
 
+    // Allocating memory for function declarations
+    functionDeclarations = malloc(sizeof(FunctionDeclarations));
+    functionDeclarations->count = 0;
+
     // Processing the given node
     char *code = translate(gn);
 
@@ -514,6 +518,23 @@ char *translate_program(GenericNode *gn, void (*error_fun)(GenericNode **, char 
         }
     }
     return code;
+}
+
+char * getFunctionDeclarations(){
+    int i, len;
+    char * result = malloc(1);
+
+    // Iteraing all the functions declared
+    for (i = 0; i < functionDeclarations->count; i++){
+        // Calculating length of declaration
+        len = strlen(functionDeclarations->functions[i].code);
+        // Allocating more memory
+        result = realloc(result, strlen(result) + len + 2);
+        // Printing to the result array
+        sprintf(result, "%s\n%s", result, functionDeclarations->functions[i].code);
+    }
+
+    return result;
 }
 
 char *getHeadersAndFunctions()

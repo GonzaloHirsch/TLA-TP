@@ -371,6 +371,7 @@ main(void) {
         */
 	
 	yyparse(&codeRootNode);
+
         // printGenericNode(codeRootNode, 0);
         char * code = translate_program(codeRootNode, &yyerror);
         if (code == NULL){
@@ -378,9 +379,15 @@ main(void) {
                 return 1;
         }
 
+        // Getting all the builtin functions and printing it
         char * headersAndFunctions = getHeadersAndFunctions();
         printf("%s\n", headersAndFunctions);
 
+        // Getting all the user functions and printing it
+        char * userFunctions = getFunctionDeclarations();
+        printf("%s\n", userFunctions);
+
+        // Printing the code
         printf("%s\n", code);
         
         //freeGenericNode(codeRootNode);

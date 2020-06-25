@@ -51,6 +51,7 @@ VarType determineVarType(GenericNode *gn);
 //----------------------------------------------------------
 
 char *getHeadersAndFunctions();
+char * getFunctionDeclarations();
 char *translate(GenericNode *gn);
 char *translate_program(GenericNode *gn, void (*error_fun)(GenericNode **, char *));
 

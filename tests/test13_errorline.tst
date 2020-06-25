@@ -7,4 +7,18 @@ start
             print "Chau" ;
         }
     });
+    arr.forEach(x->{
+        if (x > 3){
+            print "Chau" ;
+        } else {
+            print "Hola" ;
+        }
+    });
+    arr.forEach(y->{
+        if (y > 1){
+            print "JEJE" ;
+        } else {
+            print "JAJA" ;
+        }
+    });
 end
