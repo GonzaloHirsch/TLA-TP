@@ -145,11 +145,6 @@ vardeclaration:
                 type VAR {
                 GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
                 $$ = newGenericNodeWithChildren(NODE_VARDECLARATION, 0, 2, $1, varNode);}
-        |       type  VAR OPEN_BRACK NUMBER_LITERAL CLOSE_BRACK
-                {
-                GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2);
-                $$ = newGenericNodeWithChildren(NODE_VARDECLARATION, 0, 3, $1, varNode, $4);
-                }
         ;
 
 vardeclassignment: 

@@ -1,12 +1,10 @@
 start
+    int x = 1;
+    if(x > 0){
+        int a = 2;
+    }
 
-    function
-    asdfdf
-    (int xx, int yy)
-        returning int;
-
-    function asdfdf (int var, str var, int var) {
-        x == y;
-        return x == y;
+    if(x>0){
+        a = 3;
     }
 end
