@@ -71,6 +71,7 @@ typedef struct NodeInfo {
     NodeType type;
     VarType varType;
     int isMeta;
+    int line;
 } NodeInfo;
 
 // List of nodes
@@ -96,12 +97,12 @@ typedef struct FunctionsNode {
     NodeList * functions;       // List of functions declared
 } FunctionsNode;
 
-NodeList * createNodeList(GenericNode * node);
+NodeList * createNodeList(GenericNode * node, int line);
 NodeList * addToNodeList(NodeList * nodeList, GenericNode * node);
 NodeList * prependToNodeList(NodeList * nodeList, GenericNode * node);
 
-GenericNode * newGenericNode(NodeType type, char * value);
-GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int childrenCound, ...);
+GenericNode * newGenericNode(NodeType type, char * value, int line);
+GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int line, int childrenCound, ...);
 
 void changeDescendantVarType(GenericNode * gn, char * varName, VarType targetVarType, int isMeta);
 void changeDescendantVarTypeForList(NodeList * nl, char * varName, VarType targetVarType, int isMeta);

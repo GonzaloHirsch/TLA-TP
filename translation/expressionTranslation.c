@@ -21,12 +21,12 @@ char * processGeneralExpression(GenericNode * gn){
     }
 
     GenericNode * exp1 = gn -> children ->current;
-    char * exp1Proc = process(exp1);
+    char * exp1Proc = translate(exp1);
 
 
     if(strcmp(op, "") != 0){ //there is an operator to parse, then there is another expression
         GenericNode * exp2 = gn -> children -> next ->current;
-        char * exp2Proc = process(exp2);
+        char * exp2Proc = translate(exp2);
         if(exp2Proc == NULL){
             //free(buffer);
             return NULL;
@@ -74,7 +74,7 @@ char * processExpression(GenericNode * gn){
     buffer[0] = '\0';
 
     GenericNode * exp1 = gn ->children -> current;
-    char * exp1Proc = process(exp1);
+    char * exp1Proc = translate(exp1);
     if(exp1Proc == NULL){
         free(buffer);
         return NULL;

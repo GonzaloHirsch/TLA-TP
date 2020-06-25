@@ -20,8 +20,7 @@ char * processReferencedVariable(GenericNode * gn){
 
     symvartype * var = symLook(gn->value);
     if(var == NULL){
-        fprintf(stderr, "ERROR: referencing undeclared variable. \n");
-        exit(EXIT_FAILURE_);
+        return NULL;
     }
     // If the node is variable, assign its type that just the variable knows.
     gn->info.varType = var->type;
