@@ -26,6 +26,7 @@ static symvartype symboltable[MAX_VARIABLES];
 static int nextFreeFunctionSlot = 0;
 
 symvartype * symLook(char * name);
+symvartype * symLookByIndex(int index);
 
 // Functions to declare variables
 symvartype * symAddInt(char * name);

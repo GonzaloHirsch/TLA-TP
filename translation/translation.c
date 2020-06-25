@@ -154,8 +154,11 @@ char * processEntrypointNode(GenericNode * gn){
         return NULL;
     }
 
+    // Getting the variable declarations
+    char *declaredVariables = getVarDeclarations();
+
     // Calculating the length of the buffer
-    size_t bufferSize = strlen("int main(){\n\nreturn 0;}\n") + strlen(statements) + 1;
+    size_t bufferSize = strlen("int main(){\n\nreturn 0;}\n") + strlen(declaredVariables) +strlen(statements) + 1;
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
         //free(statements);
@@ -163,9 +166,10 @@ char * processEntrypointNode(GenericNode * gn){
     }
 
     // Printing the strings into the buffer
-    sprintf(buffer, "int main(){\n%s\nreturn 0;\n}", statements);
+    sprintf(buffer, "int main(){\n%s%s\nreturn 0;\n}", declaredVariables, statements);
 
     //free(statements);
+    //free(declaredVariables)
 
     return buffer;
 }
@@ -200,22 +204,20 @@ char * processNodeList(NodeList * listCurrent){
         }
 
         // Processing the current Generic Node
-        processedNode = process(currentNode);
-        if (processedNode == NULL){
-            //free(buffer);
-            break;
-        }
+        processedNode = translate(currentNode);
+        if (processedNode != NULL){
         
-        // Saving new memory for the extended buffer                             
-        buffer = realloc(buffer, 1 + strlen(buffer) +  strlen(processedNode));
-        if (buffer == NULL){
-            //free(processedNode);
-            //free(buffer);
-            break;
-        }
+            // Saving new memory for the extended buffer                             
+            buffer = realloc(buffer, 1 + strlen(buffer) +  strlen(processedNode));
+            if (buffer == NULL){
+                //free(processedNode);
+                //free(buffer);
+                break;
+            }
 
-        // Concatenating the old buffer with the new processed node.
-        strcat(buffer, processedNode);
+            // Concatenating the old buffer with the new processed node.
+            strcat(buffer, processedNode);
+        }
 
         listCurrent = listCurrent->next;
     }

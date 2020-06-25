@@ -47,12 +47,23 @@ symvartype * symLook(char * name){
     symvartype * sp;
     for(int i =0; i < MAX_VARIABLES ; i++){
         sp = &(symboltable[i]);
-        // printf("THE VAR IS CALLED %s\n", sp.name);
         if(sp->name != NULL && !strcmp(sp->name, name))
             return sp;
     }
     return NULL;
 }
+
+symvartype * symLookByIndex(int index){
+    symvartype * sp;
+    if(index < MAX_VARIABLES && index < nextFreeFunctionSlot){
+        sp = &(symboltable[index]);
+        if(sp->name != NULL)
+            return sp;
+    }
+    return NULL;
+}
+
+
 
 symvartype * symAddInt(char * name){
 

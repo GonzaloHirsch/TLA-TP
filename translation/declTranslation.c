@@ -35,17 +35,14 @@ char * processVarDeclaration(GenericNode * gn) {
         exit(EXIT_FAILURE_);
     }
 
-    char * numberLiteral = NULL;
-    char * buffer;
-   
-    buffer = malloc(strlen(type) + strlen(var) + strlen(" ") + 1);
-    sprintf(buffer, "%s %s", type, var);
+    //Dont return anything: All declarations will be at the beginning.
 
-    return buffer;
+    return NULL;
+
 }
 
 
-char * processVarDeclassignment(GenericNode * gn) {
+char * processVarDeclassignment(GenericNode * gn){
     if(gn == NULL) return NULL;
 
     char * buffer;
@@ -101,12 +98,13 @@ char * processVarDeclassignment(GenericNode * gn) {
     if(typeNode->info.varType == INTEGER_ARRAY_TYPE && valueNode->info.varType == INTEGER_ARRAY_TYPE){
         // This means its the value of an array function
         if (value[0] == '_'){
-            char * intArrDec = "IntArr * %s = %s;\n";
+            char * intArrDec = "%s = %s;\n";
             buffer = malloc(1 + strlen(intArrDec) + strlen(var) +strlen(value) - 4 );
             sprintf(buffer, intArrDec, var, value);
         } else {
+            //Declaration was moved to the beginning of main --> dont do it here
             char * intArrDec =  "int _%s[] = %s;\n"
-                                "IntArr * %s = malloc(sizeof(IntArr));\n"
+                                "%s = malloc(sizeof(IntArr));\n"
                                 "%s->arr = _%s;\n"
                                 "%s->size = NELEMS(_%s);\n";
             buffer = malloc(1 + strlen(intArrDec) + 6*strlen(var) +strlen(value) - 14 );
@@ -116,12 +114,12 @@ char * processVarDeclassignment(GenericNode * gn) {
     else if(typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == DOUBLE_ARRAY_TYPE){
         // This means its the value of an array function
         if (value[0] == '_'){
-            char * doubleArrDec = "DoubleArr * %s = %s;\n";
+            char * doubleArrDec = "%s = %s;\n";
             buffer = malloc(1 + strlen(doubleArrDec) + strlen(var) +strlen(value) -4);
             sprintf(buffer, doubleArrDec, var, value);
         } else {
             char * doubleArrDec =   "double _%s[] = %s;\n"
-                                    "DoubleArr * %s = malloc(sizeof(DoubleArr));\n"
+                                    "%s = malloc(sizeof(DoubleArr));\n"
                                     "%s->arr = _%s;\n"
                                     "%s->size = NELEMS(_%s);\n";
             buffer = malloc(1 + strlen(doubleArrDec) + 6*strlen(var) +strlen(value) -14 );
@@ -129,8 +127,8 @@ char * processVarDeclassignment(GenericNode * gn) {
         }
     }
     else if(typeNode->info.varType == valueNode->info.varType){
-        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen(" =  ") + 1);
-        sprintf(buffer, "%s %s = %s", type, var, value);
+        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen("=  ") + 1);
+        sprintf(buffer, "%s = %s", var, value);
     }
     else{
         fprintf(stderr, "ERROR: Invalid varible assigment in declaration\n");
@@ -140,3 +138,54 @@ char * processVarDeclassignment(GenericNode * gn) {
     return buffer;
 }
 
+char * getVarDeclarations(){
+
+    char * buffer = malloc(1);
+    if(buffer == NULL){
+        exit(1);
+    }
+
+    symvartype * current;
+    char * name, * type;
+    int i =0;
+    do
+    {
+        current = symLookByIndex(i++);
+        if(current != NULL){
+            name = current->name;
+            switch (current->type)
+            {
+            case STRING_TYPE:
+                type = "char *";
+                break;
+            case INTEGER_TYPE:
+                type = "int";
+                break;
+            case DOUBLE_TYPE:
+                type = "double";
+                break;
+            case INTEGER_ARRAY_TYPE:
+                type = "IntArr *"; 
+                break;
+            case DOUBLE_ARRAY_TYPE:
+                type = "DoubleArr *";
+                break;
+            }
+
+            buffer = realloc(buffer, 1 + strlen(" ;\n") + strlen(buffer) + strlen(name) + strlen(type));
+            if(buffer == NULL){
+                return NULL;
+            }
+            strcat(buffer, type);
+            strcat(buffer, " ");
+            strcat(buffer, name);
+            strcat(buffer, ";\n");
+        }
+    } while (current != NULL);
+    
+    /** TODO: Probablye free al symvar related memory */
+
+    return buffer;
+    
+
+}
