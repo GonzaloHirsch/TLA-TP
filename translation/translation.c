@@ -15,6 +15,11 @@ void (*handle_error)(GenericNode **, char *);
 */
 CompilationErrors compilationError = ERROR_NO_ERROR;
 
+/**
+ * Extern variable to hold the declarations for the functions
+*/
+FunctionDeclarations functionDeclarations;
+
 VarType determineVarType(GenericNode *gn)
 {
     // Determining the type of the leaf
