@@ -47,7 +47,8 @@ symvartype * symLook(char * name){
     symvartype * sp;
     for(int i =0; i < MAX_VARIABLES ; i++){
         sp = &(symboltable[i]);
-        if(sp->name != NULL && !strcmp(sp->name, name))
+        // printf("THE VAR IS CALLED %s\n", sp.name);
+        if(!strcmp(sp->name, name))
             return sp;
     }
     return NULL;

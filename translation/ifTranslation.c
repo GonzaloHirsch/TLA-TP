@@ -47,7 +47,7 @@ char * processIfElse(GenericNode * gn){
     
     //Gets and process general expression. ( .... )
     GenericNode * ge = gn -> children -> current;
-    char * geProc = process(ge);
+    char * geProc = translate(ge);
     if(geProc == NULL){
         return NULL;
     }
@@ -97,7 +97,7 @@ char * processElseTrain(GenericNode * gn){
         initial = " else";
         GenericNode * block = gn -> children ->current;
 
-        char * blockProc = process(block);
+        char * blockProc = translate(block);
         if(blockProc == NULL){
             return NULL;
         }
@@ -123,14 +123,14 @@ char * processElseTrain(GenericNode * gn){
     GenericNode * ge = gn->children->current;
 
     //Process the general expression that both types of else if have.
-    char * geProc = process(ge);
+    char * geProc = translate(ge);
     if(geProc == NULL){
         return NULL;
     }
 
     //Process the block that both types of else if have.
     GenericNode * block = gn -> children -> next ->current;
-    char * blockProc = process(block);
+    char * blockProc = translate(block);
         if(blockProc == NULL){
             //free(geProc);
             return NULL;
@@ -160,7 +160,7 @@ char * processElseTrain(GenericNode * gn){
 
         GenericNode * elseIf = gn -> children -> next -> next -> current;
 
-        char * elseIfProc = process(elseIf);
+        char * elseIfProc = translate(elseIf);
         if(elseIfProc == NULL){
             //free(geProc);
             //free(blockProc);
