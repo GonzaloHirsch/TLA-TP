@@ -103,6 +103,9 @@ char *process(GenericNode *gn)
     case NODE_VARIABLE:
         value = processVariable(gn);
         break;
+    case NODE_VARIABLE_ASSIGNMENT:
+        value = processAssignedVariable(gn);
+        break; 
     case NODE_VARIABLE_REF:
         value = processReferencedVariable(gn);
         break;
@@ -275,10 +278,14 @@ char *processAssignment(GenericNode *gn)
     //Process the right value of the expression(literal, generalExp or genOp)
     char *valueProc = translate(valueNode);
 
+    if(varName == NULL || valueProc == NULL){
+        return NULL;
+    }
+
     //Check if the value assigned to the variable is valid.
     if (varNode->info.varType != valueNode->info.varType)
     {
-        //fprintf(stderr, "ERROR: Incompatible assigment of variable\n");
+        compilationError = ERROR_INCOMPATIBLE_ASSIGNMENT;
         return NULL;
     }
 

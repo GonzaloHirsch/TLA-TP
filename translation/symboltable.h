@@ -19,7 +19,8 @@ typedef enum {
 typedef struct symvar{
     char name[32];
     VarType type;
-    void * value;
+    void * value;       /** TODO: Possibly delete(NOT USED) */
+    int assigned;
 } symvartype;
 
 static symvartype symboltable[MAX_VARIABLES];
@@ -35,6 +36,9 @@ symvartype * symAddDouble(char * name);
 symvartype * symAddDoubleArr(char * name);
 symvartype * symAddIntArr(char * name);
 symvartype * symAdd(char * name, VarType type);
+
+void symSetAssigned(symvartype *var);
+int symGetAssigned(symvartype *var);
 
 // Functions to set values to variables
 symvartype * symSetInt(char * name, int value);

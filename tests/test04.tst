@@ -1,4 +1,4 @@
 start
-    int d = c +1;   
-    print d;
+   int d;
+   int c = 1 + d;
 end

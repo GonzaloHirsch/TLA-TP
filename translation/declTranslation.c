@@ -92,6 +92,8 @@ char * processVarDeclassignment(GenericNode * gn){
         exit(EXIT_FAILURE_);
     }
 
+    // Variable is assigned
+    symSetAssigned(varAdded);   
 
     // Create the buffer depending on the varType.
     // The type of the typeNode has to match the type of the valueNode.

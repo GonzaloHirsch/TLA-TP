@@ -74,6 +74,7 @@ symvartype * symAddInt(char * name){
     symvartype * sp = &(symboltable[nextFreeFunctionSlot++]);
     strcpy(sp->name, name);
     sp->type = INTEGER_TYPE;
+    sp->assigned = 0;
     sp->value = malloc(sizeof(int));
     return sp;
 }
@@ -86,6 +87,7 @@ symvartype * symAddString(char * name){
     symvartype * sp = &(symboltable[nextFreeFunctionSlot++]);
     strcpy(sp->name, name);
     sp->type = STRING_TYPE;
+    sp->assigned = 0;
     return sp;
 }
 
@@ -98,6 +100,7 @@ symvartype * symAddDouble(char * name){
     strcpy(sp->name, name);
     sp->type = DOUBLE_TYPE;
     sp->value = malloc(sizeof(double));
+    sp->assigned = 0;
     return sp;
 }
 
@@ -109,6 +112,7 @@ symvartype * symAddDoubleArr(char * name){
     strcpy(sp->name, name);
     sp->type = DOUBLE_ARRAY_TYPE;
     sp->value = malloc(sizeof(double *));
+    sp->assigned = 0;
     return sp;
 }
 
@@ -121,6 +125,7 @@ symvartype * symAddIntArr(char * name){
     strcpy(sp->name, name);
     sp->type = INTEGER_ARRAY_TYPE;
     sp->value = malloc(sizeof(int *));
+    sp->assigned = 0;
     return sp;
 }
 
@@ -142,6 +147,17 @@ symvartype * symAdd(char * name, VarType type) {
             return symAddDoubleArr(name);
             break;
     }
+}
+
+void symSetAssigned(symvartype *var){
+    if(var != NULL)
+        var->assigned = 1;
+}
+
+int symGetAssigned(symvartype *var){
+    if(var != NULL)
+        return var->assigned;
+    return -1;
 }
 
 symvartype * symSetInt(char * name, int value){

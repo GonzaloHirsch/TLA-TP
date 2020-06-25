@@ -4,6 +4,25 @@ char * processVariable(GenericNode * gn) {
     return gn->value;
 }
 
+char * processAssignedVariable(GenericNode * gn){
+     if(gn->info.isMeta){
+        return gn->value;
+    }
+
+    symvartype * var = symLook(gn->value);
+    if(var == NULL){
+        compilationError = ERROR_UNDEFINED_VARIABLE;
+        return NULL;
+    }
+    // If the node is variable, assign its type that just the variable knows.
+    gn->info.varType = var->type;
+
+    // Variable is now assigned
+    symSetAssigned(var);
+
+    return gn->value;
+}
+
 char * processReferencedVariable(GenericNode * gn){
     if(gn->info.isMeta){
         return gn->value;
@@ -11,10 +30,17 @@ char * processReferencedVariable(GenericNode * gn){
 
     symvartype * var = symLook(gn->value);
     if(var == NULL){
+        compilationError = ERROR_UNDEFINED_VARIABLE;
         return NULL;
     }
     // If the node is variable, assign its type that just the variable knows.
     gn->info.varType = var->type;
+
+    //Check if the variable has been ever assigned
+    if(symGetAssigned(var) == 0){
+        compilationError = ERROR_UNASSIGNED_VARIABLE;
+        return NULL;
+    }
 
     return gn->value;
 }
