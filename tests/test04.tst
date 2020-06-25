@@ -1,4 +1,4 @@
 start
    int d;
-   in;
+   int a;
 end

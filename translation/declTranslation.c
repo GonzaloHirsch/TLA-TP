@@ -158,19 +158,19 @@ char * getVarDeclarations(){
             switch (current->type)
             {
             case STRING_TYPE:
-                type = "char *";
+                type = "static char *";
                 break;
             case INTEGER_TYPE:
-                type = "int";
+                type = "static int";
                 break;
             case DOUBLE_TYPE:
-                type = "double";
+                type = "static double";
                 break;
             case INTEGER_ARRAY_TYPE:
-                type = "IntArr *"; 
+                type = "static IntArr *"; 
                 break;
             case DOUBLE_ARRAY_TYPE:
-                type = "DoubleArr *";
+                type = "static DoubleArr *";
                 break;
             }
 

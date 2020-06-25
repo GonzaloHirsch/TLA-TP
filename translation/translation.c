@@ -186,7 +186,7 @@ char *processEntrypointNode(GenericNode *gn)
     char *declaredVariables = getVarDeclarations();
 
     // Calculating the length of the buffer
-    size_t bufferSize = strlen("int main(){\n\nreturn 0;}\n") + strlen(declaredVariables) +strlen(statements) + 1;
+    size_t bufferSize = strlen("\nint main(){\n\nreturn 0;}\n") + strlen(declaredVariables) +strlen(statements) + 1;
     char * buffer = malloc(bufferSize);
     if (buffer == NULL){
         //free(statements);
@@ -194,7 +194,7 @@ char *processEntrypointNode(GenericNode *gn)
     }
 
     // Printing the strings into the buffer
-    sprintf(buffer, "int main(){\n%s%s\nreturn 0;\n}", declaredVariables, statements);
+    sprintf(buffer, "%s\nint main(){\n%s\nreturn 0;\n}", declaredVariables, statements);
 
     //free(statements);
     //free(declaredVariables)
