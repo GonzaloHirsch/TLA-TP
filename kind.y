@@ -7,6 +7,7 @@
     #include "utility.h"
     #include "node.h"
     #include "translation/translation.h"
+    #include "translation/declTranslation.h"
 
     void yyerror(GenericNode ** codeRootNode, char *s);
     int yylex();
@@ -86,7 +87,6 @@ entrypoint:
         GenericNode * hyperstatements = newGenericNode(NODE_HYPERSTATEMENTS, 0, yylineno);
         hyperstatements->children = $2;
         *codeRootNode = newGenericNodeWithChildren(NODE_ENTRYPOINT, "helloThere\n", yylineno, 1, hyperstatements); $$ = *codeRootNode;
-
         }
         |       START END       		{
                 *codeRootNode = newGenericNode(NODE_ENTRYPOINT, "helloThere\n", yylineno); $$ = *codeRootNode;
@@ -382,6 +382,10 @@ main(void) {
         // Getting all the builtin functions and printing it
         char * headersAndFunctions = getHeadersAndFunctions();
         printf("%s\n", headersAndFunctions);
+
+        // Getting the variable declarations and printing them
+        char * declaredVariables = getVarDeclarations();
+        printf("%s\n", declaredVariables);
 
         // Getting all the user functions and printing it
         char * userFunctions = getFunctionDeclarations();

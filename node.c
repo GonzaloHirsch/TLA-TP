@@ -129,7 +129,6 @@ void freeGenericNode(GenericNode *gn)
         freeNodeList(gn->children);
     }
     free(gn);
-    printf("Freed node\n");
 }
 
 void freeNodeList(NodeList *nl)

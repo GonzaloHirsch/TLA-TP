@@ -9,4 +9,5 @@ for testFile in $(find $testsDir -name *.arr); do
     ./codeGenerator < $testFile > ${filePath}.c
     echo $resultsDir
     gcc -o $resultsDir/${fileName}_result ${filePath}.c
+    ./$resultsDir/${fileName}_result
 done

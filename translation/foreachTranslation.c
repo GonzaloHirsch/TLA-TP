@@ -54,8 +54,6 @@ char *processForEach(GenericNode *gn)
     char *forTemplate = "for(int __i = 0; __i < %s->size; __i++)\n" // this %s should be sth like arrayName->length
                         "\t_arrFunc%ld(%s->arr[__i])";
 
-    printf("BODY\n");
-
     // Getting the body of the function
     char *body = translate(foreachBody->children->current);
     if (body == NULL)
@@ -70,26 +68,17 @@ char *processForEach(GenericNode *gn)
         return NULL;
     }
 
-    printf("FUN\n");
-
     // Printing the data into the template
     sprintf(functionBuff, functionTemplate, lambdaCount, type, metaVarName, body);
 
-    printf("FUN PRINT\n");
-
     // Allocating more functions
     functionDeclarations->functions = realloc(functionDeclarations->functions, (functionDeclarations->count + 1) * sizeof(struct FunctionDeclaration *));
-    
-    printf("FUN ALLOC, %p %d\n", functionDeclarations->functions, functionDeclarations->count);
-    
+        
     // Adding the new function
     functionDeclarations->functions[functionDeclarations->count].code = functionBuff;
 
-    printf("FUN BUFF \n");
     // Increasing the function count
     functionDeclarations->count++;
-
-    printf("FOR\n");
 
     // Counting -> length of variable name twice + length of template - 4(number of extra characters due to %...) + 20(max length of the variable number)
     char *forbuff = malloc(strlen(varName) * 2 + strlen(forTemplate) - 4 + 20);

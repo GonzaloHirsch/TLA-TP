@@ -1,32 +1,32 @@
 start
     int[] arr = [1,2,3,4,5];
     arr.forEach(x->{
-        arr.forEach(y->{
-        if (y > 1){
-            print "JEJE" ;
-        } else {
-            print "JAJA" ;
+        arr.forEach(x->{
+            if (x > 1){
+                print "A" ;
+            } else {
+                print "B" ;
+            }
         }
-    }
         );
         if (x > 3){
-            print "Hola" ;
+            print "C" ;
         } else {
-            print "Chau" ;
+            print "D" ;
         }
     });
     arr.forEach(x->{
         if (x > 3){
-            print "Chau" ;
+            print "E" ;
         } else {
-            print "Hola" ;
+            print "F" ;
         }
     });
     arr.forEach(y->{
         if (y > 1){
-            print "JEJE" ;
+            print "G" ;
         } else {
-            print "JAJA" ;
+            print "H" ;
         }
     });
 end
