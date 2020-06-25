@@ -35,25 +35,14 @@ char * processVarDeclaration(GenericNode * gn) {
         exit(EXIT_FAILURE_);
     }
 
-    char * numberLiteral = NULL;
-    char * buffer;
+    //Dont return anything: All declarations will be at the beginning.
 
-    if (nl->next != NULL) {
-        nl = nl->next;
-        numberLiteral = translate(nl->current);
-        buffer = malloc(strlen(type) + strlen(var) + strlen(numberLiteral) +strlen(" []") + 1); // 2 for brackets, 1 for space,1 for \n,  1 for \0
-        sprintf(buffer, "%s %s[%s]", type, var, numberLiteral);
-    }
-    else {
-        buffer = malloc(strlen(type) + strlen(var) + strlen(" ") + 1);
-        sprintf(buffer, "%s %s", type, var);
-    }
+    return NULL;
 
-    return buffer;
 }
 
 
-char * processVarDeclassignment(GenericNode * gn) {
+char * processVarDeclassignment(GenericNode * gn){
     if(gn == NULL) return NULL;
 
     char * buffer;
@@ -91,8 +80,8 @@ char * processVarDeclassignment(GenericNode * gn) {
         //free(type);
         //free(var);
         //free(value);
-        fprintf(stderr, "ERROR: Duplicate variable declaration\n");
-        exit(EXIT_FAILURE_);
+        compilationError = ERROR_DUPLICATED_VARIABLE;
+        return NULL;
     }
     //If the variable doesn't exists, we add it based on the var type.
     symvartype * varAdded = symAdd(varNode->value, typeNode->info.varType);
@@ -103,18 +92,21 @@ char * processVarDeclassignment(GenericNode * gn) {
         exit(EXIT_FAILURE_);
     }
 
+    // Variable is assigned
+    symSetAssigned(varAdded);   
 
     // Create the buffer depending on the varType.
     // The type of the typeNode has to match the type of the valueNode.
     if(typeNode->info.varType == INTEGER_ARRAY_TYPE && valueNode->info.varType == INTEGER_ARRAY_TYPE){
         // This means its the value of an array function
         if (value[0] == '_'){
-            char * intArrDec = "IntArr * %s = %s;\n";
+            char * intArrDec = "%s = %s;\n";
             buffer = malloc(1 + strlen(intArrDec) + strlen(var) +strlen(value) - 4 );
             sprintf(buffer, intArrDec, var, value);
         } else {
+            //Declaration was moved to the beginning of main --> dont do it here
             char * intArrDec =  "int _%s[] = %s;\n"
-                                "IntArr * %s = malloc(sizeof(IntArr));\n"
+                                "%s = malloc(sizeof(IntArr));\n"
                                 "%s->arr = _%s;\n"
                                 "%s->size = NELEMS(_%s);\n";
             buffer = malloc(1 + strlen(intArrDec) + 6*strlen(var) +strlen(value) - 14 );
@@ -124,12 +116,12 @@ char * processVarDeclassignment(GenericNode * gn) {
     else if(typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == DOUBLE_ARRAY_TYPE){
         // This means its the value of an array function
         if (value[0] == '_'){
-            char * doubleArrDec = "DoubleArr * %s = %s;\n";
+            char * doubleArrDec = "%s = %s;\n";
             buffer = malloc(1 + strlen(doubleArrDec) + strlen(var) +strlen(value) -4);
             sprintf(buffer, doubleArrDec, var, value);
         } else {
             char * doubleArrDec =   "double _%s[] = %s;\n"
-                                    "DoubleArr * %s = malloc(sizeof(DoubleArr));\n"
+                                    "%s = malloc(sizeof(DoubleArr));\n"
                                     "%s->arr = _%s;\n"
                                     "%s->size = NELEMS(_%s);\n";
             buffer = malloc(1 + strlen(doubleArrDec) + 6*strlen(var) +strlen(value) -14 );
@@ -137,13 +129,65 @@ char * processVarDeclassignment(GenericNode * gn) {
         }
     }
     else if(typeNode->info.varType == valueNode->info.varType){
-        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen(" =  ") + 1);
-        sprintf(buffer, "%s %s = %s", type, var, value);
+        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen("=  ") + 1);
+        sprintf(buffer, "%s = %s", var, value);
     }
     else{
-        fprintf(stderr, "ERROR: Invalid varible assigment in declaration\n");
-        exit(EXIT_FAILURE_);
+        compilationError = ERROR_INCOMPATIBLE_ASSIGNMENT;
+        return NULL;
     }
         
     return buffer;
+}
+
+char * getVarDeclarations(){
+
+    char * buffer = malloc(1);
+    if(buffer == NULL){
+        exit(1);
+    }
+
+    symvartype * current;
+    char * name, * type;
+    int i =0;
+    do
+    {
+        current = symLookByIndex(i++);
+        if(current != NULL){
+            name = current->name;
+            switch (current->type)
+            {
+            case STRING_TYPE:
+                type = "static char *";
+                break;
+            case INTEGER_TYPE:
+                type = "static int";
+                break;
+            case DOUBLE_TYPE:
+                type = "static double";
+                break;
+            case INTEGER_ARRAY_TYPE:
+                type = "static IntArr *"; 
+                break;
+            case DOUBLE_ARRAY_TYPE:
+                type = "static DoubleArr *";
+                break;
+            }
+
+            buffer = realloc(buffer, 1 + strlen(" ;\n") + strlen(buffer) + strlen(name) + strlen(type));
+            if(buffer == NULL){
+                exit(1);
+            }
+            strcat(buffer, type);
+            strcat(buffer, " ");
+            strcat(buffer, name);
+            strcat(buffer, ";\n");
+        }
+    } while (current != NULL);
+    
+    /** TODO: Probably free al symvar related memory */
+
+    return buffer;
+    
+
 }
