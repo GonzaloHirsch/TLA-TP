@@ -20,6 +20,17 @@ typedef enum CompilationErrors
     ERROR_INVALID_OPERATION_TYPES
 } CompilationErrors;
 
+typedef struct FunctionDeclaration {
+    char * code;
+} FunctionDeclaration;
+
+typedef struct FunctionDeclarations_ {
+    struct FunctionDeclaration * functions;
+    int count;
+} FunctionDeclarations_;
+
+typedef struct FunctionDeclarations_ * FunctionDeclarations;
+
 //----------INTERNAL FUNCTIONS---------------------------
 char *processStamentListNode(GenericNode *gn);
 char *processWhileNode(GenericNode *gn);
@@ -40,9 +51,11 @@ VarType determineVarType(GenericNode *gn);
 //----------------------------------------------------------
 
 char *getHeadersAndFunctions();
+char * getFunctionDeclarations();
 char *translate(GenericNode *gn);
 char *translate_program(GenericNode *gn, void (*error_fun)(GenericNode **, char *));
 
 extern CompilationErrors compilationError;
+extern FunctionDeclarations functionDeclarations;
 
 #endif

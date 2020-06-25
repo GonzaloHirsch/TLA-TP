@@ -22,6 +22,7 @@ char * processReferencedVariable(GenericNode * gn){
     if(var == NULL){
         return NULL;
     }
+    
     // If the node is variable, assign its type that just the variable knows.
     gn->info.varType = var->type;
 
