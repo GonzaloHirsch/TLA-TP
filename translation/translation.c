@@ -108,6 +108,9 @@ char *process(GenericNode *gn)
     case NODE_VARIABLE:
         value = processVariable(gn);
         break;
+    case NODE_VARIABLE_ASSIGNMENT:
+        value = processAssignedVariable(gn);
+        break; 
     case NODE_VARIABLE_REF:
         value = processReferencedVariable(gn);
         break;
@@ -184,19 +187,22 @@ char *processEntrypointNode(GenericNode *gn)
         return NULL;
     }
 
+    // Getting the variable declarations
+    char *declaredVariables = getVarDeclarations();
+
     // Calculating the length of the buffer
-    size_t bufferSize = strlen("int main(){\n\nreturn 0;}\n") + strlen(statements) + 1;
-    char *buffer = malloc(bufferSize);
-    if (buffer == NULL)
-    {
+    size_t bufferSize = strlen("\nint main(){\n\nreturn 0;}\n") + strlen(declaredVariables) +strlen(statements) + 1;
+    char * buffer = malloc(bufferSize);
+    if (buffer == NULL){
         //free(statements);
         return NULL;
     }
 
     // Printing the strings into the buffer
-    sprintf(buffer, "int main(){\n%s\nreturn 0;\n}", statements);
+    sprintf(buffer, "%s\nint main(){\n%s\nreturn 0;\n}", declaredVariables, statements);
 
     //free(statements);
+    //free(declaredVariables)
 
     return buffer;
 }
@@ -239,23 +245,19 @@ char *processNodeList(NodeList *listCurrent)
 
         // Processing the current Generic Node
         processedNode = translate(currentNode);
-        if (processedNode == NULL)
-        {
-            //free(buffer);
-            break;
-        }
+        if (processedNode != NULL){
+        
+            // Saving new memory for the extended buffer                             
+            buffer = realloc(buffer, 1 + strlen(buffer) +  strlen(processedNode));
+            if (buffer == NULL){
+                //free(processedNode);
+                //free(buffer);
+                break;
+            }
 
-        // Saving new memory for the extended buffer
-        buffer = realloc(buffer, 1 + strlen(buffer) + strlen(processedNode));
-        if (buffer == NULL)
-        {
-            //free(processedNode);
-            //free(buffer);
-            break;
+            // Concatenating the old buffer with the new processed node.
+            strcat(buffer, processedNode);
         }
-
-        // Concatenating the old buffer with the new processed node.
-        strcat(buffer, processedNode);
 
         listCurrent = listCurrent->next;
     }
@@ -281,10 +283,14 @@ char *processAssignment(GenericNode *gn)
     //Process the right value of the expression(literal, generalExp or genOp)
     char *valueProc = translate(valueNode);
 
+    if(varName == NULL || valueProc == NULL){
+        return NULL;
+    }
+
     //Check if the value assigned to the variable is valid.
     if (varNode->info.varType != valueNode->info.varType)
     {
-        //fprintf(stderr, "ERROR: Incompatible assigment of variable\n");
+        compilationError = ERROR_INCOMPATIBLE_ASSIGNMENT;
         return NULL;
     }
 
@@ -454,6 +460,18 @@ void compose_error_message(char *buffer, int line)
     {
     case ERROR_INVALID_OPERATION_TYPES:
         msg = "Invalid operation types";
+        break;
+    case ERROR_UNDEFINED_VARIABLE:
+        msg = "Reference to undefined variable";
+        break;
+    case ERROR_INCOMPATIBLE_ASSIGNMENT:
+        msg = "Incompatible assignment to variable";
+        break;
+    case ERROR_UNASSIGNED_VARIABLE:
+        msg = "Reference to unassigned variable";
+        break;
+    case ERROR_DUPLICATED_VARIABLE:
+        msg = "Dublicate variable declaration";
         break;
     case ERROR_GENERIC:
     default:

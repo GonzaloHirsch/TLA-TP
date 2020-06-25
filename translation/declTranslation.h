@@ -8,4 +8,6 @@
 char * processVarDeclaration(GenericNode * gn);
 char * processVarDeclassignment(GenericNode * gn);
 
+char * getVarDeclarations();
+
 #endif

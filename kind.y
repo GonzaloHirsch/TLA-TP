@@ -195,11 +195,11 @@ block:	OPEN_B inblockstatements  CLOSE_B {
         }
         ;
 
-assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_REF, $1, yylineno);
+assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
-        |	VAR ASSIGN_EQ generaloperation 	{       GenericNode * varNode = newGenericNode(NODE_VARIABLE_REF, $1, yylineno);
+        |	VAR ASSIGN_EQ generaloperation 	{       GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
-        |       VAR ASSIGN_EQ generalexpression {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_REF, $1, yylineno);
+        |       VAR ASSIGN_EQ generalexpression {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
         ;
 
