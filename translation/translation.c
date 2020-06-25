@@ -465,7 +465,7 @@ char *translate(GenericNode *gn)
     char *code = process(gn);
 
     // If the given code is NULL, it means there is a compilation error
-    if (code == NULL)
+    if (code == NULL && compilationError != ERROR_NO_ERROR)
     {
         char *buffer[255] = {0};
         if (gn != NULL)
@@ -493,7 +493,7 @@ char *translate_program(GenericNode *gn, void (*error_fun)(GenericNode **, char 
     char *code = translate(gn);
 
     // If the given code is NULL, it means there is a compilation error
-    if (code == NULL)
+    if (code == NULL && compilationError != ERROR_NO_ERROR)
     {
         char *buffer[255] = {0};
         if (gn != NULL)
