@@ -387,9 +387,17 @@ main(void) {
                 return 1;
         }
 
-        // Getting all the builtin functions and printing it
-        char * headersAndFunctions = getHeadersAndFunctions();
-        printf("%s\n", headersAndFunctions);
+        // Getting all the headers and printing them
+        char * headers = getHeaders();
+        printf("%s\n", headers);
+
+        // Getting all the operation functions and printing them
+        char * operationFunctions = getOperationFunctions();
+        printf("%s\n", operationFunctions);
+
+        // Getting all the input functions and printing them
+        char * inputFunctions = getInputFunctions();
+        printf("%s\n", inputFunctions);
 
         // Getting the variable declarations and printing them
         char * declaredVariables = getVarDeclarations();

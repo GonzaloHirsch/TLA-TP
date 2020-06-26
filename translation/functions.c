@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <string.h>
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 
@@ -126,6 +127,12 @@ DoubleArr * _divIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2);
 
 void _printIntArr(IntArr * arr);
 void _printDoubleArr(DoubleArr * arr);
+
+// ---------- Input ----------
+
+int _getInt();
+char * _getString();
+double _getDouble();
 
 // ------------------------- IMPLEMENTATIONS -------------------------
 
@@ -484,6 +491,105 @@ void _printDoubleArr(DoubleArr * arr){
 			printf("%f ", arr->arr[i]);
 		}
 	}
+}
+
+// ---------- Input ----------
+
+int _getInt(){
+    char c;
+    char num_buff[12] = {0};
+    int index = 0;
+    while ((c = getchar()) != EOF && c != '\n'){
+        if (c == '-' && index == 0){
+            num_buff[index++] = c;
+        } else if (c >= '0' && c <= '9'){
+            if (index < 12){
+                num_buff[index++] = c;
+            } else {
+                fprintf(stderr, "\033[0;31m");
+                printf("Number out of range\n");
+                fprintf(stderr, "\033[0m");
+                exit(1);
+            }
+        } else {
+            fprintf(stderr, "\033[0;31m");
+            printf("Not a number\n");
+            fprintf(stderr, "\033[0m");
+            exit(1);
+        }
+    }
+
+    int num = atoi(num_buff);
+    if (num == 0 && num_buff[0] != '0'){
+        fprintf(stderr, "\033[0;31m");
+        printf("Not a number\n");
+        fprintf(stderr, "\033[0m");
+        exit(1);
+    }
+    return num;
+}
+
+char * _getString(){
+    char c;
+    char * buff = malloc(1);
+    int index = 0;
+    while ((c = getchar()) != EOF && c != '\n'){
+        buff = realloc(buff, index + 1);
+        if (buff == NULL){
+            fprintf(stderr, "\033[0;31m");
+            printf("Out of memory\n");
+            fprintf(stderr, "\033[0m");
+            exit(1);
+        }
+        buff[index++] = c;
+    }
+    buff = realloc(buff, index + 1);
+    buff[index] = 0x00;
+    return buff;
+}
+
+double _getDouble(){
+    char c;
+    char num_buff[20] = {0};
+    int index = 0, has_point = 0;
+    while ((c = getchar()) != EOF && c != '\n'){
+        if (c == '.' && !has_point){
+            if (index == 0){
+                num_buff[index++] = '0';
+            }
+            num_buff[index++] = c;
+        } else if (c == '-' && index == 0){
+            num_buff[index++] = c;
+        } else if (c >= '0' && c <= '9'){
+            if (index < 20){
+                num_buff[index++] = c;
+            } else {
+                fprintf(stderr, "\033[0;31m");
+                printf("Number out of range\n");
+                fprintf(stderr, "\033[0m");
+                exit(1);
+            }
+        } else {
+            fprintf(stderr, "\033[0;31m");
+            printf("Not a number\n");
+            fprintf(stderr, "\033[0m");
+            exit(1);
+        }
+    }
+    char * stop_val;
+    double num = strtod(num_buff, &stop_val);
+    if (errno == ERANGE){
+        fprintf(stderr, "\033[0;31m");
+        printf("Number out of range\n");
+        fprintf(stderr, "\033[0m");
+        exit(1);
+    } else if (num == 0){
+        fprintf(stderr, "\033[0;31m");
+        printf("Invalid number\n");
+        fprintf(stderr, "\033[0m");
+        exit(1);
+    }
+    return num;
 }
 
 /*
