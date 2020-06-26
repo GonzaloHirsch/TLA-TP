@@ -95,7 +95,7 @@ char * processExpression(GenericNode * gn){
         op = " < ";
     }
     else if(strcmp(opString, "LE") == 0){
-        op = " >= ";
+        op = " <= ";
     }
     else if(strcmp(opString, "NE") == 0){
         op = " != ";

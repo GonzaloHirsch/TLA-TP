@@ -128,7 +128,7 @@ char *processVarDeclassignment(GenericNode *gn)
             sprintf(buffer, intArrDec, var, value, var, var, var, var, var);
         }
     }
-    else if (typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == DOUBLE_ARRAY_TYPE)
+    else if ((typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == DOUBLE_ARRAY_TYPE) || (typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == INTEGER_ARRAY_TYPE))
     {
         // This means its the value of an array function
         if (value[0] == '_')
@@ -170,6 +170,7 @@ char *getVarDeclarations()
 {
 
     char *buffer = malloc(1);
+    buffer[0] = 0x00;
     if (buffer == NULL)
     {
         exit(1);
