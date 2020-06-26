@@ -59,6 +59,9 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "start"         return START;
 "end"           return END;
 "cross"         return CROSS;
+"getInt"        return GET_INT;
+"getDouble"     return GET_DOUBLE;
+"getString"     return GET_STRING;
 [\t ]           ;
 \n              {yylineno++;}
 {number} 		{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}

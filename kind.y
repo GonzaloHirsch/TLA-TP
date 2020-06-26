@@ -52,6 +52,7 @@
 %token<string> DEFINE PASSING
 %token<string> ASSIGN_EQ
 %token<string> INT_ARR DOUBLE_ARR
+%token<string> GET_INT GET_DOUBLE GET_STRING
 
 %type<node> entrypoint
 %type<nodelist> hyperstatements
@@ -79,6 +80,7 @@
 %type<nodelist> numlist
 %type<node> arg
 %type<node> arraccess
+%type<node> getfunctions
 
 %%
 
@@ -140,6 +142,7 @@ statement:
         |       funcall                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       foreach                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       print                   {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
+        |       getfunctions            {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         ;
 
 vardeclaration:
@@ -170,12 +173,20 @@ vardeclassignment:
             GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2, yylineno);
             $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, yylineno, 3, $1, varNode, $4);    
         }
+        | type VAR ASSIGN_EQ getfunctions {
+            GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2, yylineno);
+            $$ = newGenericNodeWithChildren(NODE_VARDECLASSIGNMENT, 0, yylineno, 3, $1, varNode, $4);    
+        }
         ;
 
 print:          PRINT unity     {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, yylineno, 1, $2);}  
         |       PRINT literal   {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, yylineno, 1, $2);}
         ;
 
+getfunctions:     GET_INT OPEN_P CLOSE_P          {$$ = newGenericNodeWithChildren(NODE_GET_INT, 0, yylineno,0);}
+                | GET_DOUBLE OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_DOUBLE, 0, yylineno,0);}
+                | GET_STRING OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_STRING, 0, yylineno,0);}
+                ;
 
 foreach:
         VAR DOT FOREACH OPEN_P VAR RIGHT_ARROW foreachbody CLOSE_P 
@@ -204,6 +215,8 @@ assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGen
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
         |       arraccess ASSIGN_EQ generalexpression   { $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
         |       arraccess ASSIGN_EQ generaloperation   { $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
+        |       VAR ASSIGN_EQ getfunctions      {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
+                                                        $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
         ;
 
 arraccess:      VAR OPEN_BRACK expunity CLOSE_BRACK {$$ = newGenericNodeWithChildren(NODE_ARRAY_ACCESS, "ARRAY_ACCESS", yylineno, 2, $1, $3);}
@@ -385,9 +398,17 @@ main(void) {
                 return 1;
         }
 
-        // Getting all the builtin functions and printing it
-        char * headersAndFunctions = getHeadersAndFunctions();
-        printf("%s\n", headersAndFunctions);
+        // Getting all the headers and printing them
+        char * headers = getHeaders();
+        printf("%s\n", headers);
+
+        // Getting all the operation functions and printing them
+        char * operationFunctions = getOperationFunctions();
+        printf("%s\n", operationFunctions);
+
+        // Getting all the input functions and printing them
+        char * inputFunctions = getInputFunctions();
+        printf("%s\n", inputFunctions);
 
         // Getting the variable declarations and printing them
         char * declaredVariables = getVarDeclarations();
