@@ -52,6 +52,7 @@ char *processPrint(GenericNode *);
 char * processGetDouble(GenericNode * gn);
 char * processGetString(GenericNode * gn);
 char * processGetInt(GenericNode *gn);
+char *processArrayAccess(GenericNode * gn);
 
 VarType determineVarType(GenericNode *gn);
 

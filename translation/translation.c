@@ -165,6 +165,9 @@ char *process(GenericNode *gn)
     case NODE_GET_STRING:
         value = processGetString(gn);
         break;
+    case NODE_ARRAY_ACCESS:
+        value = processArrayAccess(gn);
+        break;
     default:
         break;
     }
@@ -498,6 +501,40 @@ char *processGetInt(GenericNode *gn)
     gn->info.varType = INTEGER_TYPE;
     char *buffer = malloc(1 + strlen("_getInt()"));
     sprintf(buffer, "_getInt()");
+    return buffer;
+}
+
+char *processArrayAccess(GenericNode * gn) {
+    if (gn == NULL)
+        return NULL;
+    
+    char * buffer;
+    NodeList * nl = gn->children;
+
+    // Get the variable
+
+    GenericNode * varNode = nl->current;
+    char * var = translate(varNode);
+
+    symvartype * svt = symLook(varNode->value);
+    if (svt == NULL)
+    {
+        //free(type);
+        //free(var);
+        //free(value);
+        compilationError = ERROR_UNDEFINED_VARIABLE;
+        return NULL;
+    }
+
+    // Get the expression inside brackets
+
+    nl = nl->next;
+    GenericNode * indexNode = nl->current;
+    char * indexExpr = translate(indexNode);
+
+    
+    buffer = malloc(strlen(var) + 3 + strlen(indexExpr) + 2 + 2 + 1);
+    sprintf(buffer, "%s->arr[%s]", var, indexExpr);
     return buffer;
 }
 
