@@ -123,6 +123,14 @@ DoubleArr * _divIntArrIntArr(IntArr * arr1, IntArr * arr2);
 DoubleArr * _divDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2);
 DoubleArr * _divIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2);
 
+//----------- Cross ----------
+
+IntArr * _crossIntArrIntArr(IntArr * arr1, IntArr * arr2);
+DoubleArr * _crossIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2);
+DoubleArr * _crossDoubleArrIntArr(DoubleArr *arr1, IntArr * arr2);
+DoubleArr * _crossDoubleArrDoubleArr(DoubleArr *arr1, DoubleArr * arr2);
+
+
 // ---------- Other ----------
 
 void _printIntArr(IntArr * arr);
@@ -482,6 +490,114 @@ DoubleArr * _divIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2){
 	return _divDoubleArrIntArr(arr2, arr1);
 }
 
+//----------- Cross ----------
+
+IntArr * _crossIntArrIntArr(IntArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
+	if(arr1->size == 2){
+		IntArr * res = malloc(sizeof(IntArr));
+		int * resArr = malloc(sizeof(int) * 1);
+		resArr[0] = arr1->arr[0] * arr2->arr[1] - arr1->arr[1] * arr2->arr[0];
+		res->arr = resArr;
+		res->size = 1;
+		return res;
+	}
+	else if(arr1->size == 3){
+		IntArr * res = malloc(sizeof(IntArr));
+		int * resArr = malloc(sizeof(int) * 3);
+		resArr[0] = arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		resArr[1] = arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[2] = arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		res->arr = resArr;
+		res->size = 3;
+		return res;
+	}
+	else{
+		fprintf(stderr, "Invalid size of operation between arrays");
+		exit(0);
+	}
+}
+
+DoubleArr * _crossIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
+	if(arr1->size == 2){
+		DoubleArr * res = malloc(sizeof(DoubleArr));
+		double * resArr = malloc(sizeof(double) * 1);
+		resArr[0] = (double) arr1->arr[0] * arr2->arr[1] - arr1->arr[1] * arr2->arr[0];
+		res->arr = resArr;
+		res->size = 1;
+		return res;
+	}
+	else if(arr1->size == 3){
+		DoubleArr * res = malloc(sizeof(DoubleArr));
+		double * resArr = malloc(sizeof(double) * 3);
+		resArr[0] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		resArr[1] = (double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[2] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		res->arr = resArr;
+		res->size = 3;
+		return res;
+	}
+	else{
+		fprintf(stderr, "Invalid size of operation between arrays");
+		exit(0);
+	}
+}
+
+DoubleArr * _crossDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
+	if(arr1->size == 2){
+		DoubleArr * res = malloc(sizeof(DoubleArr));
+		double * resArr = malloc(sizeof(double) * 1);
+		resArr[0] = (double) arr1->arr[0] * arr2->arr[1] - arr1->arr[1] * arr2->arr[0];
+		res->arr = resArr;
+		res->size = 1;
+		return res;
+	}
+	else if(arr1->size == 3){
+		DoubleArr * res = malloc(sizeof(DoubleArr));
+		double * resArr = malloc(sizeof(double) * 3);
+		resArr[0] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		resArr[1] = (double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[2] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		res->arr = resArr;
+		res->size = 3;
+		return res;
+	}
+	else{
+		fprintf(stderr, "Invalid size of operation between arrays");
+		exit(0);
+	}
+}
+
+DoubleArr * _crossDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
+	if(arr1->size == 2){
+		DoubleArr * res = malloc(sizeof(DoubleArr));
+		double * resArr = malloc(sizeof(double) * 1);
+		resArr[0] = (double) arr1->arr[0] * arr2->arr[1] - arr1->arr[1] * arr2->arr[0];
+		res->arr = resArr;
+		res->size = 1;
+		return res;
+	}
+	else if(arr1->size == 3){
+		DoubleArr * res = malloc(sizeof(DoubleArr));
+		double * resArr = malloc(sizeof(double) * 3);
+		resArr[0] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		resArr[1] = (double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[2] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
+		res->arr = resArr;
+		res->size = 3;
+		return res;
+	}
+	else{
+		fprintf(stderr, "Invalid size of operation between arrays");
+		exit(0);
+	}
+}
+
+
+
 // ---------- Other ----------
 
 void _printIntArr(IntArr * arr){
@@ -510,7 +626,7 @@ void _printDoubleArr(DoubleArr * arr){
 
 int _checkArrSizes(int s1, int s2){
 	if(s1 != s2){
-		fprintf(stderr, "Invalid size of operation between arrays\n");
+		fprintf(stderr, "Invalid size of operation between arrays");
 		exit(0);
 	}
 

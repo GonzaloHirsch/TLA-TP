@@ -5,6 +5,7 @@ char *processProdOp(GenericNode *gn);
 char *processDivOp(GenericNode *gn);
 char *processAddOp(GenericNode *gn);
 char *processSubOp(GenericNode *gn);
+char *processCrossOp(GenericNode *gn);
 
 // ------------- EXPOSED FUNCTIONS -------------
 
@@ -38,6 +39,9 @@ char *processOperation(GenericNode *gn)
     else if (strcmp(opValue, "SUBS") == 0)
     {
         value = processSubOp(gn);
+    }
+    else if(strcmp(opValue, "CROSS") == 0){
+        value = processCrossOp(gn);
     }
     else
     {
@@ -891,4 +895,71 @@ char *processSubOp(GenericNode *gn)
     }
 
     return buffer;
+}
+
+char *processCrossOp(GenericNode *gn){
+    if (gn->children == NULL)
+    {
+        compilationError = ERROR_GENERIC;
+        return NULL;
+    }
+
+    // Processing the left side of the operation
+    char *leftSide = translate(gn->children->current);
+    if (leftSide == NULL)
+    {
+        return NULL;
+    }
+
+    if (gn->children->next == NULL)
+    {
+        compilationError = ERROR_GENERIC;
+        return NULL;
+    }
+    // Processing the right side of the operation
+    char *rightSide = translate(gn->children->next->current);
+    if (rightSide == NULL)
+    {   
+        compilationError = ERROR_GENERIC;
+        return NULL;
+    }
+
+    // Var types to determine the name of the operation
+    VarType leftType = gn->children->current->info.varType;
+    VarType rightType = gn->children->next->current->info.varType;
+    VarType newType;
+    char *buffer;
+    char * operation;
+
+    // Determining the operation
+    if (leftType == INTEGER_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    {
+        operation = "_crossIntArrIntArr";
+        newType = INTEGER_ARRAY_TYPE;
+    }
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
+    {
+        operation = "_crossIntArrDoubleArr";
+        newType = DOUBLE_ARRAY_TYPE;
+    }
+    else if (rightType == DOUBLE_ARRAY_TYPE && leftType == INTEGER_ARRAY_TYPE)
+    {
+        operation = "_crossDoubleArrIntArr";
+        newType = DOUBLE_ARRAY_TYPE;
+    }
+    else if (rightType == DOUBLE_ARRAY_TYPE && leftType == DOUBLE_ARRAY_TYPE)
+    {
+        operation = "_crossDoubleArrDoubleArr";
+        newType = DOUBLE_ARRAY_TYPE;
+    }
+    else{
+        compilationError = ERROR_INVALID_OPERATION_TYPES;
+        return NULL;
+    }
+    
+    buffer = malloc(1 + strlen(operation) + strlen("(,)") + strlen(leftSide) + strlen(rightSide));
+    sprintf(buffer, "%s(%s,%s)", operation, leftSide, rightSide);
+
+    return buffer;
+
 }
