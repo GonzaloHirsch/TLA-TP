@@ -52,6 +52,7 @@
 %token<string> DEFINE PASSING
 %token<string> ASSIGN_EQ
 %token<string> INT_ARR DOUBLE_ARR
+%token<string> GET_INT GET_DOUBLE GET_STRING
 
 %type<node> entrypoint
 %type<nodelist> hyperstatements
@@ -78,6 +79,7 @@
 %type<node> arrayliteral
 %type<nodelist> numlist
 %type<node> arg
+%type<node> getfunctions
 
 %%
 
@@ -139,6 +141,7 @@ statement:
         |       funcall                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       foreach                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       print                   {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
+        |       getfunctions            {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         ;
 
 vardeclaration:
@@ -174,6 +177,10 @@ vardeclassignment:
 print:          PRINT unity     {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, yylineno, 1, $2);}  
         |       PRINT literal   {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, yylineno, 1, $2);}
         ;
+
+getfunctions:   GET_INT OPEN_P CLOSE_P          {$$ = newGenericNodeWithChildren(NODE_GET_INT, 0, yylineno,0);
+                GET_DOUBLE OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_DOUBLE, 0, yylineno,0);
+                GET_STRING OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_STRING, 0, yylineno,0);}
 
 
 foreach:

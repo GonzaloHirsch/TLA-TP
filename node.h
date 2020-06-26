@@ -64,6 +64,9 @@ typedef enum {
     NODE_NUMLIST,
 
     NODE_PRINT,
+    NODE_GET_INT,
+    NODE_GET_DOUBLE,
+    NODE_GET_STRING,
 
 } NodeType;
 
