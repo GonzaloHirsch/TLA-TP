@@ -128,11 +128,14 @@ DoubleArr * _divIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2);
 void _printIntArr(IntArr * arr);
 void _printDoubleArr(DoubleArr * arr);
 
+int _checkArrSizes(int s1, int s2);
+
 // ---------- Input ----------
 
 int _getInt();
 char * _getString();
 double _getDouble();
+
 
 // ------------------------- IMPLEMENTATIONS -------------------------
 
@@ -192,6 +195,7 @@ DoubleArr * _prodIntDoubleArr(int num, DoubleArr * arr){
 
 // Product Double Arr & Double Arr
 DoubleArr * _prodDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] * arr2->arr[i]);}
@@ -202,6 +206,7 @@ DoubleArr * _prodDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
 
 // Product Int Arr & Int Arr
 IntArr * _prodIntArrIntArr(IntArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	IntArr * res = malloc(sizeof(IntArr));
 	int * resArr = malloc(sizeof(int) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (arr1->arr[i] * arr2->arr[i]);}
@@ -212,6 +217,7 @@ IntArr * _prodIntArrIntArr(IntArr * arr1, IntArr * arr2){
 
 // Product Int Arr & Double Arr
 DoubleArr * _prodDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] * arr2->arr[i]);}
@@ -279,6 +285,7 @@ DoubleArr * _sumIntDoubleArr(int num, DoubleArr * arr){
 
 // Sum Double Arr & Double Arr
 DoubleArr * _sumDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] + arr2->arr[i]);}
@@ -289,6 +296,7 @@ DoubleArr * _sumDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
 
 // Sum Int Arr & Int Arr
 IntArr * _sumIntArrIntArr(IntArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	IntArr * res = malloc(sizeof(IntArr));
 	int * resArr = malloc(sizeof(int) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (arr1->arr[i] + arr2->arr[i]);}
@@ -299,6 +307,7 @@ IntArr * _sumIntArrIntArr(IntArr * arr1, IntArr * arr2){
 
 // Sum Int Arr & Double Arr
 DoubleArr * _sumDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] + arr2->arr[i]);}
@@ -361,6 +370,7 @@ DoubleArr * _subsDoubleArrInt(DoubleArr * arr, int num){
 
 // Subs Double Arr & Double Arr
 DoubleArr * _subsDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] - arr2->arr[i]);}
@@ -371,6 +381,7 @@ DoubleArr * _subsDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
 
 // Subs Int Arr & Int Arr
 IntArr * _subsIntArrIntArr(IntArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	IntArr * res = malloc(sizeof(IntArr));
 	int * resArr = malloc(sizeof(int) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (arr1->arr[i] - arr2->arr[i]);}
@@ -381,6 +392,7 @@ IntArr * _subsIntArrIntArr(IntArr * arr1, IntArr * arr2){
 
 // Subs Int Arr & Double Arr
 DoubleArr * _subsDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] - arr2->arr[i]);}
@@ -436,6 +448,7 @@ DoubleArr * _divDoubleArrInt(DoubleArr * arr, int num){
 
 // Div Double Arr & Double Arr
 DoubleArr * _divDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] / arr2->arr[i]);}
@@ -446,6 +459,7 @@ DoubleArr * _divDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
 
 // Div Int Arr & Int Arr
 DoubleArr * _divIntArrIntArr(IntArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] / arr2->arr[i]);}
@@ -456,6 +470,7 @@ DoubleArr * _divIntArrIntArr(IntArr * arr1, IntArr * arr2){
 
 // Div Int Arr & Double Arr
 DoubleArr * _divDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
 	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] / arr2->arr[i]);}
@@ -491,6 +506,15 @@ void _printDoubleArr(DoubleArr * arr){
 			printf("%f ", arr->arr[i]);
 		}
 	}
+}
+
+int _checkArrSizes(int s1, int s2){
+	if(s1 != s2){
+		fprintf(stderr, "Invalid size of operation between arrays\n");
+		exit(0);
+	}
+
+	return 0;
 }
 
 // ---------- Input ----------
