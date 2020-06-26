@@ -942,12 +942,12 @@ char *processCrossOp(GenericNode *gn){
         operation = "_crossIntArrDoubleArr";
         newType = DOUBLE_ARRAY_TYPE;
     }
-    else if (rightType == DOUBLE_ARRAY_TYPE && leftType == INTEGER_ARRAY_TYPE)
+    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
     {
         operation = "_crossDoubleArrIntArr";
         newType = DOUBLE_ARRAY_TYPE;
     }
-    else if (rightType == DOUBLE_ARRAY_TYPE && leftType == DOUBLE_ARRAY_TYPE)
+    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         operation = "_crossDoubleArrDoubleArr";
         newType = DOUBLE_ARRAY_TYPE;
@@ -956,6 +956,8 @@ char *processCrossOp(GenericNode *gn){
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
+
+    gn->info.varType = newType;
     
     buffer = malloc(1 + strlen(operation) + strlen("(,)") + strlen(leftSide) + strlen(rightSide));
     sprintf(buffer, "%s(%s,%s)", operation, leftSide, rightSide);
