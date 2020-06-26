@@ -506,7 +506,7 @@ IntArr * _crossIntArrIntArr(IntArr * arr1, IntArr * arr2){
 		IntArr * res = malloc(sizeof(IntArr));
 		int * resArr = malloc(sizeof(int) * 3);
 		resArr[0] = arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
-		resArr[1] = arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[1] = -(arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0]);
 		resArr[2] = arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
 		res->arr = resArr;
 		res->size = 3;
@@ -532,7 +532,7 @@ DoubleArr * _crossIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2){
 		DoubleArr * res = malloc(sizeof(DoubleArr));
 		double * resArr = malloc(sizeof(double) * 3);
 		resArr[0] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
-		resArr[1] = (double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[1] = -((double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0]);
 		resArr[2] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
 		res->arr = resArr;
 		res->size = 3;
@@ -558,7 +558,7 @@ DoubleArr * _crossDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
 		DoubleArr * res = malloc(sizeof(DoubleArr));
 		double * resArr = malloc(sizeof(double) * 3);
 		resArr[0] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
-		resArr[1] = (double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[1] = -((double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0]);
 		resArr[2] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
 		res->arr = resArr;
 		res->size = 3;
@@ -584,7 +584,7 @@ DoubleArr * _crossDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
 		DoubleArr * res = malloc(sizeof(DoubleArr));
 		double * resArr = malloc(sizeof(double) * 3);
 		resArr[0] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
-		resArr[1] = (double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0];
+		resArr[1] = -((double) arr1->arr[0] * arr2->arr[2] - arr1->arr[2] * arr2->arr[0]);
 		resArr[2] = (double) arr1->arr[1] * arr2->arr[2] - arr1->arr[2] * arr2->arr[1];
 		res->arr = resArr;
 		res->size = 3;
