@@ -69,6 +69,7 @@ typedef enum {
     NODE_GET_STRING,
 
     NODE_ARRAY_ACCESS,
+    // NODE_ARRAY_ACCESS_ASSIGNMENT
 
 } NodeType;
 

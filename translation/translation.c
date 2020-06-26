@@ -168,6 +168,9 @@ char *process(GenericNode *gn)
     case NODE_ARRAY_ACCESS:
         value = processArrayAccess(gn);
         break;
+    // case NODE_ARRAY_ACCESS_ASSIGNMENT:
+    //     value = processArrayAccessAssignment(gn);
+    //     break;
     default:
         break;
     }
@@ -516,6 +519,12 @@ char *processArrayAccess(GenericNode * gn) {
     GenericNode * varNode = nl->current;
     char * var = translate(varNode);
 
+    if (varNode->info.varType == DOUBLE_ARRAY_TYPE)
+        gn->info.varType = DOUBLE_TYPE;
+    if (varNode->info.varType == INTEGER_ARRAY_TYPE)
+        gn->info.varType = INTEGER_TYPE;
+
+
     symvartype * svt = symLook(varNode->value);
     if (svt == NULL)
     {
@@ -537,6 +546,10 @@ char *processArrayAccess(GenericNode * gn) {
     sprintf(buffer, "%s->arr[%s]", var, indexExpr);
     return buffer;
 }
+
+// char * processArrayAccessAssignment(GenericNode * gn) {
+//     ;
+// }
 
 void compose_error_message(char *buffer, int line)
 {
