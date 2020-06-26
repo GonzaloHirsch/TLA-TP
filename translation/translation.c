@@ -472,7 +472,9 @@ char *processGetDouble(GenericNode *gn)
         return NULL;
     }
     gn->info.varType = DOUBLE_TYPE;
-    return "_getDouble()";
+    char *buffer = malloc(1 + strlen("_getDouble()"));
+    sprintf(buffer, "_getDouble()");
+    return buffer;
 }
 
 char *processGetString(GenericNode *gn)
@@ -482,7 +484,9 @@ char *processGetString(GenericNode *gn)
         return NULL;
     }
     gn->info.varType = STRING_TYPE;
-    return "_getString()";
+    char *buffer = malloc(1 + strlen("_getString()"));
+    sprintf(buffer, "_getString()");
+    return buffer;
 }
 
 char *processGetInt(GenericNode *gn)
@@ -492,7 +496,9 @@ char *processGetInt(GenericNode *gn)
         return NULL;
     }
     gn->info.varType = INTEGER_TYPE;
-    return "_getInt()";
+    char *buffer = malloc(1 + strlen("_getInt()"));
+    sprintf(buffer, "_getInt()");
+    return buffer;
 }
 
 void compose_error_message(char *buffer, int line)
