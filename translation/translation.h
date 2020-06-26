@@ -49,6 +49,9 @@ char *processInBlockStatement(GenericNode *gn);
 char *processHyperStatement(GenericNode *gn);
 char *processHyperStatements(GenericNode *gn);
 char *processPrint(GenericNode *);
+char * processGetDouble(GenericNode * gn);
+char * processGetString(GenericNode * gn);
+char * processGetInt(GenericNode *gn);
 
 VarType determineVarType(GenericNode *gn);
 

@@ -178,9 +178,10 @@ print:          PRINT unity     {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, 
         |       PRINT literal   {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, yylineno, 1, $2);}
         ;
 
-getfunctions:   GET_INT OPEN_P CLOSE_P          {$$ = newGenericNodeWithChildren(NODE_GET_INT, 0, yylineno,0);
-                GET_DOUBLE OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_DOUBLE, 0, yylineno,0);
-                GET_STRING OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_STRING, 0, yylineno,0);}
+getfunctions:     GET_INT OPEN_P CLOSE_P          {$$ = newGenericNodeWithChildren(NODE_GET_INT, 0, yylineno,0);}
+                | GET_DOUBLE OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_DOUBLE, 0, yylineno,0);}
+                | GET_STRING OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_STRING, 0, yylineno,0);}
+                ;
 
 
 foreach:
