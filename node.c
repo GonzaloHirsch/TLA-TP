@@ -123,12 +123,14 @@ void printNodeList(NodeList *nl, int tabs)
 }
 
 void freeGenericNode(GenericNode *gn)
-{
-    if (gn->children != NULL)
-    {
-        freeNodeList(gn->children);
+{   
+    if(gn != NULL){
+        if (gn->children != NULL)
+        {
+            freeNodeList(gn->children);
+        }
+        free(gn);
     }
-    free(gn);
 }
 
 void freeNodeList(NodeList *nl)
