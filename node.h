@@ -65,6 +65,8 @@ typedef enum {
 
     NODE_PRINT,
 
+    NODE_ARRAY_ACCESS,
+
 } NodeType;
 
 // Information about the node itinfo

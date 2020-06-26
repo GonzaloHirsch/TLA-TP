@@ -78,6 +78,7 @@
 %type<node> arrayliteral
 %type<nodelist> numlist
 %type<node> arg
+%type<node> arraccess
 
 %%
 
@@ -201,7 +202,11 @@ assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGen
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
         |       VAR ASSIGN_EQ generalexpression {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
+        |       arraccess ASSIGN_EQ generalexpression   { $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
+        |       arraccess ASSIGN_EQ generaloperation   { $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
         ;
+
+arraccess:      VAR OPEN_BRACK expunity CLOSE_BRACK {$$ = newGenericNodeWithChildren(NODE_ARRAY_ACCESS, "ARRAY_ACCESS", yylineno, 2, $1, $3);}
 
 literal:        STRING_LITERAL {$$ = newGenericNode(NODE_STRING_LITERAL, $1, yylineno);}
         ;
@@ -318,6 +323,7 @@ expression: expunity EQ  expunity {$$ = newGenericNodeWithChildren(NODE_EXPRESSI
 
 expunity:       VAR               {$$ = newGenericNode(NODE_VARIABLE_REF, $1, yylineno);}
         |       NUMBER_LITERAL    {$$ = newGenericNode(NODE_LITERAL, $1, yylineno);}
+        |       arraccess         {$$ = $1;}
         ;
 
 generaloperation:       operation                        {$$ = newGenericNodeWithChildren(NODE_G_OPERATION, "PLAIN", yylineno, 1, $1);}
