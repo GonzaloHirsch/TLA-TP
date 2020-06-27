@@ -131,6 +131,12 @@ DoubleArr * _crossDoubleArrIntArr(DoubleArr *arr1, IntArr * arr2);
 DoubleArr * _crossDoubleArrDoubleArr(DoubleArr *arr1, DoubleArr * arr2);
 
 
+//------------- Scalar Prod -------------------
+int _sprodIntArrIntArr(IntArr * arr1, IntArr * arr2);
+double _sprodDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2);
+double _sprodIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2);
+double _sprodDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2);
+
 // ---------- Other ----------
 
 void _printIntArr(IntArr * arr);
