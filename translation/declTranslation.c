@@ -149,13 +149,13 @@ char *processVarDeclassignment(GenericNode *gn)
     }
     else if (typeNode->info.varType == DOUBLE_TYPE && (valueNode->info.varType == DOUBLE_TYPE || valueNode->info.varType == INTEGER_TYPE))
     {
-        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen("=  ") + 1);
-        sprintf(buffer, "%s = %s", var, value);
+        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen("=  ;\n") + 1);
+        sprintf(buffer, "%s = %s;\n", var, value);
     }
     else if (typeNode->info.varType == valueNode->info.varType)
     {
-        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen("=  ") + 1);
-        sprintf(buffer, "%s = %s", var, value);
+        buffer = malloc(strlen(type) + strlen(var) + strlen(value) + strlen("=  ;\n") + 1);
+        sprintf(buffer, "%s = %s;\n", var, value);
     }
     else
     {

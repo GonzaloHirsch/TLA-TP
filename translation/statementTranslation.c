@@ -9,8 +9,5 @@ char * processStatement(GenericNode * gn) {
         return NULL;
     }
 
-    char * buffer = malloc(1+ strlen(";\n") + strlen(childString));
-    sprintf(buffer, "%s;\n", childString);
-
-    return buffer;
+    return childString;
 }
