@@ -1006,22 +1006,22 @@ char * processSprodOp(GenericNode * gn){
     if (leftType == INTEGER_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
     {
         operation = "_sprodIntArrIntArr";
-        newType = INTEGER_ARRAY_TYPE;
+        newType = INTEGER_TYPE;
     }
     else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         operation = "_sprodIntArrDoubleArr";
-        newType = DOUBLE_ARRAY_TYPE;
+        newType = DOUBLE_TYPE;
     }
     else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
     {
         operation = "_sprodDoubleArrIntArr";
-        newType = DOUBLE_ARRAY_TYPE;
+        newType = DOUBLE_TYPE;
     }
     else if (leftType == DOUBLE_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         operation = "_sprodDoubleArrDoubleArr";
-        newType = DOUBLE_ARRAY_TYPE;
+        newType = DOUBLE_TYPE;
     }
     else{
         compilationError = ERROR_INVALID_OPERATION_TYPES;

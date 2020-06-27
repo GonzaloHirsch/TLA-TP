@@ -14,11 +14,14 @@ start
     int[] resInt = arr5 cross arr6;
     print resInt;
 
-    int[] arr7 = [1,2,3,4];
+    int[] arr7 = [1,2,3];
     double[] arr8 = [1.0,2,3];
 
     res = arr7 cross arr8;
     print res;
+
+    double resEsc = arr7 *. arr8;
+    print resEsc;
 
 
 end
