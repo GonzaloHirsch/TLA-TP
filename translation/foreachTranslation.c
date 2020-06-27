@@ -56,7 +56,7 @@ char *processForEach(GenericNode *gn)
 
     // Template to be used to print the for loop
     char *forTemplate = "for(int __i = 0; __i < %s->size; __i++)\n" // this %s should be sth like arrayName->length
-                        "\t_arrFunc%ld(%s->arr[__i])";
+                        "\t_arrFunc%ld(%s->arr[__i]);\n";
 
     // Getting the body of the function
     char *body = translate(foreachBody->children->current);
