@@ -597,6 +597,47 @@ DoubleArr * _crossDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
 }
 
 
+//Scalar product
+
+ int _sprodIntArrIntArr(IntArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1 -> size, arr2 -> size);
+	int res = 0, i;
+	for(i = 0; i < arr1 -> size; i++){
+		res += (arr1 -> arr[i] * arr2 -> arr[i] );
+	} 
+	return res; 
+} 
+
+double _sprodDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
+	_checkArrSizes(arr1->size, arr2->size);
+	double res=0;
+	int i;
+	for(i = 0; i<arr1->size; i++){
+		res += (arr1->arr[i] * ((double)arr2->arr[i]));
+	}
+	return res;
+} 
+	
+double _sprodIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1 -> size, arr2 -> size);
+	double res=0;
+	int i;
+	for(i = 0; i<arr1->size; i++){
+		res += (((double) arr1->arr[i]) * arr2 -> arr[i] );
+	} return res;
+}
+
+double _sprodDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
+	_checkArrSizes(arr1 -> size, arr2 -> size);
+	double res=0;
+	int i;
+	for(i = 0; i <arr1->size;i++){
+		res+= arr1->arr[i] * arr2->arr[i];
+	} 
+	return res; 
+}
+
+
 
 // ---------- Other ----------
 
