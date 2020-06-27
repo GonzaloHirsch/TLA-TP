@@ -425,7 +425,7 @@ main(void) {
         // Printing the code
         printf("%s\n", code);
         
-        //freeGenericNode(codeRootNode);
+        //
 /*
 
 	char * translation = translateToC((Token *)code);
@@ -452,10 +452,15 @@ main(void) {
 	if(functionsTranslation != NULL) {
 		free(functionsTranslation);
 	}
-	freeFunctions();
+
+        freeGenericNode(codeRootNode);
+        freeFunctions();
 	freeToken((Token *) code);
 	freeVariables();
+
         */
+
+
 
         fprintf(stderr, "\033[0;32m");
 	fprintf(stderr, "Compilation Successful\n");

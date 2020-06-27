@@ -16,22 +16,21 @@ char * processIf(GenericNode * gn){
     GenericNode * block = gn -> children -> next -> current;
     char * blockProc = processBlock(block);
     if(blockProc ==  NULL){
-        //free(geProc);
+        free(geProc);
         return NULL;
     }
 
     buffer = malloc(strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + 1);
     if(buffer == NULL){
-        //free(buffer);
-        //free(geProc);
-        //free(blockProc);
+        free(geProc);
+        free(blockProc);
         return NULL;
     }
 
     sprintf(buffer, "%s%s%s%s", if_op, geProc, p_close, blockProc);
 
-    //free(geProc);
-    //free(blockProc);
+    free(geProc);
+    free(blockProc);
 
     return buffer;
 
@@ -56,7 +55,7 @@ char * processIfElse(GenericNode * gn){
     GenericNode * block = gn -> children -> next -> current;
     char * blockProc = processBlock(block);
     if(blockProc ==  NULL){
-        //free(geProc);
+        free(geProc);
         return NULL;
     }
 
@@ -64,22 +63,24 @@ char * processIfElse(GenericNode * gn){
     GenericNode * elseTrain = gn -> children -> next -> next -> current; //Get the node of the else train.
     char * elseTrainProc = processElseTrain(elseTrain);
     if(elseTrainProc == NULL){
-        //free(elseTrainProc);
+        free(geProc);
+        free(blockProc);
         return NULL;
     }
 
     buffer = malloc(1+ strlen(if_op) + strlen(geProc) + strlen(p_close) + strlen(blockProc) + strlen(elseTrainProc) );
     if(buffer == NULL){
-        //free(buffer);
-        //free(geProc);
-        //free(blockProc);
+        free(elseTrainProc);
+        free(geProc);
+        free(blockProc);
         return NULL;
     }
 
     sprintf(buffer, "%s%s%s%s%s", if_op, geProc, p_close, blockProc, elseTrainProc);
 
-    //free(geProc);
-    //free(blockProc);
+    free(elseTrainProc);
+    free(geProc);
+    free(blockProc);
 
     return buffer;
 
@@ -104,12 +105,12 @@ char * processElseTrain(GenericNode * gn){
 
         buffer = malloc(1 +  strlen(initial) + strlen(blockProc));
         if(buffer == NULL){
-            //free(blockProc);
+            free(blockProc);
             return NULL;
         }
 
         sprintf(buffer, "%s%s", initial, blockProc);
-        //free(blockProc);
+        free(blockProc);
 
         return buffer;
 
@@ -132,7 +133,7 @@ char * processElseTrain(GenericNode * gn){
     GenericNode * block = gn -> children -> next ->current;
     char * blockProc = translate(block);
         if(blockProc == NULL){
-            //free(geProc);
+            free(geProc);
             return NULL;
         }
 
@@ -142,8 +143,8 @@ char * processElseTrain(GenericNode * gn){
 
         buffer = malloc(1 + strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc));
         if(buffer == NULL){
-            //free(geProc);
-            //free(blockProc);
+            free(geProc);
+            free(blockProc);
             return NULL;
         }
 
@@ -162,23 +163,23 @@ char * processElseTrain(GenericNode * gn){
 
         char * elseIfProc = translate(elseIf);
         if(elseIfProc == NULL){
-            //free(geProc);
-            //free(blockProc);
+            free(geProc);
+            free(blockProc);
             return NULL;
         }
 
         buffer = malloc(1 + strlen(initial) + strlen(geProc) + strlen(c_par) + strlen(blockProc) + strlen(elseIfProc));
         if(buffer == NULL){
-            //free(geProc);
-            //free(blockProc);
-            //free(elseIfProc);
+            free(geProc);
+            free(blockProc);
+            free(elseIfProc);
             return NULL;
         }
 
         sprintf(buffer, "%s%s%s%s%s", initial, geProc, c_par, blockProc, elseIfProc);
-        //free(geProc);
-        //free(blockProc);
-        //free(elseIfProc);
+        free(geProc);
+        free(blockProc);
+        free(elseIfProc);
 
         return buffer;
 

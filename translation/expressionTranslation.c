@@ -28,21 +28,21 @@ char * processGeneralExpression(GenericNode * gn){
         GenericNode * exp2 = gn -> children -> next ->current;
         char * exp2Proc = translate(exp2);
         if(exp2Proc == NULL){
-            //free(buffer);
+            free(buffer);
             return NULL;
         }
         buffer = realloc(buffer, 1 + strlen(exp1Proc) + strlen(op) + strlen(exp2Proc) + strlen(buffer));
         if(buffer == NULL){
-            //free(exp1Proc);
-            //free(exp2Proc);
+            free(exp1Proc);
+            free(exp2Proc);
             return NULL;
         }
         strcat(buffer, exp1Proc);
         strcat(buffer, op);
         strcat(buffer, exp2Proc);
 
-        //free(exp1Proc);
-        //free(exp2Proc);
+        free(exp1Proc);
+        free(exp2Proc);
 
         return buffer;
 
@@ -52,7 +52,7 @@ char * processGeneralExpression(GenericNode * gn){
 
     buffer = realloc(buffer, strlen(exp1Proc) + strlen(buffer));
     if(buffer == NULL){
-        //free(exp1Proc);
+        free(exp1Proc);
         return NULL;
     }
     strcat(buffer, exp1Proc);
@@ -60,7 +60,7 @@ char * processGeneralExpression(GenericNode * gn){
     // A general expression is of integer type.
     gn->info.varType = INTEGER_TYPE;
 
-    //free(exp1Proc);
+    free(exp1Proc);
 
     return buffer;
 }

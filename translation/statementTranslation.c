@@ -11,6 +11,6 @@ char * processStatement(GenericNode * gn) {
 
     char * buffer = malloc(1+ strlen(";\n") + strlen(childString));
     sprintf(buffer, "%s;\n", childString);
-
+    free(childString);
     return buffer;
 }

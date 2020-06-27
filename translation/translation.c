@@ -197,7 +197,6 @@ char *processEntrypointNode(GenericNode *gn)
     char *statements = translate(statementsNode);
     if (statements == NULL)
     {
-        //free(statements);
         return NULL;
     }
 
@@ -206,15 +205,14 @@ char *processEntrypointNode(GenericNode *gn)
     char *buffer = malloc(bufferSize);
     if (buffer == NULL)
     {
-        //free(statements);
+        free(statements);
         return NULL;
     }
 
     // Printing the strings into the buffer
     sprintf(buffer, "\nint main(){\n%s\nreturn 0;\n}", statements);
 
-    //free(statements);
-    //free(declaredVariables)
+    free(statements);
 
     return buffer;
 }
@@ -277,7 +275,7 @@ char *processNodeList(NodeList *listCurrent)
     }
 
     // Free the memory for the pointer to processed node
-    //free(processedNode);
+    free(processedNode);
 
     return buffer;
 }
@@ -315,16 +313,15 @@ char *processAssignment(GenericNode *gn)
     buffer = malloc(1 + strlen(varName) + strlen(" = ") + strlen(valueProc));
     if (buffer == NULL)
     {
-        //free(valueNListProc);
-        //free(varName);
-        //free(buffer);
+        free(varName);
+        free(valueProc);
         return NULL;
     }
 
     sprintf(buffer, "%s = %s", varName, valueProc);
 
-    //free(varName);
-    //free(varNListProc)
+    free(varName);
+    free(valueProc);
 
     return buffer;
 }
@@ -360,21 +357,19 @@ char *processBlock(GenericNode *gn)
     char *processedBlock = processInBlockStatements(child);
     if (processedBlock == NULL)
     {
-        //free(buffer);
         return NULL;
     }
 
     buffer = malloc(1 + strlen(op_b) + strlen(processedBlock) + strlen(cl_b));
     if (buffer == NULL)
     {
-        //free(processedBlock);
-        //free(buffer);
+        free(processedBlock);
         return NULL;
     }
 
     sprintf(buffer, "%s%s%s", op_b, processedBlock, cl_b);
 
-    //free(processedBlock);
+    free(processedBlock);
 
     return buffer;
 }
@@ -408,6 +403,7 @@ char *processWhileNode(GenericNode *gn)
     char *block = translate(blockNode);
     if (block == NULL)
     {
+        free(expression);
         return NULL;
     }
 
@@ -416,16 +412,16 @@ char *processWhileNode(GenericNode *gn)
     char *buffer = malloc(bufferSize);
     if (buffer == NULL)
     {
-        //free(block);
-        //free(expression);
+        free(block);
+        free(expression);
         return NULL;
     }
 
     // Saving the strings into the buffer
     sprintf(buffer, "while( %s )%s", expression, block);
 
-    //free(block);
-    //free(expression);
+    free(block);
+    free(expression);
 
     return buffer;
 }
@@ -464,9 +460,12 @@ char *processPrint(GenericNode *gn)
         sprintf(buffer, "printf(\"%%f\\n\",%s)", childNodeProc);
         break;
     default:
+        free(childNodeProc);
         return NULL;
         // ERROR
     }
+
+    free(childNodeProc);
 
     return buffer;
 }
@@ -479,6 +478,9 @@ char *processGetDouble(GenericNode *gn)
     }
     gn->info.varType = DOUBLE_TYPE;
     char *buffer = malloc(1 + strlen("_getDouble()"));
+    if(buffer == NULL){
+        return NULL;
+    }
     sprintf(buffer, "_getDouble()");
     return buffer;
 }
@@ -491,6 +493,9 @@ char *processGetString(GenericNode *gn)
     }
     gn->info.varType = STRING_TYPE;
     char *buffer = malloc(1 + strlen("_getString()"));
+    if(buffer == NULL){
+        return NULL;
+    }
     sprintf(buffer, "_getString()");
     return buffer;
 }
@@ -503,6 +508,9 @@ char *processGetInt(GenericNode *gn)
     }
     gn->info.varType = INTEGER_TYPE;
     char *buffer = malloc(1 + strlen("_getInt()"));
+    if(buffer == NULL){
+        return NULL;
+    }
     sprintf(buffer, "_getInt()");
     return buffer;
 }
@@ -528,9 +536,8 @@ char *processArrayAccess(GenericNode * gn) {
     symvartype * svt = symLook(varNode->value);
     if (svt == NULL)
     {
-        //free(type);
-        //free(var);
-        //free(value);
+
+        free(var);
         compilationError = ERROR_UNDEFINED_VARIABLE;
         return NULL;
     }
@@ -540,10 +547,16 @@ char *processArrayAccess(GenericNode * gn) {
     nl = nl->next;
     GenericNode * indexNode = nl->current;
     char * indexExpr = translate(indexNode);
+    if(indexExpr == NULL){
+        free(var);
+        return NULL;
+    }
 
     
     buffer = malloc(strlen(var) + 3 + strlen(indexExpr) + 2 + 2 + 1);
     sprintf(buffer, "%s->arr[%s]", var, indexExpr);
+    free(var);
+    free(indexExpr);
     return buffer;
 }
 

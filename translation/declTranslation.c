@@ -18,15 +18,15 @@ char *processVarDeclaration(GenericNode *gn)
     char *var = translate(varNode);
     if (var == NULL)
     {
-        //free(type)
+        free(type);
         return NULL;
     }
 
     // Check if the already variable exists
     if (symLook(varNode->value) != NULL)
     {
-        //free(type)
-        //free(var)
+        free(type);
+        free(var);
         fprintf(stderr, "ERROR: Duplicate variable declaration");
         exit(EXIT_FAILURE_);
     }
@@ -35,8 +35,8 @@ char *processVarDeclaration(GenericNode *gn)
     symvartype *varAdded = symAdd(varNode->value, typeNode->info.varType);
     if (varAdded == NULL)
     {
-        //free(type);
-        //free(var);
+        free(type);
+        free(var);
         fprintf(stderr, "ERROR: Failure creating the variable");
         exit(EXIT_FAILURE_);
     }
@@ -69,7 +69,7 @@ char *processVarDeclassignment(GenericNode *gn)
     char *var = translate(varNode);
     if (var == NULL)
     {
-        //free(type);
+        free(type);
         return NULL;
     }
 
@@ -79,17 +79,17 @@ char *processVarDeclassignment(GenericNode *gn)
     char *value = translate(valueNode);
     if (value == NULL)
     {
-        //free(type);
-        //free(var);
+        free(type);
+        free(var);
         return NULL;
     }
 
     // Check if the variable already exists.
     if (symLook(varNode->value) != NULL)
     {
-        //free(type);
-        //free(var);
-        //free(value);
+        free(type);
+        free(var);
+        free(value);
         compilationError = ERROR_DUPLICATED_VARIABLE;
         return NULL;
     }
@@ -97,8 +97,9 @@ char *processVarDeclassignment(GenericNode *gn)
     symvartype *varAdded = symAdd(varNode->value, typeNode->info.varType);
     if (varAdded == NULL)
     {
-        //free(type);
-        //free(var);
+        free(type);
+        free(var);
+        free(value);
         fprintf(stderr, "ERROR: Failure creating the variable\n");
         exit(EXIT_FAILURE_);
     }
@@ -116,6 +117,7 @@ char *processVarDeclassignment(GenericNode *gn)
             char *intArrDec = "%s = %s;\n";
             buffer = malloc(1 + strlen(intArrDec) + strlen(var) + strlen(value) - 4);
             sprintf(buffer, intArrDec, var, value);
+
         }
         else
         {
@@ -159,9 +161,16 @@ char *processVarDeclassignment(GenericNode *gn)
     }
     else
     {
+        free(var);
+        free(value);
+        free(type);
         compilationError = ERROR_INCOMPATIBLE_ASSIGNMENT;
         return NULL;
     }
+
+    free(var);
+    free(value);
+    free(type);
 
     return buffer;
 }

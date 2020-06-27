@@ -41,6 +41,7 @@ char *processOperation(GenericNode *gn)
     }
     else
     {
+        free(value);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
@@ -82,6 +83,7 @@ char *processProdOp(GenericNode *gn)
 
     if (gn->children->next == NULL)
     {
+        free(leftSide);
         compilationError = ERROR_GENERIC;
         return NULL;
     }
@@ -89,6 +91,7 @@ char *processProdOp(GenericNode *gn)
     char *rightSide = translate(gn->children->next->current);
     if (rightSide == NULL)
     {
+        free(leftSide);
         return NULL;
     }
 
@@ -182,6 +185,8 @@ char *processProdOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
@@ -260,9 +265,14 @@ char *processProdOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
+
+    free(leftSide);
+    free(rightSide);
 
     return buffer;
 }
@@ -284,6 +294,7 @@ char *processDivOp(GenericNode *gn)
 
     if (gn->children->next == NULL)
     {
+        free(leftSide);
         compilationError = ERROR_GENERIC;
         return NULL;
     }
@@ -292,6 +303,7 @@ char *processDivOp(GenericNode *gn)
     char *rightSide = translate(gn->children->next->current);
     if (rightSide == NULL)
     {
+        free(leftSide);
         return NULL;
     }
 
@@ -385,6 +397,8 @@ char *processDivOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
@@ -467,9 +481,14 @@ char *processDivOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
+
+    free(leftSide);
+    free(rightSide);
 
     return buffer;
 }
@@ -597,6 +616,8 @@ char *processAddOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
@@ -679,10 +700,13 @@ char *processAddOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
-
+    free(leftSide);
+    free(rightSide);
     return buffer;
 }
 
@@ -703,6 +727,7 @@ char *processSubOp(GenericNode *gn)
 
     if (gn->children->next == NULL)
     {
+        free(leftSide);
         compilationError = ERROR_GENERIC;
         return NULL;
     }
@@ -711,6 +736,7 @@ char *processSubOp(GenericNode *gn)
     char *rightSide = translate(gn->children->next->current);
     if (rightSide == NULL)
     {
+        free(leftSide);
         return NULL;
     }
 
@@ -804,6 +830,8 @@ char *processSubOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
@@ -886,9 +914,12 @@ char *processSubOp(GenericNode *gn)
     }
     else
     {
+        free(leftSide);
+        free(rightSide);
         compilationError = ERROR_INVALID_OPERATION_TYPES;
         return NULL;
     }
-
+    free(leftSide);
+    free(rightSide);
     return buffer;
 }
