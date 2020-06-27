@@ -44,7 +44,7 @@
 %token<string> EQ GT GE LT LE NE
 %token<string> NUMBER_LITERAL STRING_LITERAL
 %token<string> VAR
-%token<string> ADD SUBS PROD DIV MODULE CROSS
+%token<string> ADD SUBS PROD DIV MODULE CROSS SPROD
 %token<string> AND OR NOT
 %token<string> OPEN_B CLOSE_B OPEN_P CLOSE_P OPEN_BRACK CLOSE_BRACK
 %token<string> PRINT
@@ -343,6 +343,7 @@ operation:      unity                            {$$ = newGenericNodeWithChildre
         |       unity PROD operation             {$$ = newGenericNodeWithChildren(NODE_OPERATION, "PROD", yylineno, 2, $1, $3);}
         |       unity DIV  operation             {$$ = newGenericNodeWithChildren(NODE_OPERATION, "DIV", yylineno, 2, $1, $3);}
         |       unity CROSS operation            {$$ = newGenericNodeWithChildren(NODE_OPERATION, "CROSS", yylineno, 2, $1, $3);}
+        |       unity SPROD operation            {$$ = newGenericNodeWithChildren(NODE_OPERATION, "SPROD", yylineno,2, $1,$3);}
         |       SUBS operation                   {$$ = newGenericNodeWithChildren(NODE_OPERATION, "SUBS", yylineno, 1, $2);       }
         ;
 

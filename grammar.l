@@ -43,6 +43,7 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "!="            return NE;
 "+"             return ADD;
 "-"             return SUBS;
+".."            return SPROD;
 "*"             return PROD;
 "/"             return DIV;
 "%"             return MODULE;
