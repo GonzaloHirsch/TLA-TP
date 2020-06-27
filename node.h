@@ -114,6 +114,8 @@ GenericNode * newGenericNodeWithChildren(NodeType type, char * value, int line, 
 void changeDescendantVarType(GenericNode * gn, char * varName, VarType targetVarType, int isMeta);
 void changeDescendantVarTypeForList(NodeList * nl, char * varName, VarType targetVarType, int isMeta);
 
+int hasDescendantOfType(GenericNode * gn, NodeType nodeType);
+
 void freeGenericNode(GenericNode * GenericNode);
 void freeNodeList (NodeList * nl);
 

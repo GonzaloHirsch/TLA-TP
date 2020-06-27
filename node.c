@@ -114,6 +114,19 @@ void changeDescendantVarTypeForList(NodeList *nl, char *varName, VarType targetV
     changeDescendantVarTypeForList(nl->next, varName, targetVarType, isMeta);
 }
 
+int listHasDescendantOfType(NodeList * nl, NodeType nodeType) {
+    if (nl == NULL)
+        return 0;
+    return hasDescendantOfType(nl->current, nodeType) || listHasDescendantOfType(nl->next, nodeType);
+}
+
+int hasDescendantOfType(GenericNode * gn, NodeType nodeType) {
+    if (gn->info.type == nodeType)
+        return 1;
+    else
+        return listHasDescendantOfType(gn->children, nodeType);
+}
+
 void printNodeList(NodeList *nl, int tabs)
 {
     if (nl == NULL)

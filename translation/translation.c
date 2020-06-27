@@ -571,6 +571,9 @@ void compose_error_message(char *buffer, int line)
     case ERROR_DUPLICATED_VARIABLE:
         msg = "Duplicate variable declaration";
         break;
+    case ERROR_NESTED_FOREACH:
+        msg = "Nested forEach statement";
+        break;
     case ERROR_GENERIC:
     default:
         msg = "Unkown error";

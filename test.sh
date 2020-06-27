@@ -13,5 +13,5 @@ for testFile in $(find $testsDir -name *.tst); do
     echo $filePath $fileName
     ./codeGenerator < $testFile > ${filePath}.c
     echo $resultsDir
-    # gcc -o $resultsDir/${fileName}_result ${filePath}.c
+    gcc -o $resultsDir/${fileName}_result ${filePath}.c
 done
