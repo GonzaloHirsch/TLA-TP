@@ -306,7 +306,7 @@ char *processAssignment(GenericNode *gn)
         }
     }
 
-    buffer = malloc(1 + strlen(varName) + strlen(" = ") + strlen(valueProc));
+    buffer = malloc(1 + strlen(varName) + strlen(" = ;\n") + strlen(valueProc));
     if (buffer == NULL)
     {
         //free(valueNListProc);
@@ -315,7 +315,7 @@ char *processAssignment(GenericNode *gn)
         return NULL;
     }
 
-    sprintf(buffer, "%s = %s", varName, valueProc);
+    sprintf(buffer, "%s = %s;\n", varName, valueProc);
 
     //free(varName);
     //free(varNListProc)
@@ -438,24 +438,24 @@ char *processPrint(GenericNode *gn)
     switch (childNode->info.varType)
     {
     case INTEGER_ARRAY_TYPE:
-        buffer = malloc(1 + strlen("_printIntArr()") + strlen(childNodeProc));
-        sprintf(buffer, "_printIntArr(%s)", childNodeProc);
+        buffer = malloc(1 + strlen("_printIntArr();") + strlen(childNodeProc));
+        sprintf(buffer, "_printIntArr(%s);", childNodeProc);
         break;
     case DOUBLE_ARRAY_TYPE:
-        buffer = malloc(1 + strlen("_printDoubleArr()") + strlen(childNodeProc));
-        sprintf(buffer, "_printDoubleArr(%s)", childNodeProc);
+        buffer = malloc(1 + strlen("_printDoubleArr();") + strlen(childNodeProc));
+        sprintf(buffer, "_printDoubleArr(%s);", childNodeProc);
         break;
     case STRING_TYPE:
-        buffer = malloc(1 + strlen("printf(\"\"%s,\n)") + strlen(childNodeProc));
-        sprintf(buffer, "printf(\"%%s\\n\",%s)", childNodeProc);
+        buffer = malloc(1 + strlen("printf(\"\"%s,\n);") + strlen(childNodeProc));
+        sprintf(buffer, "printf(\"%%s\\n\",%s);", childNodeProc);
         break;
     case INTEGER_TYPE:
-        buffer = malloc(1 + strlen("printf(\"\"%d,\n)") + strlen(childNodeProc));
-        sprintf(buffer, "printf(\"%%d\\n\",%s)", childNodeProc);
+        buffer = malloc(1 + strlen("printf(\"\"%d,\n);") + strlen(childNodeProc));
+        sprintf(buffer, "printf(\"%%d\\n\",%s);", childNodeProc);
         break;
     case DOUBLE_TYPE:
-        buffer = malloc(1 + strlen("printf(\"\"%f,\n)") + strlen(childNodeProc));
-        sprintf(buffer, "printf(\"%%f\\n\",%s)", childNodeProc);
+        buffer = malloc(1 + strlen("printf(\"\"%f,\n);") + strlen(childNodeProc));
+        sprintf(buffer, "printf(\"%%f\\n\",%s);", childNodeProc);
         break;
     default:
         return NULL;
