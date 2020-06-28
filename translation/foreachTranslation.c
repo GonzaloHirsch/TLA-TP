@@ -44,6 +44,10 @@ char *processForEach(GenericNode *gn)
     GenericNode *foreachBody = nl->current;
 
     changeDescendantVarType(foreachBody->children->current, metaVarName, metaVarVarType, 1); //1 for isMeta
+    if (0 != hasDescendantOfType(foreachBody->children->current, NODE_FOREACH)) {
+        compilationError = ERROR_NESTED_FOREACH;
+        return NULL;
+    }
 
     // Template to be used to print the function body
     char *functionTemplate = "void _arrFunc%ld(%s %s) {\n" //function declaration with global counter
@@ -52,7 +56,7 @@ char *processForEach(GenericNode *gn)
 
     // Template to be used to print the for loop
     char *forTemplate = "for(int __i = 0; __i < %s->size; __i++)\n" // this %s should be sth like arrayName->length
-                        "\t_arrFunc%ld(%s->arr[__i])";
+                        "\t_arrFunc%ld(%s->arr[__i]);\n";
 
     // Getting the body of the function
     char *body = translate(foreachBody->children->current);

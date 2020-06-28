@@ -22,6 +22,7 @@ typedef enum CompilationErrors
     ERROR_INCOMPATIBLE_ASSIGNMENT,
     ERROR_UNASSIGNED_VARIABLE,
     ERROR_DUPLICATED_VARIABLE,
+    ERROR_NESTED_FOREACH
 } CompilationErrors;
 
 typedef struct FunctionDeclaration {
