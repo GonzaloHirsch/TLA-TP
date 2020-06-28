@@ -40,6 +40,7 @@ $ ./test_real_specific.sh real_tests/<nombre_del_archivo.arr>
 ```
 
 ## Contenidos del Repositorio
+En la raíz del repositorio se encuentra un Makefile para poder realizar la compilación del proyecto.
 
 ### Documentación
 Dentro de la carpeta */Documentación* se encuentra el informe del trabajo práctico, con el nombre *"Informe-Hirsch-Henestrosa-Choi-Ribas.pdf"*
