@@ -269,6 +269,9 @@ char *processNodeList(NodeList *listCurrent)
 
             // Concatenating the old buffer with the new processed node.
             strcat(buffer, processedNode);
+
+             // Free the memory for the pointer to processed node
+            free(processedNode);
         }
 
         listCurrent = listCurrent->next;
@@ -448,21 +451,20 @@ char *processPrint(GenericNode *gn)
         sprintf(buffer, "_printDoubleArr(%s);", childNodeProc);
         break;
     case STRING_TYPE:
-        buffer = malloc(1 + strlen("printf(\"\"%s,\n);") + strlen(childNodeProc));
+        buffer = malloc(1 + strlen("printf(\"\"%s,\\n);") + strlen(childNodeProc));
         sprintf(buffer, "printf(\"%%s\\n\",%s);", childNodeProc);
         break;
     case INTEGER_TYPE:
-        buffer = malloc(1 + strlen("printf(\"\"%d,\n);") + strlen(childNodeProc));
+        buffer = malloc(1 + strlen("printf(\"\"%d,\\n);") + strlen(childNodeProc));
         sprintf(buffer, "printf(\"%%d\\n\",%s);", childNodeProc);
         break;
     case DOUBLE_TYPE:
-        buffer = malloc(1 + strlen("printf(\"\"%f,\n);") + strlen(childNodeProc));
+        buffer = malloc(1 + strlen("printf(\"\"%f,\\n);") + strlen(childNodeProc));
         sprintf(buffer, "printf(\"%%f\\n\",%s);", childNodeProc);
         break;
     default:
         free(childNodeProc);
         return NULL;
-        // ERROR
     }
 
     free(childNodeProc);
