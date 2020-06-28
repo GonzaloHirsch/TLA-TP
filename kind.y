@@ -65,20 +65,16 @@
 %type<node> expunity
 %type<node> ifsentence
 %type<node> statement
-%type<node> block funblock
+%type<node> block 
 %type<nodelist> inblockstatements
 %type<node> inblockstatement
-%type<node> funcall fundeclaration function returnstatement funargs funcallargs 
-%type<nodelist> arglist funarglist
 %type<node> foreach foreachbody
 %type<node> assignment vardeclassignment vardeclaration
 %type<node> type literal
 %type<node> while print
 %type<node> elsetrain
-%type<node> funarg
 %type<node> arrayliteral
 %type<nodelist> numlist
-%type<node> arg
 %type<node> arraccess
 %type<node> getfunctions
 
@@ -104,7 +100,6 @@ hyperstatement:	statement SEMICOLON 	{$$ = newGenericNodeWithChildren(NODE_HYPER
         |       block   		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, yylineno, 1, $1);}
         |       ifsentence        	{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, yylineno, 1, $1);}
         |      	while   		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, yylineno, 1, $1);}
-        |       function 		{$$ = newGenericNodeWithChildren(NODE_HYPERSTATEMENT, 0, yylineno, 1, $1);}
         ;
 
 inblockstatements:	inblockstatement inblockstatements 	{$$ = prependToNodeList($2, $1);}
@@ -138,8 +133,6 @@ statement:
         |       assignment              {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       vardeclaration          {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       vardeclassignment       {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
-        |       fundeclaration          {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
-        |       funcall                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       foreach                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       print                   {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       getfunctions            {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
@@ -242,81 +235,6 @@ numlist:
         | NUMBER_LITERAL                {GenericNode * node = newGenericNode(NODE_LITERAL, $1, yylineno);
                                         $$ = createNodeList(node, yylineno);}
         ;
-
-fundeclaration: FUNCTION VAR funargs RETURNING type 
-              {GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2, yylineno);
-               $$ = newGenericNodeWithChildren(NODE_FUNDEC, 0, yylineno, 3, varNode, $3, $5);}
-        ;
-
-function:	FUNCTION VAR funargs funblock 
-        {GenericNode * varNode = newGenericNode(NODE_VARIABLE, $2, yylineno);
-        $$ = newGenericNodeWithChildren(NODE_FUNCTION, 0, yylineno, 3, varNode, $3, $4);}
-        ;
-
-funblock:	
-                OPEN_B inblockstatements returnstatement CLOSE_B 
-                {
-                 GenericNode * ibssNode = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENTS, 0, yylineno, 1, $2);
-                 $$ = newGenericNodeWithChildren(NODE_FUNBLOCK_RET, 0, yylineno, 2, ibssNode, $3);
-                }
-        |       OPEN_B inblockstatements CLOSE_B 
-                {
-                 GenericNode * ibssNode = newGenericNodeWithChildren(NODE_INBLOCKSTATEMENTS, 0, yylineno, 1, $2);
-                 $$ = newGenericNodeWithChildren(NODE_FUNBLOCK, 0, yylineno, 1, ibssNode);
-                }
-        ;
-
-returnstatement:        RETURN generaloperation SEMICOLON {
-                        $$ = newGenericNodeWithChildren(NODE_RETURN_STATEMENT, 0, yylineno, 1, $2);}
-        |               RETURN generalexpression SEMICOLON {
-                        $$ = newGenericNodeWithChildren(NODE_RETURN_STATEMENT, 0, yylineno, 1, $2);}
-        ;
-
-funargs:	OPEN_P  CLOSE_P 	{$$ = newGenericNodeWithChildren(NODE_FUNARGS, 0, yylineno, 1, 0);}
-        | 	OPEN_P arglist CLOSE_P	{
-                                        GenericNode * childNode = newGenericNode(NODE_ARGLIST,0, yylineno);
-                                        childNode->children = $2;
-                                        $$ = newGenericNodeWithChildren(NODE_FUNARGS, 0, yylineno, 1, childNode);
-                                        }
-        ;
-
-arglist:	arglist COMMA arg 	{$$ = addToNodeList($1,$3); }
-        | 	arg 			{$$ = createNodeList($1, yylineno);}
-        ;
-
-arg:	type VAR {GenericNode * node = newGenericNode(NODE_VARIABLE, $2, yylineno);
-                  $$ = newGenericNodeWithChildren(NODE_ARG, 0, yylineno, 2, $1, node);}
-        ;
-
-funcall:
-        VAR funcallargs 
-        {GenericNode * varNode = newGenericNode(NODE_VARIABLE, $1, yylineno);
-        $$ = newGenericNodeWithChildren(NODE_FUNCALL, 0, yylineno, 2, varNode, $2);
-        }
-        ;
-
-funcallargs:
-                OPEN_P CLOSE_P
-                {$$ = newGenericNodeWithChildren(NODE_FUNCALLARGS, 0, yylineno, 1, 0);
-                }
-        |       OPEN_P funarglist CLOSE_P
-                {GenericNode * childNode = newGenericNode(NODE_FUNARGLIST,0, yylineno);
-                childNode->children = $2;
-                $$ = newGenericNodeWithChildren(NODE_FUNCALLARGS, 0, yylineno, 1, childNode);
-        }             
-        ;
-
-funarglist:
-        funarglist COMMA funarg {$$ = addToNodeList($1,$3);}
-        | funarg                {$$ = createNodeList($1, yylineno);}
-        ;
-
-funarg:
-        VAR              {$$ = newGenericNode(NODE_VARIABLE,$1, yylineno);}
-        | STRING_LITERAL {$$ = newGenericNode(NODE_STRING_LITERAL,$1, yylineno);}
-        | NUMBER_LITERAL {$$ = newGenericNode(NODE_LITERAL,$1, yylineno);}
-        ;
-
 type:		INT 	{$$ = newGenericNode(NODE_INT,"int", yylineno);}
         | 	STR 	{$$ = newGenericNode(NODE_STR,"char *", yylineno);}
         | 	DOUBLE 	{$$ = newGenericNode(NODE_DOUBLE,"double", yylineno);}

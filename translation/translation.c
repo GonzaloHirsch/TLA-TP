@@ -56,8 +56,6 @@ char *process(GenericNode *gn)
     {
     case NODE_LIST:
         break;
-    case NODE_FUNCTIONS:
-        break;
     case NODE_ENTRYPOINT:
         value = processEntrypointNode(gn);
         break;
@@ -87,8 +85,6 @@ char *process(GenericNode *gn)
     //     break;
     case NODE_BLOCK:
         value = processBlock(gn);
-        break;
-    case NODE_FUNBLOCK:
         break;
     case NODE_ASSIGNMENT:
         value = processAssignment(gn);

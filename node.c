@@ -163,9 +163,6 @@ const char *getNodeTypeString(NodeType type)
     case NODE_LIST:
         return "node_list";
         break;
-    case NODE_FUNCTIONS:
-        return "node_functions";
-        break;
     case NODE_ENTRYPOINT:
         return "NODE_ENTRYPOINT";
         break;
@@ -195,9 +192,6 @@ const char *getNodeTypeString(NodeType type)
         break;
     case NODE_BLOCK:
         return "NODE_BLOCK";
-        break;
-    case NODE_FUNBLOCK:
-        return "NODE_FUNBLOCK";
         break;
     case NODE_ASSIGNMENT:
         return "NODE_ASSIGNMENT";
