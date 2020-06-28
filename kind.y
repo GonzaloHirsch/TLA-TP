@@ -205,13 +205,13 @@ assignment:	VAR ASSIGN_EQ literal	        {       GenericNode * varNode = newGen
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
         |       VAR ASSIGN_EQ generalexpression {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
-        |       arraccess ASSIGN_EQ generalexpression   {//$1->info.nodeType = NODE_ARRAY_ACCESS_ASSIGNMENT;
-                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
-        |       arraccess ASSIGN_EQ generaloperation   {//$1->info.nodeType = NODE_ARRAY_ACCESS_ASSIGNMENT;
+        |       arraccess ASSIGN_EQ generalexpression   {
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
-        |       VAR ASSIGN_EQ getfunctions      {       GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
+        |       arraccess ASSIGN_EQ generaloperation    {
+                                                        $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
+        |       VAR ASSIGN_EQ getfunctions              {GenericNode * varNode = newGenericNode(NODE_VARIABLE_ASSIGNMENT, $1, yylineno);
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, 0, yylineno, 2, varNode, $3);}
-        |       arraccess ASSIGN_EQ getfunctions        {//$1->info.nodeType = NODE_ARRAY_ACCESS_ASSIGNMENT;
+        |       arraccess ASSIGN_EQ getfunctions        {
                                                         $$ = newGenericNodeWithChildren(NODE_ASSIGNMENT, "ARRAY_ELEM_ASSIGNMENT", yylineno, 2, $1, $3);}
         ;
 

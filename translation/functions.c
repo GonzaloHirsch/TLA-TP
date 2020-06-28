@@ -804,17 +804,3 @@ double _getDouble(){
     }
     return num;
 }
-
-/*
-HOW TO DECLARE AN ARRAY STRUCT
-
-int my[] = {1,2,3};
-IntArr * _my = malloc(sizeof(IntArr));
-_my->arr = my;
-_my->size = NELEMS(my);
-
-double my[] = {1,2,3};
-DoubleArr * _my = malloc(sizeof(DoubleArr));
-_my->arr = my;
-_my->size = NELEMS(my);
-*/
