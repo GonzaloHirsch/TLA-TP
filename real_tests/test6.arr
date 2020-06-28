@@ -48,6 +48,5 @@ start
     resDoub = arrOp1 *. arrOp2;
     print resDoub;
 
-    print "GOODBYE";
     
 end

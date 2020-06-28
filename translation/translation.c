@@ -80,9 +80,6 @@ char *process(GenericNode *gn)
     case NODE_FOREACH:
         value = processForEach(gn);
         break;
-    // case NODE_FOREACHBODY:
-    //     value = processForEachBody(gn);
-    //     break;
     case NODE_BLOCK:
         value = processBlock(gn);
         break;
@@ -164,9 +161,6 @@ char *process(GenericNode *gn)
     case NODE_ARRAY_ACCESS:
         value = processArrayAccess(gn);
         break;
-    // case NODE_ARRAY_ACCESS_ASSIGNMENT:
-    //     value = processArrayAccessAssignment(gn);
-    //     break;
     case NODE_EXIT:
         value = processExit(gn);
         break;

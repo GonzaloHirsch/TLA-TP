@@ -19,7 +19,7 @@ typedef enum {
 typedef struct symvar{
     char name[32];
     VarType type;
-    void * value;       /** TODO: Possibly delete(NOT USED) */
+    void * value;
     int assigned;
 } symvartype;
 
@@ -47,23 +47,5 @@ symvartype * symSetDouble(char * name, double value);
 symvartype * symSetDoubleArr(char * name, double * values);
 symvartype * symSetDoubleArr(char * name, double * values);
 void symSet(char * name, VarType type, void * value);
-
-/*
-symvartype * symLook(char * name, symvartype * symvartable);
-
-// Functions to declare variables
-symvartype * symAddInt(char * name, symvartype * symvartable);
-symvartype * symAddString(char * name,  symvartype * symvartable);
-symvartype * symAddDouble(char * name, symvartype * symvartable);
-symvartype * symAddDoubleArr(char * name, symvartype * symvartable);
-symvartype * symAddIntArr(char * name, symvartype * symvartable);
-
-// Functions to set values to variables
-symvartype * symSetInt(char * name, int value, symvartype * symvartable);
-symvartype * symSetString(char * name, char * value, symvartype * symvartable);
-symvartype * symSetDouble(char * name, double value, symvartype * symvartable);
-symvartype * symSetDoubleArr(char * name, double * values, symvartype * symvartable);
-symvartype * symSetDoubleArr(char * name, double * values, symvartype * symvartable);
-*/
 
 #endif

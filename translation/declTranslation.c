@@ -218,7 +218,5 @@ char *getVarDeclarations()
         }
     } while (current != NULL);
 
-    /** TODO: Probably free al symvar related memory */
-
     return buffer;
 }
