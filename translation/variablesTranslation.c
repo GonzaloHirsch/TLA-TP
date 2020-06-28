@@ -1,12 +1,16 @@
 #include "variablesTranslation.h"
 
 char * processVariable(GenericNode * gn) {
-    return gn->value;
+    char *buffer = malloc(1 + strlen(gn->value));
+    sprintf(buffer, "%s", gn->value);
+    return buffer;
 }
 
 char * processAssignedVariable(GenericNode * gn){
      if(gn->info.isMeta){
-        return gn->value;
+        char *buffer = malloc(1 + strlen(gn->value));
+        sprintf(buffer, "%s", gn->value);
+        return buffer;
     }
 
     symvartype * var = symLook(gn->value);
@@ -20,12 +24,16 @@ char * processAssignedVariable(GenericNode * gn){
     // Variable is now assigned
     symSetAssigned(var);
 
-    return gn->value;
+    char *buffer = malloc(1 + strlen(gn->value));
+    sprintf(buffer, "%s", gn->value);
+    return buffer;
 }
 
 char * processReferencedVariable(GenericNode * gn){
     if(gn->info.isMeta){
-        return gn->value;
+        char *buffer = malloc(1 + strlen(gn->value));
+        sprintf(buffer, "%s", gn->value);
+        return buffer;
     }
 
     symvartype * var = symLook(gn->value);
@@ -43,31 +51,43 @@ char * processReferencedVariable(GenericNode * gn){
         return NULL;
     }
 
-    return gn->value;
+    char *buffer = malloc(1 + strlen(gn->value));
+    sprintf(buffer, "%s", gn->value);
+    return buffer;
 }
 
 char * processDouble(GenericNode * gn) {
     gn->info.varType = DOUBLE_TYPE;
-    return gn->value;
+    char *buffer = malloc(1 + strlen(gn->value));
+    sprintf(buffer, "%s", gn->value);
+    return buffer;
 }
 char * processStr(GenericNode * gn) {
     gn->info.varType = STRING_TYPE;
-    return gn->value;
+    char *buffer = malloc(1 + strlen(gn->value));
+    sprintf(buffer, "%s", gn->value);
+    return buffer;
 }
 
 char * processInt(GenericNode * gn) {
     gn->info.varType = INTEGER_TYPE;
-    return gn->value;
+    char *buffer = malloc(1 + strlen(gn->value));
+    sprintf(buffer, "%s", gn->value);
+    return buffer;
 }
 
 char * processArrayTypeInt(GenericNode * gn){
     gn->info.varType = INTEGER_ARRAY_TYPE;
-    return "IntArr * ";
+    char *buffer = malloc(1 + strlen("IntArr * "));
+    sprintf(buffer, "%s", "IntArr * ");
+    return buffer;
 }
 
 char * processArrayTypeDouble(GenericNode * gn){
     gn->info.varType = DOUBLE_ARRAY_TYPE;
-    return "DoubleArr * ";
+    char *buffer = malloc(1 + strlen("DoubleArr * "));
+    sprintf(buffer, "%s", "DoubleArr * ");
+    return buffer;
 }
 
 char * processArray(GenericNode * gn){
