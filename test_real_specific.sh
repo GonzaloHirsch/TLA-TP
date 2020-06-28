@@ -1,5 +1,6 @@
 testsDir='real_tests'
 resultsDir=$testsDir/results
+mkdir ./$resultsDir
 filePath=$(echo $1 | cut -d'.' -f1)
 fileName=$(echo $filePath | cut -d'/' -f2)
 echo "Compilando ${fileName}..."
