@@ -50,7 +50,7 @@ char * processGeneralExpression(GenericNode * gn){
 
     // there is no other expression
 
-    buffer = realloc(buffer, strlen(exp1Proc) + strlen(buffer));
+    buffer = realloc(buffer,1+ strlen(exp1Proc) + strlen(buffer));
     if(buffer == NULL){
         free(exp1Proc);
         return NULL;
@@ -109,7 +109,7 @@ char * processExpression(GenericNode * gn){
             exit(EXIT_FAILURE_);
         }
 
-        buffer = realloc(buffer,! + strlen(op) + strlen(exp1Proc) + strlen(buffer));
+        buffer = realloc(buffer,1 + strlen(op) + strlen(exp1Proc) + strlen(buffer));
         if(buffer == NULL){
             free(exp1Proc);
             return NULL;
@@ -127,7 +127,7 @@ char * processExpression(GenericNode * gn){
     // is not an unary expression
 
     GenericNode * exp2 = gn -> children -> next -> current;
-    char * exp2Proc = process(exp2);
+    char * exp2Proc = translate(exp2);
     if(exp2Proc == NULL){
         free(buffer);
         free(exp1Proc);
@@ -142,7 +142,7 @@ char * processExpression(GenericNode * gn){
 
 
 
-    buffer = realloc(buffer, strlen(op) + strlen(exp1Proc) + strlen(exp2Proc) + strlen(buffer));
+    buffer = realloc(buffer,1+ strlen(op) + strlen(exp1Proc) + strlen(exp2Proc) + strlen(buffer));
     if(buffer == NULL){
         free(exp1Proc);
         free(exp2Proc);
