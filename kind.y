@@ -86,10 +86,10 @@ entrypoint:
         // create node for hyprestatements
         GenericNode * hyperstatements = newGenericNode(NODE_HYPERSTATEMENTS, 0, yylineno);
         hyperstatements->children = $2;
-        *codeRootNode = newGenericNodeWithChildren(NODE_ENTRYPOINT, "helloThere\n", yylineno, 1, hyperstatements); $$ = *codeRootNode;
+        *codeRootNode = newGenericNodeWithChildren(NODE_ENTRYPOINT, 0, yylineno, 1, hyperstatements); $$ = *codeRootNode;
         }
         |       START END       		{
-                *codeRootNode = newGenericNode(NODE_ENTRYPOINT, "helloThere\n", yylineno); $$ = *codeRootNode;
+                *codeRootNode = newGenericNode(NODE_ENTRYPOINT, 0, yylineno); $$ = *codeRootNode;
                 }
         ;
 
@@ -178,9 +178,9 @@ print:          PRINT unity     {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, 
         |       PRINT literal   {$$ = newGenericNodeWithChildren(NODE_PRINT, 0, yylineno, 1, $2);}
         ;
 
-getfunctions:     GET_INT OPEN_P CLOSE_P          {$$ = newGenericNodeWithChildren(NODE_GET_INT, 0, yylineno,0);}
-                | GET_DOUBLE OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_DOUBLE, 0, yylineno,0);}
-                | GET_STRING OPEN_P CLOSE_P       {$$ = newGenericNodeWithChildren(NODE_GET_STRING, 0, yylineno,0);}
+getfunctions:     GET_INT OPEN_P CLOSE_P          {$$ = newGenericNode(NODE_GET_INT, 0, yylineno);}
+                | GET_DOUBLE OPEN_P CLOSE_P       {$$ = newGenericNode(NODE_GET_DOUBLE, 0, yylineno);}
+                | GET_STRING OPEN_P CLOSE_P       {$$ = newGenericNode(NODE_GET_STRING, 0, yylineno);}
                 ;
 
 foreach:
@@ -311,21 +311,8 @@ void yyerror(GenericNode ** codeRootNode, char *s) {
 
 int
 main(void) {
-
-        #ifdef YYDEBUG
-        // yydebug = 1;
-        #endif
-
-        /*
-	variables = malloc(MAX_VARIABLES * sizeof(VariableToken *));
-
-	if (variables == NULL) {
-		printf("Unable to allocate space for the variables\n");
-		exit(EXIT_FAILURE);
-	}
-	memset(variables, '\0', sizeof(VariableToken *) * MAX_VARIABLES);
-        */
 	
+        // Calling the yyparse
 	yyparse(&codeRootNode);
 
         // printGenericNode(codeRootNode, 0);
@@ -358,37 +345,8 @@ main(void) {
         // Printing the code
         printf("%s\n", code);
         
-        //freeGenericNode(codeRootNode);
-/*
-
-	char * translation = translateToC((Token *)code);
-	//We should always call get functions after translateToC
-	char * functionsTranslation = getFunctions();
-        */
-
-/*
-	if (translation == NULL) printf("Error allocating memory for generated C code.\n");
-	else {
-		printf("#include <stdio.h>\n");
-		printf("#include <stdlib.h>\n\n");
-		if(functionsTranslation != NULL) {
-			printf("%s\n", functionsTranslation);
-		}
-		printf("int main(int argc, char const *argv[]) {\n");
-		printf("%s\n", translation);
-		printf("\nreturn 0;\n}");
-	}
-
-	if(translation != NULL) {
-		free(translation);
-	}
-	if(functionsTranslation != NULL) {
-		free(functionsTranslation);
-	}
-	freeFunctions();
-	freeToken((Token *) code);
-	freeVariables();
-        */
+        // Liberating the memory
+        freeGenericNode(codeRootNode);
 
         fprintf(stderr, "\033[0;32m");
 	fprintf(stderr, "Compilation Successful\n");

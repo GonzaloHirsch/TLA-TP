@@ -18,7 +18,7 @@ start
         i = i +1;
     }
 
-    print "Choose the operation: 1. * 2. + 3. / 4. -";
+    print "Choose the operation: \n\t1. * \n\t2. + \n\t3. / \n\t4. -";
     int op = getInt();
 
     if(op == 1){
