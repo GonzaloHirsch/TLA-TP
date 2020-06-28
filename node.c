@@ -14,6 +14,7 @@ GenericNode *newGenericNodeWithChildren(NodeType type, char *value, int line, in
     GenericNode *createdNode = malloc(sizeof(GenericNode));
     createdNode->info.type = type;
     createdNode->info.line = line;
+    createdNode->info.isMeta = 0;
 
     va_start(childrenList, childrenCount);
     createdNode->children = createNodeList(va_arg(childrenList, GenericNode *), line);
@@ -70,6 +71,7 @@ GenericNode *newGenericNode(NodeType type, char *value, int line)
     GenericNode *gn = malloc(sizeof(GenericNode));
     gn->info.type = type;
     gn->info.line = line;
+    gn->info.isMeta = 0;
     if (value != 0)
     {
         gn->value = malloc(strlen(value) + 1);

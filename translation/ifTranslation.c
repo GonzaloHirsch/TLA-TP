@@ -7,14 +7,14 @@ char * processIf(GenericNode * gn){
     
     //Gets and process general expression. ( .... )
     GenericNode * ge = gn -> children -> current;
-    char * geProc = processGeneralExpression(ge);
+    char * geProc = translate(ge);
     if(geProc == NULL){
         return NULL;
     }
 
     //Gets and process the block statement of the if.
     GenericNode * block = gn -> children -> next -> current;
-    char * blockProc = processBlock(block);
+    char * blockProc = translate(block);
     if(blockProc ==  NULL){
         //free(geProc);
         return NULL;
@@ -54,7 +54,7 @@ char * processIfElse(GenericNode * gn){
 
     //Gets and process the block statement of the if.
     GenericNode * block = gn -> children -> next -> current;
-    char * blockProc = processBlock(block);
+    char * blockProc = translate(block);
     if(blockProc ==  NULL){
         //free(geProc);
         return NULL;
@@ -62,7 +62,7 @@ char * processIfElse(GenericNode * gn){
 
     // Process the else train
     GenericNode * elseTrain = gn -> children -> next -> next -> current; //Get the node of the else train.
-    char * elseTrainProc = processElseTrain(elseTrain);
+    char * elseTrainProc = translate(elseTrain);
     if(elseTrainProc == NULL){
         //free(elseTrainProc);
         return NULL;
