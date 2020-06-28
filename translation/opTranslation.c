@@ -163,7 +163,7 @@ char *processProdOp(GenericNode *gn)
         operation = "_prodDoubleArrIntArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         operation = "_prodIntArrDoubleArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
@@ -246,7 +246,7 @@ char *processProdOp(GenericNode *gn)
     {
         sprintf(buffer, "_prodDoubleArrIntArr(%s,%s)", leftSide, rightSide);
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         sprintf(buffer, "_prodIntArrDoubleArr(%s,%s)", leftSide, rightSide);
     }
@@ -366,7 +366,7 @@ char *processDivOp(GenericNode *gn)
         operation = "_divDoubleArrIntArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         operation = "_divIntArrDoubleArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
@@ -453,7 +453,7 @@ char *processDivOp(GenericNode *gn)
     {
         sprintf(buffer, "_divDoubleArrIntArr(%s,%s)", leftSide, rightSide);
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         sprintf(buffer, "_divIntArrDoubleArr(%s,%s)", leftSide, rightSide);
     }
@@ -573,7 +573,7 @@ char *processAddOp(GenericNode *gn)
         operation = "_sumDoubleArrIntArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         operation = "_sumIntArrDoubleArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
@@ -661,7 +661,7 @@ char *processAddOp(GenericNode *gn)
     {
         sprintf(buffer, "_sumDoubleArrIntArr(%s,%s)", leftSide, rightSide);
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         sprintf(buffer, "_sumIntArrDoubleArr(%s,%s)", leftSide, rightSide);
     }
@@ -785,7 +785,7 @@ char *processSubOp(GenericNode *gn)
         operation = "_subsDoubleArrIntArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         operation = "_subsIntArrDoubleArr(,)";
         newType = DOUBLE_ARRAY_TYPE;
@@ -872,7 +872,7 @@ char *processSubOp(GenericNode *gn)
     {
         sprintf(buffer, "_subsDoubleArrIntArr(%s,%s)", leftSide, rightSide);
     }
-    else if (leftType == DOUBLE_ARRAY_TYPE && rightType == INTEGER_ARRAY_TYPE)
+    else if (leftType == INTEGER_ARRAY_TYPE && rightType == DOUBLE_ARRAY_TYPE)
     {
         sprintf(buffer, "_subsIntArrDoubleArr(%s,%s)", leftSide, rightSide);
     }
