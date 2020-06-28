@@ -1,15 +1,15 @@
 start
-    print "This program asks the user for a multiplier and multiples each array item in 2 different ways and obtains the sum of all the items";
-    print "The array is this";
+    print "This program asks the user for a multiplier and multiples each array item in 2 different ways and obtains the sum of all the items\n";
+    print "The array is this\n";
     int[] arr = [1, 2, 3, 4, 5];
     print arr;
     print "Choose a double multiplier number";
     double multiplier = getDouble();
-    print "Choose a limit";
+    print "Choose a limit\n";
     double limit = getDouble();
-    print "Choose a message of success";
+    print "Choose a message of success\n";
     str msgOk = getString();
-    print "Choose a message of failure";
+    print "Choose a message of failure\n";
     str msgFail = getString();
 
     print "\n####################\n";
@@ -22,8 +22,10 @@ start
     print "Result 1 - Sum with multiplication in each iteration";
     if (sum > limit || limit < sum){
         print msgOk;
+        print "\n";
     } else {
         print msgFail;
+        print "\n";
     }
 
     print "Result 2 - Sum with multiplication in one line";
@@ -38,4 +40,6 @@ start
     } else {
         print msgFail;
     }
+
+    print "\n";
 end

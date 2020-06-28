@@ -56,7 +56,6 @@ typedef enum {
     NODE_GET_STRING,
 
     NODE_ARRAY_ACCESS,
-    // NODE_ARRAY_ACCESS_ASSIGNMENT,
 
     NODE_EXIT,
 
@@ -72,9 +71,9 @@ typedef struct NodeInfo {
 
 // List of nodes
 typedef struct NodeList {
-    NodeInfo info;                  // Information about the type of node
-    struct GenericNode * current;              // The current node with information
-    struct NodeList * next;                // The next node on the list
+    NodeInfo info;                          // Information about the type of node
+    struct GenericNode * current;           // The current node with information
+    struct NodeList * next;                 // The next node on the list
 } NodeList;
 
 // This is used so as to enable polymorphism and reduce
@@ -90,7 +89,7 @@ typedef struct GenericNode {
 // Node for a functions section
 typedef struct FunctionsNode {
     NodeInfo info;                  // Information about the type of node
-    NodeList * functions;       // List of functions declared
+    NodeList * functions;           // List of functions declared
 } FunctionsNode;
 
 NodeList * createNodeList(GenericNode * node, int line);

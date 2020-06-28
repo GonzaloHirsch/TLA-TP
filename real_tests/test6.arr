@@ -1,5 +1,5 @@
 start
-    print "This program evaluates the cross and escalar product of two vectors";
+    print "This program evaluates the cross and escalar product of two vectors\n";
     double[] arr1 = [0.0,0,0];
     double[] arr2 = [0.0,0,0];
     double[] arr3 = [0.0,0];
@@ -10,7 +10,7 @@ start
     double resDoub;
     int size;
 
-    print "First Choose the size of the vectors ( 2 o 3):";
+    print "First Choose the size of the vectors ( 2 o 3):\n";
     size = getInt();
 
     if(size == 2){
@@ -22,31 +22,32 @@ start
         arrOp2 = arr2;
     }
     else{
-        print "ERROR SIZE MUST BE 2 o 3";
+        print "ERROR SIZE MUST BE 2 o 3\n";
         exit();
     }
 
-    print "Choose the values for the first arrays";
+    print "Choose the values for the first arrays\n";
     int i =0;
     while(i < size){
        arrOp1[i] = getDouble();
        i=i+1;
     }
 
-    print "Choose the values for the second arrays";
+    print "Choose the values for the second arrays\n";
     i =0;
     while(i < size){
         arrOp2[i] = getDouble();
         i = i +1;
     }
 
-    print "CROSS PRODUCT: ";
+    print "CROSS PRODUCT: \n";
     resArrDoub = arrOp1 *x arrOp2;
     print resArrDoub;
 
-    print "SCALAR PRODUCT: ";
+    print "SCALAR PRODUCT: \n";
     resDoub = arrOp1 *. arrOp2;
     print resDoub;
+    print "\n";
 
     
 end

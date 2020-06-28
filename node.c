@@ -1,12 +1,6 @@
 #include "node.h"
 
 const char *getNodeTypeString(NodeType type);
-// GenericNode * newGenericNodeAux(NodeList * hyperStatements) {
-//     GenericNode * epn = malloc(sizeof(GenericNode));
-//     epn -> info.type = NODE_ENTRYPOINT;
-//     epn -> hyperstatements = hyperStatements;
-//     return epn;
-// }
 
 GenericNode *newGenericNodeWithChildren(NodeType type, char *value, int line, int childrenCount, ...)
 {
