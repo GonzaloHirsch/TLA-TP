@@ -58,6 +58,7 @@ char *processGetString(GenericNode *gn);
 char *processGetInt(GenericNode *gn);
 char *processArrayAccess(GenericNode *gn);
 // char * processArrayAccessAssignment(GenericNode * gn);
+char * processExit(GenericNode *gn);
 
 VarType determineVarType(GenericNode *gn);
 

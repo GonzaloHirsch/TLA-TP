@@ -167,6 +167,9 @@ char *process(GenericNode *gn)
     // case NODE_ARRAY_ACCESS_ASSIGNMENT:
     //     value = processArrayAccessAssignment(gn);
     //     break;
+    case NODE_EXIT:
+        value = processExit(gn);
+        break;
     default:
         break;
     }
@@ -548,6 +551,16 @@ char *processArrayAccess(GenericNode *gn)
     sprintf(buffer, "%s->arr[%s]", var, indexExpr);
     return buffer;
 }
+
+char * processExit(GenericNode *gn){
+    if(gn == NULL){
+        return NULL;
+    }
+    char *buffer = malloc(1 + strlen("exit(0);"));
+    sprintf(buffer, "%s", "exit(0);");
+    return buffer;
+}
+
 
 // char * processArrayAccessAssignment(GenericNode * gn) {
 //     ;

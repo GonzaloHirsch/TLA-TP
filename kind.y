@@ -53,6 +53,7 @@
 %token<string> ASSIGN_EQ
 %token<string> INT_ARR DOUBLE_ARR
 %token<string> GET_INT GET_DOUBLE GET_STRING
+%token<string> EXIT
 
 %type<node> entrypoint
 %type<nodelist> hyperstatements
@@ -77,6 +78,7 @@
 %type<nodelist> numlist
 %type<node> arraccess
 %type<node> getfunctions
+%type<node> exit
 
 %%
 
@@ -136,6 +138,7 @@ statement:
         |       foreach                 {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       print                   {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         |       getfunctions            {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
+        |       exit                    {$$ = newGenericNodeWithChildren(NODE_STATEMENT, 0, yylineno, 1, $1);}
         ;
 
 vardeclaration:
@@ -282,6 +285,8 @@ unity:          VAR                             {$$ = newGenericNode(NODE_VARIAB
         |       arraccess                       {$$ = $1;}
         ;
 
+exit:   EXIT                                    {$$ = newGenericNode(NODE_EXIT, $1, yylineno);}
+        ;
 %%
 
 void yyerror(GenericNode ** codeRootNode, char *s) {

@@ -23,6 +23,7 @@ start
     }
     else{
         print "ERROR SIZE MUST BE 2 o 3";
+        exit();
     }
 
     print "Choose the values for the first arrays";

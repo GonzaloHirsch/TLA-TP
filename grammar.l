@@ -60,6 +60,7 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "getInt"        return GET_INT;
 "getDouble"     return GET_DOUBLE;
 "getString"     return GET_STRING;
+"exit()"        return EXIT;
 [\t ]           ;
 \n              {yylineno++;}
 {number} 		{strcpy(yylval.string, yytext);return NUMBER_LITERAL;}
