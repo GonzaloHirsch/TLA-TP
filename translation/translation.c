@@ -293,10 +293,10 @@ char *processAssignment(GenericNode *gn)
     GenericNode *varNode = gn->children->current;
     GenericNode *valueNode = gn->children->next->current;
 
-    //Process the variable
-    char *varName = translate(varNode);
     //Process the right value of the expression(literal, generalExp or genOp)
     char *valueProc = translate(valueNode);
+    //Process the variable
+    char *varName = translate(varNode);
 
     if (varName == NULL || valueProc == NULL)
     {
