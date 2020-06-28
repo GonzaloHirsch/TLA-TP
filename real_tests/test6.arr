@@ -41,13 +41,12 @@ start
     }
 
     print "CROSS PRODUCT: ";
-    resArrDoub = arrOp1 cross arrOp2;
+    resArrDoub = arrOp1 *x arrOp2;
     print resArrDoub;
 
     print "SCALAR PRODUCT: ";
     resDoub = arrOp1 *. arrOp2;
     print resDoub;
 
-    print "GOODBYE";
     
 end

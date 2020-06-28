@@ -8,19 +8,10 @@ string		\"[^\"]*\"
 varName		[a-zA-Z][a-zA-Z0-9]*
 
 %%
-
-"until"         return UNTIL;
-"execute"       return EXECUTE;
 "if"			return IF;
 "else if"       return ELSE_IF;
 "else"          return ELSE; 
-"repeat"        return REPEAT;
 "while"         return WHILE;
-"set"           return SET;
-"to be"         return TO_BE;
-"as"            return AS;
-"equal"         return EQ;
-"do"            return DO;
 ","             return COMMA;
 ";"            	return SEMICOLON;
 "."             return DOT;

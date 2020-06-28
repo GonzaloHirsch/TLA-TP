@@ -32,10 +32,7 @@
 
 %parse-param {struct GenericNode ** codeRootNode}
 
-%token<string> IF ELSE_IF ELSE REPEAT WHILE UNTIL
-%token<string> SET TO_BE AS
-%token<string> DO THANK_YOU
-%token<string> EXECUTE FUNCTION RECEIVING RETURNING RETURN
+%token<string> IF ELSE_IF ELSE WHILE
 %token<string> FOREACH RIGHT_ARROW
 %token<string> COMMA SEMICOLON DOT
 %token<string> INT STR DOUBLE
