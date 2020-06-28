@@ -36,7 +36,6 @@
 %token<string> FOREACH RIGHT_ARROW
 %token<string> COMMA SEMICOLON DOT
 %token<string> INT STR DOUBLE
-%token<string> INTEGER
 %token<string> EQ GT GE LT LE NE
 %token<string> NUMBER_LITERAL STRING_LITERAL
 %token<string> VAR
@@ -312,10 +311,9 @@ main(void) {
         // Calling the yyparse
 	yyparse(&codeRootNode);
 
-        // printGenericNode(codeRootNode, 0);
+        // Getting the code of the main program
         char * code = translate_program(codeRootNode, &yyerror);
         if (code == NULL){
-                //freeGenericNode(codeRootNode);
                 return 1;
         }
 

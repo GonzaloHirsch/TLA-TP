@@ -214,8 +214,6 @@ char *processEntrypointNode(GenericNode *gn)
 
 char *processHyperStatement(GenericNode *gn)
 {
-    // Statements add the comma,
-    // won't do checks here
     return translate(gn->children->current);
 }
 
@@ -555,11 +553,6 @@ char * processExit(GenericNode *gn){
     sprintf(buffer, "%s", "exit(0);");
     return buffer;
 }
-
-
-// char * processArrayAccessAssignment(GenericNode * gn) {
-//     ;
-// }
 
 void compose_error_message(char *buffer, int line)
 {

@@ -148,8 +148,6 @@ char * processExpression(GenericNode * gn){
         free(exp2Proc);
         return NULL;
     }
-
-    //example:  var1 >= var2
     strcat(buffer, exp1Proc);
     strcat(buffer, op);
     strcat(buffer, exp2Proc);
