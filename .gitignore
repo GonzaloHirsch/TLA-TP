@@ -90,3 +90,9 @@ a.out
 out
 
 tmp
+
+valgrind-out.txt
+
+valgrind-output.txt
+
+.DS_Store
