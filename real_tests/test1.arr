@@ -3,7 +3,7 @@ start
     print "The array is this";
     int[] arr = [1, 2, 3, 4, 5];
     print arr;
-    print "Choose a decimal number";
+    print "Choose a double multiplier number";
     double multiplier = getDouble();
     print "Choose a limit";
     double limit = getDouble();
@@ -19,14 +19,14 @@ start
         sum = sum + x * multiplier;
     });
 
-    print "Result 1";
+    print "Result 1 - Sum with multiplication in each iteration";
     if (sum > limit || limit < sum){
         print msgOk;
     } else {
         print msgFail;
     }
 
-    print "Result 2";
+    print "Result 2 - Sum with multiplication in one line";
     double[] arr2 = arr * multiplier;
     sum = 0;
     arr2.forEach(x->{
