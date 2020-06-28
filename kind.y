@@ -366,11 +366,19 @@ unity:          VAR                             {$$ = newGenericNode(NODE_VARIAB
 
 void yyerror(GenericNode ** codeRootNode, char *s) {
         fprintf(stderr, "\033[0;31m");
-	fprintf(stderr, 
-                "######################### COMPILATION ERROR #########################\n"
-                "%s\n"
-                "######################### COMPILATION ERROR #########################\n"
-                , s);
+        if (compilationError == ERROR_NO_ERROR){
+        fprintf(stderr, 
+                        "######################### COMPILATION ERROR #########################\n"
+                        "%s near line %d\n"
+                        "######################### COMPILATION ERROR #########################\n"
+                        , s, yylineno);
+        } else {
+        fprintf(stderr, 
+                        "######################### COMPILATION ERROR #########################\n"
+                        "%s\n"
+                        "######################### COMPILATION ERROR #########################\n"
+                        , s);
+        }
         fprintf(stderr, "\033[0m");
 	//printf("-------------------------------------\nError: %s in line %d\n-------------------------------------\n", s, yylineno);
 	freeGenericNode(*codeRootNode);

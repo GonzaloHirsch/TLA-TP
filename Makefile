@@ -1,7 +1,7 @@
 .PHONY: clean
 
 all:
-	yacc -d kind.y --debug -Wconflicts-rr
+	yacc -d kind.y -Wconflicts-rr
 	lex grammar.l
 	gcc -g lex.yy.c y.tab.c translation/*.c utility.c node.c -o codeGenerator
 

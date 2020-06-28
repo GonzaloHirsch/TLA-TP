@@ -507,25 +507,25 @@ char *processGetInt(GenericNode *gn)
     return buffer;
 }
 
-char *processArrayAccess(GenericNode * gn) {
+char *processArrayAccess(GenericNode *gn)
+{
     if (gn == NULL)
         return NULL;
-    
-    char * buffer;
-    NodeList * nl = gn->children;
+
+    char *buffer;
+    NodeList *nl = gn->children;
 
     // Get the variable
 
-    GenericNode * varNode = nl->current;
-    char * var = translate(varNode);
+    GenericNode *varNode = nl->current;
+    char *var = translate(varNode);
 
     if (varNode->info.varType == DOUBLE_ARRAY_TYPE)
         gn->info.varType = DOUBLE_TYPE;
     if (varNode->info.varType == INTEGER_ARRAY_TYPE)
         gn->info.varType = INTEGER_TYPE;
 
-
-    symvartype * svt = symLook(varNode->value);
+    symvartype *svt = symLook(varNode->value);
     if (svt == NULL)
     {
         //free(type);
@@ -538,10 +538,16 @@ char *processArrayAccess(GenericNode * gn) {
     // Get the expression inside brackets
 
     nl = nl->next;
-    GenericNode * indexNode = nl->current;
-    char * indexExpr = translate(indexNode);
+    GenericNode *indexNode = nl->current;
+    char *indexExpr = translate(indexNode);
 
-    
+    // Checking the type of the index is an integer type
+    if (indexNode->info.varType != INTEGER_TYPE)
+    {
+        compilationError = ERROR_INVALID_ACCESS_INDEX_TYPE;
+        return NULL;
+    }
+
     buffer = malloc(strlen(var) + 3 + strlen(indexExpr) + 2 + 2 + 1);
     sprintf(buffer, "%s->arr[%s]", var, indexExpr);
     return buffer;
@@ -573,6 +579,9 @@ void compose_error_message(char *buffer, int line)
         break;
     case ERROR_NESTED_FOREACH:
         msg = "Nested forEach statement";
+        break;
+    case ERROR_INVALID_ACCESS_INDEX_TYPE:
+        msg = "Array index not int type";
         break;
     case ERROR_GENERIC:
     default:

@@ -22,19 +22,22 @@ typedef enum CompilationErrors
     ERROR_INCOMPATIBLE_ASSIGNMENT,
     ERROR_UNASSIGNED_VARIABLE,
     ERROR_DUPLICATED_VARIABLE,
-    ERROR_NESTED_FOREACH
+    ERROR_NESTED_FOREACH,
+    ERROR_INVALID_ACCESS_INDEX_TYPE
 } CompilationErrors;
 
-typedef struct FunctionDeclaration {
-    char * code;
+typedef struct FunctionDeclaration
+{
+    char *code;
 } FunctionDeclaration;
 
-typedef struct FunctionDeclarations_ {
-    struct FunctionDeclaration * functions;
+typedef struct FunctionDeclarations_
+{
+    struct FunctionDeclaration *functions;
     int count;
 } FunctionDeclarations_;
 
-typedef struct FunctionDeclarations_ * FunctionDeclarations;
+typedef struct FunctionDeclarations_ *FunctionDeclarations;
 
 //----------INTERNAL FUNCTIONS---------------------------
 char *processStamentListNode(GenericNode *gn);
@@ -50,10 +53,10 @@ char *processInBlockStatement(GenericNode *gn);
 char *processHyperStatement(GenericNode *gn);
 char *processHyperStatements(GenericNode *gn);
 char *processPrint(GenericNode *);
-char * processGetDouble(GenericNode * gn);
-char * processGetString(GenericNode * gn);
-char * processGetInt(GenericNode *gn);
-char * processArrayAccess(GenericNode * gn);
+char *processGetDouble(GenericNode *gn);
+char *processGetString(GenericNode *gn);
+char *processGetInt(GenericNode *gn);
+char *processArrayAccess(GenericNode *gn);
 // char * processArrayAccessAssignment(GenericNode * gn);
 
 VarType determineVarType(GenericNode *gn);
@@ -62,8 +65,8 @@ VarType determineVarType(GenericNode *gn);
 
 char *getHeaders();
 char *getOperationFunctions();
-char * getFunctionDeclarations();
-char * getInputFunctions();
+char *getFunctionDeclarations();
+char *getInputFunctions();
 char *translate(GenericNode *gn);
 char *translate_program(GenericNode *gn, void (*error_fun)(GenericNode **, char *));
 
