@@ -43,7 +43,7 @@ $ ./test_real_specific.sh real_tests/<nombre_del_archivo.arr>
 En la raíz del repositorio se encuentra un Makefile para poder realizar la compilación del proyecto.
 
 ### Documentación
-Dentro de la carpeta */Documentación* se encuentra el informe del trabajo práctico, con el nombre *"Informe-Hirsch-Henestrosa-Choi-Ribas.pdf"*
+Dentro de la carpeta */documentation* se encuentra el informe del trabajo práctico, con el nombre *"Informe-Hirsch-Henestrosa-Choi-Ribas.pdf"*
 
 ### Código Fuente
 El código fuente se encuentra en:
@@ -56,6 +56,17 @@ El código fuente se encuentra en:
 Se encuentran también una serie de scripts para poder realizar la compilación y ejecución de los archivos de prueba:
 - El script *test_real.sh* -> Compila todos los archivos .arr dentro de la carpeta */real_tests* dejando los binarios para ejecutar dentro de la carpeta */real_tests/results*.
 - El script *test_real_specific.sh* -> Recibe por entrada estándar el path al archivo .arr para ser compilado y ejecutado.
+
+### Ejemplos
+Se encuentran dentro de la carpeta */real_tests* una serie de 8 programas de ejemplo, se listan a continuación (todos los ejemplos hacen uso de la entrada estándar para hacerlos interactivos):
+- test1.arr -> Muestra las combinaciones de multiplicación y las distintas formas de iterar sobre un array. 
+- test2.arr -> Muestra iteración forEach y comparaciones de cada elemento de un array.
+- test3.arr -> Muestra conjunto de iteración forEach + while para hacer distintas comparaciones sobre el array.
+- test4.arr -> Muestra indexación de los arrays.
+- test5.arr -> Muestra manejo de cadenas de caracteres junto a la concatenación.
+- test6.arr -> Muestra las operaciones de producto vectorial y escalar entre dos vectores.
+- test7.arr -> Muestra operaciones entre arrays.
+- test8.arr -> Muestra operaciones entre arrays y numeros.
 
 ## Autores
 

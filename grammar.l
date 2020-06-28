@@ -34,7 +34,6 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "*."            return SPROD;
 "*"             return PROD;
 "/"             return DIV;
-"%"             return MODULE;
 "&&"            return AND;
 "||"            return OR;
 "!"             return NOT;
