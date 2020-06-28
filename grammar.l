@@ -56,7 +56,7 @@ varName		[a-zA-Z][a-zA-Z0-9]*
 "print"         return PRINT;
 "start"         return START;
 "end"           return END;
-"cross"         return CROSS;
+"*x"         return CROSS;
 "getInt"        return GET_INT;
 "getDouble"     return GET_DOUBLE;
 "getString"     return GET_STRING;
