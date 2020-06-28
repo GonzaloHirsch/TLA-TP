@@ -116,13 +116,15 @@ void changeDescendantVarTypeForList(NodeList *nl, char *varName, VarType targetV
     changeDescendantVarTypeForList(nl->next, varName, targetVarType, isMeta);
 }
 
-int listHasDescendantOfType(NodeList * nl, NodeType nodeType) {
+int listHasDescendantOfType(NodeList *nl, NodeType nodeType)
+{
     if (nl == NULL)
         return 0;
     return hasDescendantOfType(nl->current, nodeType) || listHasDescendantOfType(nl->next, nodeType);
 }
 
-int hasDescendantOfType(GenericNode * gn, NodeType nodeType) {
+int hasDescendantOfType(GenericNode *gn, NodeType nodeType)
+{
     if (gn->info.type == nodeType)
         return 1;
     else
@@ -138,14 +140,16 @@ void printNodeList(NodeList *nl, int tabs)
 }
 
 void freeGenericNode(GenericNode *gn)
-{   
-    if(gn != NULL){
-        if (gn->children != NULL)
-        {
-            freeNodeList(gn->children);
-        }
-        free(gn);
+{
+    if (gn == NULL)
+        return;
+
+    if (gn->children != NULL)
+    {
+        freeNodeList(gn->children);
     }
+    free(gn);
+    gn = NULL;
 }
 
 void freeNodeList(NodeList *nl)
@@ -154,6 +158,8 @@ void freeNodeList(NodeList *nl)
         return;
     freeGenericNode(nl->current);
     freeNodeList(nl->next);
+    free(nl);
+    nl = NULL;
 }
 
 const char *getNodeTypeString(NodeType type)
@@ -161,10 +167,25 @@ const char *getNodeTypeString(NodeType type)
     switch (type)
     {
     case NODE_LIST:
-        return "node_list";
+        return "NODE_LIST";
+        break;
+    case NODE_FUNCTIONS:
+        return "NODE_FUNCTIONS";
         break;
     case NODE_ENTRYPOINT:
         return "NODE_ENTRYPOINT";
+        break;
+    case NODE_HYPERSTATEMENT:
+        return "NODE_HYPERSTATEMENT";
+        break;
+    case NODE_HYPERSTATEMENTS:
+        return "NODE_HYPERSTATEMENTS";
+        break;
+    case NODE_INBLOCKSTATEMENTS:
+        return "NODE_INBLOCKSTATEMENTS";
+        break;
+    case NODE_INBLOCKSTATEMENT:
+        return "NODE_INBLOCKSTATEMENT";
         break;
     case NODE_IFSENTENCE:
         return "NODE_IFSENTENCE";
@@ -174,6 +195,9 @@ const char *getNodeTypeString(NodeType type)
         break;
     case NODE_ELSETRAIN:
         return "NODE_ELSETRAIN";
+        break;
+    case NODE_WHILE:
+        return "NODE_WHILE";
         break;
     case NODE_STATEMENT:
         return "NODE_STATEMENT";
@@ -196,50 +220,44 @@ const char *getNodeTypeString(NodeType type)
     case NODE_ASSIGNMENT:
         return "NODE_ASSIGNMENT";
         break;
-    case NODE_INT:
-        return "NODE_INT";
-        break;
-    case NODE_STR:
-        return "NODE_STR";
-        break;
-    case NODE_DOUBLE:
-        return "NODE_DOUBLE";
+    case NODE_LITERAL:
+        return "NODE_LITERAL";
         break;
     case NODE_VARIABLE:
         return "NODE_VARIABLE";
         break;
-    case NODE_LITERAL:
-        return "NODE_LITERAL";
+    case NODE_VARIABLE_ASSIGNMENT:
+        return "NODE_VARIABLE_ASSIGNMENT";
         break;
-    case NODE_HYPERSTATEMENTS:
-        return "NODE_HYPERSTATEMENTS";
+    case NODE_VARIABLE_REF:
+        return "NODE_VARIABLE_REF";
+        break;  
+    case NODE_ARRAYLITERAL:
+        return "NODE_ARRAYLITERAL";
         break;
-    case NODE_HYPERSTATEMENT:
-        return "NODE_HYPERSTATEMENT";
-        break;
-    case NODE_INBLOCKSTATEMENTS:
-        return "NODE_INBLOCKSTATEMENTS";
-        break;
-    case NODE_WHILE:
-        return "NODE_WHILE";
-        break;
-    case NODE_G_EXPRESSION:
-        return "NODE_G_EXPRESSION";
-        break;
-    case NODE_EXPRESSION:
-        return "NODE_EXPRESSION";
-        break;
-    case NODE_G_OPERATION:
-        return "NODE_G_OPERATION";
+    case NODE_STRING_LITERAL:
+        return "NODE_STRING_LITERAL";
         break;
     case NODE_OPERATION:
         return "NODE_OPERATION";
         break;
-    case NODE_ARRAYLITERAL:
-        return "NODE_ARRAYLITERAL";
+    case NODE_G_OPERATION:
+        return "NODE_G_OPERATION";
         break;
-    case NODE_NUMLIST:
-        return "NODE_NUMLIST";
+    case NODE_EXPRESSION:
+        return "NODE_EXPRESSION";
+        break;
+    case NODE_G_EXPRESSION:
+        return "NODE_G_EXPRESSION";
+        break;
+    case NODE_INT:
+        return "NODE_INT";
+        break;
+    case NODE_DOUBLE:
+        return "NODE_DOUBLE";
+        break;
+    case NODE_STR:
+        return "NODE_STR";
         break;
     case NODE_ARR_INT:
         return "NODE_ARR_INT";
@@ -247,8 +265,26 @@ const char *getNodeTypeString(NodeType type)
     case NODE_ARR_DOUBLE:
         return "NODE_ARR_DOUBLE";
         break;
-    case NODE_STRING_LITERAL:
-        return "NODE_STRING_LITERAL";
+    case NODE_NUMLIST:
+        return "NODE_NUMLIST";
+        break;
+    case NODE_PRINT:
+        return "NODE_PRINT";
+        break;
+    case NODE_GET_INT:
+        return "NODE_GET_INT";
+        break;
+    case NODE_GET_DOUBLE:
+        return "NODE_GET_DOUBLE";
+        break;
+    case NODE_GET_STRING:
+        return "NODE_GET_STRING";
+        break;
+    case NODE_ARRAY_ACCESS:
+        return "NODE_ARRAY_ACCESS";
+        break;
+    case NODE_EXIT:
+        return "NODE_EXIT";
         break;
     default:
         return "DEFAULT";
