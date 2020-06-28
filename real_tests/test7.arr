@@ -1,24 +1,31 @@
 start
     print "This program evaluates operations of two arrays of size 5\n";
-    double[] arr1 = [0.0,0,0,0,0];
-    double[] arr2 = [0.0,0,0,0,0];
+    double[] arr1 = [0,0,0,0,0];
+    double[] arr2 = [0,0,0,0,0];
     double[] res;
 
     print "Choose the values for the first arrays\n";
     int i =0;
     while(i < 5){
-       arr1[i] = getDouble();
-       i=i+1;
+        print "Value for element ";
+        print i;
+        print ": ";
+        arr1[i] = getDouble();
+        i=i+1;
     }
 
     print "Choose the values for the second arrays\n";
     i =0;
     while(i < 5){
+        print "Value for element ";
+        print i;
+        print ": ";
         arr2[i] = getDouble();
         i = i +1;
     }
 
     print "Choose the operation: \n\t1. * \n\t2. + \n\t3. / \n\t4. -\n";
+    print "Operation: ";
     int op = getInt();
 
     if(op == 1){
@@ -38,7 +45,6 @@ start
         exit();
     }
 
-    print "Result\n";
-    print res;
-    
+    print "Result: ";
+    print res;  
 end

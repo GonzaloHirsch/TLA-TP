@@ -42,6 +42,13 @@ double * _check_double_index(struct DoubleArr * arr, int i){
     }
 }
 
+void _div_0_error(){
+	fprintf(stderr, "\033[0;31m");
+	printf("Division by zero\n");
+	fprintf(stderr, "\033[0m");
+	exit(0);
+}
+
 // ---------- Product ----------
 
 // Product Int Arr & Int
@@ -450,7 +457,7 @@ DoubleArr * _subsIntArrDoubleArr(IntArr * arr1, DoubleArr * arr2){
 DoubleArr * _divIntArrInt(IntArr * arr, int num){
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr->size);
-	int i = 0;for(i = 0; i < arr->size; i++){resArr[i] = (double)(arr->arr[i] / num);}
+	int i = 0;for(i = 0; i < arr->size; i++){if (num == 0){_div_0_error();}resArr[i] = (double)(arr->arr[i] / (double)num);}
 	res->arr = resArr;
 	res->size = arr->size;
 	return res;
@@ -460,7 +467,7 @@ DoubleArr * _divIntArrInt(IntArr * arr, int num){
 DoubleArr * _divIntArrDouble(IntArr * arr, double num){
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr->size);
-	int i = 0;for(i = 0; i < arr->size; i++){resArr[i] = (double)(arr->arr[i] / num);}
+	int i = 0;for(i = 0; i < arr->size; i++){if (num == 0){_div_0_error();}resArr[i] = (double)(arr->arr[i] / (double)num);}
 	res->arr = resArr;
 	res->size = arr->size;
 	return res;
@@ -470,7 +477,7 @@ DoubleArr * _divIntArrDouble(IntArr * arr, double num){
 DoubleArr * _divDoubleArrDouble(DoubleArr * arr, double num){
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr->size);
-	int i = 0;for(i = 0; i < arr->size; i++){resArr[i] = (double)(arr->arr[i] / num);}
+	int i = 0;for(i = 0; i < arr->size; i++){if (num == 0){_div_0_error();}resArr[i] = (double)(arr->arr[i] / num);}
 	res->arr = resArr;
 	res->size = arr->size;
 	return res;
@@ -480,7 +487,7 @@ DoubleArr * _divDoubleArrDouble(DoubleArr * arr, double num){
 DoubleArr * _divDoubleArrInt(DoubleArr * arr, int num){
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr->size);
-	int i = 0;for(i = 0; i < arr->size; i++){resArr[i] = (double)(arr->arr[i] / num);}
+	int i = 0;for(i = 0; i < arr->size; i++){if (num == 0){_div_0_error();}resArr[i] = (double)(arr->arr[i] / num);}
 	res->arr = resArr;
 	res->size = arr->size;
 	return res;
@@ -491,7 +498,7 @@ DoubleArr * _divDoubleArrDoubleArr(DoubleArr * arr1, DoubleArr * arr2){
 	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
-	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] / arr2->arr[i]);}
+	int i = 0;for(i = 0; i < arr1->size; i++){if (arr2->arr[i] == 0){_div_0_error();}resArr[i] = (double)(arr1->arr[i] / arr2->arr[i]);}
 	res->arr = resArr;
 	res->size = arr1->size;
 	return res;
@@ -502,7 +509,7 @@ DoubleArr * _divIntArrIntArr(IntArr * arr1, IntArr * arr2){
 	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
-	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] / arr2->arr[i]);}
+	int i = 0;for(i = 0; i < arr1->size; i++){if (arr2->arr[i] == 0){_div_0_error();}resArr[i] = (double)(arr1->arr[i] / (double)arr2->arr[i]);}
 	res->arr = resArr;
 	res->size = arr1->size;
 	return res;
@@ -513,7 +520,7 @@ DoubleArr * _divDoubleArrIntArr(DoubleArr * arr1, IntArr * arr2){
 	_checkArrSizes(arr1->size, arr2->size);
 	DoubleArr * res = malloc(sizeof(DoubleArr));
 	double * resArr = malloc(sizeof(double) * arr1->size);
-	int i = 0;for(i = 0; i < arr1->size; i++){resArr[i] = (double)(arr1->arr[i] / arr2->arr[i]);}
+	int i = 0;for(i = 0; i < arr1->size; i++){if (arr2->arr[i] == 0){_div_0_error();}resArr[i] = (double)(arr1->arr[i] / (double)arr2->arr[i]);}
 	res->arr = resArr;
 	res->size = arr1->size;
 	return res;

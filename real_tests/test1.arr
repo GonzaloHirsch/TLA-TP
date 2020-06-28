@@ -1,15 +1,15 @@
 start
     print "This program asks the user for a multiplier and multiples each array item in 3 different ways (1 - forEach multiplying in each iteration, 2 - multiplying the array with the number and then using forEach, 3 - while to iterate and multiply each time) and obtains the sum of all the items\n";
-    print "The array is this:\n";
+    print "The array is this:";
     int[] arr = [1, 2, 3, 4, 5];
     print arr;
     print "\nChoose a double multiplier number: ";
     double multiplier = getDouble();
-    print "\nChoose a limit to compare the sum to: ";
+    print "Choose a limit to compare the sum to: ";
     double limit = getDouble();
-    print "\nChoose a message in case the sum is greater than the limit: ";
+    print "Choose a message in case the sum is greater than the limit: ";
     str msgOk = getString();
-    print "\nChoose a message in case the sum is smallet than the limit: ";
+    print "Choose a message in case the sum is smallet than the limit: ";
     str msgFail = getString();
 
     print "\n####################\n";
@@ -22,10 +22,8 @@ start
     print "\nResult 1 - Sum with multiplication with forEach in each iteration: ";
     if (sum > limit || limit < sum){
         print msgOk;
-        print "\n";
     } else {
         print msgFail;
-        print "\n";
     }
 
     double[] arr2 = arr * multiplier;
@@ -53,4 +51,5 @@ start
     } else {
         print msgFail;
     }
+    print "\n";
 end

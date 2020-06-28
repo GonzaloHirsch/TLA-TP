@@ -10,7 +10,8 @@ start
     double resDoub;
     int size;
 
-    print "First Choose the size of the vectors ( 2 o 3):\n";
+    print "First Choose the size of the vectors (2 o 3):\n";
+    print "Size: ";
     size = getInt();
 
     if(size == 2){
@@ -29,25 +30,29 @@ start
     print "Choose the values for the first arrays\n";
     int i =0;
     while(i < size){
-       arrOp1[i] = getDouble();
-       i=i+1;
+        print "Value for element ";
+        print i;
+        print ": ";
+        arrOp1[i] = getDouble();
+        i=i+1;
     }
 
     print "Choose the values for the second arrays\n";
     i =0;
     while(i < size){
+        print "Value for element ";
+        print i;
+        print ": ";
         arrOp2[i] = getDouble();
         i = i +1;
     }
 
-    print "CROSS PRODUCT: \n";
+    print "\nCROSS PRODUCT: ";
     resArrDoub = arrOp1 *x arrOp2;
     print resArrDoub;
 
-    print "SCALAR PRODUCT: \n";
+    print "SCALAR PRODUCT: ";
     resDoub = arrOp1 *. arrOp2;
     print resDoub;
     print "\n";
-
-    
 end

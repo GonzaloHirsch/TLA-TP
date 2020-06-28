@@ -1,22 +1,23 @@
 start
     print "This program prompts the user for a number of iterations to evaluate the array and a limit in each iteratio to evaluate each array item\n";
-    print "Choose number of iterations\n";
+    print "The array is this: ";
+    int[] arr = [1,2,3,4,5,6,7,8,9,10];
+    print arr;
+    print "Choose number of iterations: ";
     int iters = getInt();
-
-    int[] arr = [1,2,3,4,5];
     int i = 0;
 
     int arrlimit;
     while (i < iters){
-        print "Choose limit of array\n";
+        print "Choose a number to compare to: ";
         arrlimit = getInt();
-        print "Res: \n";
+        print "Items greater than "; print arrlimit; print " :";
         arr.forEach(y->{
-            if (y < arrlimit){
-                print y;
-                print "\n";
+            if (y >= arrlimit){
+                print " "; print y; print " ";
             }
         });
+        print "\n";
         i = i + 1;
     }
 end

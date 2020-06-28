@@ -10,13 +10,19 @@ start
     print "Choose the values for the array\n";
     int i =0;
     while(i < size){
-       arr1[i] = getInt();
-       i=i+1;
+        print "Value for element ";
+        print i;
+        print ": ";
+        arr1[i] = getInt();
+        i=i+1;
     }
 
-    print "Choose the values for the integers (3)\n";
+    print "Choose the values for the integers(3)\n";
     i =0;
     while(i < 3){
+        print "Value for element ";
+        print i;
+        print ": ";
         integers[i] = getInt();
         i = i +1;
     }
