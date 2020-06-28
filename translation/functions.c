@@ -9,12 +9,38 @@
 typedef struct IntArr{
 	int * arr;
 	int size;
+	int * (*on_access)(struct IntArr *, int);
 } IntArr;
 
 typedef struct DoubleArr{
 	double * arr;
 	int size;
+	double * (*on_access)(struct DoubleArr *, int);
 } DoubleArr;
+
+int * _check_int_index(struct IntArr * arr, int i){
+    if (i >= 0 && i < arr->size){
+        return arr->arr + i;
+    } else {
+        fprintf(stderr, "\033[0;31m");
+        printf("Array index out of bounds\n");
+        fprintf(stderr, "\033[0m");
+        exit(0);
+        return NULL;
+    }
+}
+
+double * _check_double_index(struct DoubleArr * arr, int i){
+    if (i >= 0 && i < arr->size){
+        return arr->arr + i;
+    } else {
+        fprintf(stderr, "\033[0;31m");
+        printf("Array index out of bounds\n");
+        fprintf(stderr, "\033[0m");
+        exit(0);
+        return NULL;
+    }
+}
 
 // ---------- Product ----------
 

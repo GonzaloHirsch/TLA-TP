@@ -4,8 +4,6 @@ start
     print "The array is this";
     print arr;
     print "Set a number limit";
-    double[] arr2 = [1, 2, 3, 4];
-    double[] b = arr * arr2;
     int limit = getInt();
     arr.forEach(x->{
         if (x > limit){

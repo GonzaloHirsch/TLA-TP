@@ -123,9 +123,10 @@ char *processVarDeclassignment(GenericNode *gn)
             char *intArrDec = "int _%s[] = %s;\n"
                               "%s = malloc(sizeof(IntArr));\n"
                               "%s->arr = _%s;\n"
-                              "%s->size = NELEMS(_%s);\n";
-            buffer = malloc(1 + strlen(intArrDec) + 6 * strlen(var) + strlen(value) - 14);
-            sprintf(buffer, intArrDec, var, value, var, var, var, var, var);
+                              "%s->size = NELEMS(_%s);\n"
+                              "%s->on_access = &_check_int_index;\n";
+            buffer = malloc(1 + strlen(intArrDec) + 7 * strlen(var) + strlen(value) - 14);
+            sprintf(buffer, intArrDec, var, value, var, var, var, var, var, var);
         }
     }
     else if ((typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == DOUBLE_ARRAY_TYPE) || (typeNode->info.varType == DOUBLE_ARRAY_TYPE && valueNode->info.varType == INTEGER_ARRAY_TYPE))
@@ -142,9 +143,10 @@ char *processVarDeclassignment(GenericNode *gn)
             char *doubleArrDec = "double _%s[] = %s;\n"
                                  "%s = malloc(sizeof(DoubleArr));\n"
                                  "%s->arr = _%s;\n"
-                                 "%s->size = NELEMS(_%s);\n";
-            buffer = malloc(1 + strlen(doubleArrDec) + 6 * strlen(var) + strlen(value) - 14);
-            sprintf(buffer, doubleArrDec, var, value, var, var, var, var, var);
+                                 "%s->size = NELEMS(_%s);\n"
+                                 "%s->on_access = &_check_double_index;\n";
+            buffer = malloc(1 + strlen(doubleArrDec) + 7 * strlen(var) + strlen(value) - 14);
+            sprintf(buffer, doubleArrDec, var, value, var, var, var, var, var, var);
         }
     }
     else if (typeNode->info.varType == DOUBLE_TYPE && (valueNode->info.varType == DOUBLE_TYPE || valueNode->info.varType == INTEGER_TYPE))
