@@ -14,7 +14,7 @@ char * processGeneralExpression(GenericNode * gn){
     }
     else if(strcmp(operatorValue, "OR") == 0)
     {   
-        op = " | ";
+        op = " || ";
     }
     else{
         op = "";

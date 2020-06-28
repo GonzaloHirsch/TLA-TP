@@ -20,7 +20,7 @@ start
     });
 
     print "Result 1";
-    if (sum > limit){
+    if (sum > limit || limit < sum){
         print msgOk;
     } else {
         print msgFail;
