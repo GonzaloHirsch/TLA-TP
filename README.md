@@ -43,7 +43,9 @@ $ ./test_real_specific.sh real_tests/<nombre_del_archivo.arr>
 En la raíz del repositorio se encuentra un Makefile para poder realizar la compilación del proyecto.
 
 ### Documentación
-Dentro de la carpeta */documentation* se encuentra el informe del trabajo práctico, con el nombre *"Informe-Hirsch-Henestrosa-Choi-Ribas.pdf"*
+Dentro de la carpeta */documentation* se encuentra el informe del trabajo práctico, con el nombre *"Informe-Hirsch-Henestrosa-Choi-Ribas.pdf"*.
+
+También dentro de la carpeta */documentation* se encuentra una copia de las producciones de la gramática en formato BFN, con el nombre *"Gramatica-Hirsch-Henestrosa-Choi-Ribas.pdf"*.
 
 ### Código Fuente
 El código fuente se encuentra en:
