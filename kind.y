@@ -4,7 +4,6 @@
     #include <ctype.h>
     #include <string.h>
     #include "translation/symboltable.h"
-    #include "utility.h"
     #include "node.h"
     #include "translation/translation.h"
     #include "translation/declTranslation.h"
@@ -307,7 +306,7 @@ void yyerror(GenericNode ** codeRootNode, char *s) {
         fprintf(stderr, "\033[0m");
 	//printf("-------------------------------------\nError: %s in line %d\n-------------------------------------\n", s, yylineno);
 	freeGenericNode(*codeRootNode);
-        exit(0);
+        exit(1);
 }
 
 int

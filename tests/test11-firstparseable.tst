@@ -1,3 +1,0 @@
-start
-    int x;
-end
