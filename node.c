@@ -145,6 +145,7 @@ void freeGenericNode(GenericNode *gn)
             freeNodeList(gn->children);
         }
         free(gn);
+        gn = NULL;
     }
 }
 

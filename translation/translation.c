@@ -278,7 +278,7 @@ char *processNodeList(NodeList *listCurrent)
     }
 
     // Free the memory for the pointer to processed node
-    free(processedNode);
+    //free(processedNode);
 
     return buffer;
 }
