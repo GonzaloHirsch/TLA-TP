@@ -269,6 +269,9 @@ char *processNodeList(NodeList *listCurrent)
 
             // Concatenating the old buffer with the new processed node.
             strcat(buffer, processedNode);
+
+             // Free the memory for the pointer to processed node
+            free(processedNode);
         }
 
         listCurrent = listCurrent->next;
@@ -462,7 +465,6 @@ char *processPrint(GenericNode *gn)
     default:
         free(childNodeProc);
         return NULL;
-        // ERROR
     }
 
     free(childNodeProc);
