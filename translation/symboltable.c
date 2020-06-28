@@ -268,3 +268,11 @@ void symSet(char *name, VarType type, void *value)
         break;
     }
 }
+
+
+void freeVariables(){
+    int i;
+    for(i = 0; i < nextFreeFunctionSlot; i++){
+        free(symboltable[i].value);
+    }
+}

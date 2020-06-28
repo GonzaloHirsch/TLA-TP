@@ -48,6 +48,8 @@ symvartype * symSetDoubleArr(char * name, double * values);
 symvartype * symSetDoubleArr(char * name, double * values);
 void symSet(char * name, VarType type, void * value);
 
+void freeVariables();
+
 /*
 symvartype * symLook(char * name, symvartype * symvartable);
 

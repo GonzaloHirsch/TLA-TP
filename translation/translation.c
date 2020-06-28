@@ -628,7 +628,7 @@ char *translate_program(GenericNode *gn, void (*error_fun)(GenericNode **, char 
     handle_error = error_fun;
 
     // Allocating memory for function declarations
-    functionDeclarations = malloc(sizeof(FunctionDeclarations));
+    functionDeclarations = malloc(sizeof(FunctionDeclarations_));
     functionDeclarations->count = 0;
 
     // Processing the given node

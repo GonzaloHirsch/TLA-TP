@@ -454,12 +454,13 @@ main(void) {
 		free(functionsTranslation);
 	}
 
-        freeGenericNode(codeRootNode);
-        freeFunctions();
-	freeToken((Token *) code);
-	freeVariables();
+
 
         */
+        freeGenericNode(codeRootNode);
+        free(code);
+        freeVariables();
+
 
 
 
