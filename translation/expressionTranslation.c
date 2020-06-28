@@ -105,8 +105,8 @@ char * processExpression(GenericNode * gn){
 
         // check that if exp1 its a variable, its a valid type.
         if(exp1->info.varType != INTEGER_TYPE && exp1->info.varType != DOUBLE_TYPE){
-            perror("Invalid type in expression\n");
-            exit(EXIT_FAILURE_);
+            compilationError = ERROR_INVALID_COMPARISON;
+            return NULL;
         }
 
         buffer = realloc(buffer,1 + strlen(op) + strlen(exp1Proc) + strlen(buffer));

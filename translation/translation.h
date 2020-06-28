@@ -23,7 +23,8 @@ typedef enum CompilationErrors
     ERROR_UNASSIGNED_VARIABLE,
     ERROR_DUPLICATED_VARIABLE,
     ERROR_NESTED_FOREACH,
-    ERROR_INVALID_ACCESS_INDEX_TYPE
+    ERROR_INVALID_ACCESS_INDEX_TYPE,
+    ERROR_INVALID_COMPARISON,
 } CompilationErrors;
 
 typedef struct FunctionDeclaration

@@ -593,6 +593,8 @@ void compose_error_message(char *buffer, int line)
     case ERROR_INVALID_ACCESS_INDEX_TYPE:
         msg = "Array index not int type";
         break;
+    case ERROR_INVALID_COMPARISON:
+        msg = "Invalid comparison in expression";
     case ERROR_GENERIC:
     default:
         msg = "Unkown error";
